@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NuevoColaboradorComponent } from '../nuevo-colaborador/nuevo-colaborador.component';
 
 interface Colaborador {
   nombre: string;
@@ -15,7 +16,7 @@ interface Colaborador {
 @Component({
   selector: 'app-colaboradores',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NuevoColaboradorComponent],
   templateUrl: './colaboradores.component.html',
   styleUrls: ['./colaboradores.component.css']
 })
@@ -100,5 +101,14 @@ export class ColaboradoresComponent {
   goToPage(page: number) {
     this.currentPage = page;
     this.updatePaginatedColaboradores();
+  }
+  mostrarFormulario: boolean = false;
+
+  abrirFormulario() {
+    this.mostrarFormulario = true;
+  }
+
+  cerrarFormulario() {
+    this.mostrarFormulario = false;
   }
 }

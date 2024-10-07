@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { AreasComponent } from './areas/areas.component';
 import { JefaturasComponent } from './jefaturas/jefaturas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CredencialComponent } from './credencial/credencial.component';
 
 
 @Component({
@@ -24,7 +23,6 @@ import { CredencialComponent } from './credencial/credencial.component';
     JefaturasComponent,
     FormsModule,
     ReactiveFormsModule,
-    CredencialComponent,
 
   ],
   templateUrl: './app.component.html',

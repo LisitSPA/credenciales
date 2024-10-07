@@ -4,8 +4,11 @@
   <div class="toolbar">
     <h1 class="title">Mantenedores / </h1>
    <h1 class="title" style="color: grey;">Colaboradores</h1>
-    <a href="credencial" class="btn btn-primary">Nuevo Colaborador</a>
+   <div class=" btn btn-primary" (click)="abrirFormulario()">
+    <img src="/icons/vector-icono-identificarme.svg"  class="option-icon">
+    <span>Nuevo Colaborador</span>
   </div>
+    </div>
 
   <input type="text" placeholder="Buscar por Nombre, RUT, Correo electrónico..." class="search-bar" />
 
@@ -99,3 +102,4 @@
   </div>
   </div>
 </body>
+<app-nuevo-colaborador *ngIf="mostrarFormulario" (cerrar)="cerrarFormulario()"></app-nuevo-colaborador>
