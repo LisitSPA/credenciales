@@ -2,31 +2,23 @@
 CREATE TABLE dbo.Attachments (
     Id INT PRIMARY KEY IDENTITY(1,1),
 	CollaboratorIdId int not null,
-    FileBase64 VARCHAR(MAX) NOT NULL,
     FileName VARCHAR(50) NOT NULL,
     Description VARCHAR(150) NOT NULL,
 	EAttachmentType int not null,
 	Active bit NOT NULL
 );
 
-CREATE TABLE dbo.Areas (
+CREATE TABLE dbo.Leadership --gerencia(
     Id INT PRIMARY KEY IDENTITY(1,1),
     Name VARCHAR(150) NOT NULL,
-	Description VARCHAR(150) NULL,
-);
-
-CREATE TABLE dbo.Leadership (
-    Id INT PRIMARY KEY IDENTITY(1,1),
-    Name VARCHAR(150) NOT NULL,
-	Description VARCHAR(150) NULL,
+	Active bit NULL,
 );
 
 
 CREATE TABLE dbo.Collaborators (
     RUT VARCHAR(50)  NULL,
     CompleteName VARCHAR(250)  NULL,
-	--AreaId int not NULL,
-	Area varchar(200) not NULL,
+	Area varchar(200) not NULL, --sede
 	LeadershipId int not NULL,
 	Position VARCHAR(180) NULL,
 	ECollaboratorStatus INT not NULL,
@@ -47,3 +39,14 @@ CREATE TABLE dbo.Users (
 	ChangePassword bit NOT NULL default 1,
 	Active bit NOT NULL
 );
+
+CREATE TABLE dbo.Segment (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Color VARCHAR(150) NOT NULL,
+	Description VARCHAR(150) NULL,
+);
+
+
+alter table dbo.Collaborators add SegmentId int not null;
+alter table dbo.Collaborators add FOREIGN KEY (SegmentId) REFERENCES Segment(Id)
+

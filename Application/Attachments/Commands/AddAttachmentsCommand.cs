@@ -4,6 +4,7 @@ using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing.Template;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,27 +41,34 @@ public class AddAttachmentsCommandHandler
         Response<int> result = new();
         try
         {
-            string fileBase64 = "";
-            using (var memoryStream = new MemoryStream())
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Photos");
+            if (!Directory.Exists(filePath))
             {
-                command.Attachment.CopyTo(memoryStream);
-                byte[] fileBytes = memoryStream.ToArray();
-                fileBase64 = Convert.ToBase64String(fileBytes);
+                Directory.CreateDirectory(filePath);
             }
 
-            var attachment = new Domain.Entities.Attachment
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
             {
-                FileBase64 = fileBase64,
-                EAttachmentType = command.AttachmentType,
-                FileName = command.Attachment.FileName,
-                ContentType = command.Attachment.ContentType,
-                CollaboratorId = command.CollaboratorId
-            };
+                await command.Attachment.CopyToAsync(stream);
+            }
 
-            _repoAttach.Add(attachment);
+            //var attachment = new Domain.Entities.Attachment
+            //{
+            //    //FileBase64 = fileBase64,
+            //    EAttachmentType = command.AttachmentType,
+            //    FileName = command.Attachment.FileName,
+            //    ContentType = command.Attachment.ContentType,
+            //    CollaboratorId = command.CollaboratorId
+            //};
 
-            _repository.Save();
-            result.Result = attachment.Id;
+            //_repoAttach.Add(attachment);
+
+            //_repository.Save();
+            //result.Result = attachment.Id;
+
+
+
 
         }
         catch (Exception ex)

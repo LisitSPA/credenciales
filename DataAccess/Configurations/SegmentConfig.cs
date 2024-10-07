@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.Configurations
 {
-    public class AreaConfig : IEntityTypeConfiguration<Area>
+    public class SegmentConfig : IEntityTypeConfiguration<Segment>
     {
-        public void Configure(EntityTypeBuilder<Area> builder)
+        public void Configure(EntityTypeBuilder<Segment> builder)
         {
             //Table Name
-            builder.ToTable("Areas");
+            builder.ToTable("Segment");
             
             //Primary Key
             builder.Property<int>("Id")

@@ -37,6 +37,9 @@
     <ProjectReference Include="..\Proxy\Proxy.csproj" />
     <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Images\" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties appsettings_1json__JsonSchema="" />
