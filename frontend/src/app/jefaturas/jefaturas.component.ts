@@ -20,7 +20,18 @@ export class JefaturasComponent {
       jefatura: 'Nombre Jefatura',
       fecha: '000000',
       editado: '000000',
-      estado: 'activo',
+      estado: 'Activo',
+    },
+    {
+      jefatura: 'Nombre Jefatura',
+      fecha: '000000',
+      editado: '000000',
+      estado: 'Activo',
+    },{
+      jefatura: 'Nombre Jefatura',
+      fecha: '000000',
+      editado: '000000',
+      estado: 'Inactivo',
     },
   ];
 

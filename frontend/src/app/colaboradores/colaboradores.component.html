@@ -2,9 +2,9 @@
 <div class="table-container">
 
   <div class="toolbar">
-    <h1 class="title">Mantenedores / Colaboradores</h1>
+    <h1 class="title">Mantenedores / </h1>
+   <h1 class="title" style="color: grey;">Colaboradores</h1>
     <a href="credencial" class="btn btn-primary">Nuevo Colaborador</a>
-    <a class="btn btn-secondary">Re-imprimir</a>
   </div>
 
   <input type="text" placeholder="Buscar por Nombre, RUT, Correo electrónico..." class="search-bar" />
@@ -36,16 +36,50 @@
           <td>{{ colaborador.cargo }}</td>
           <td>{{ colaborador.celular }}</td>
           <td>{{ colaborador.correo }}</td>
-          <td [ngClass]="colaborador.estado === 'Fijo' ? 'estado-fijo' : 'estado-temporal'">{{ colaborador.estado }}</td>
           <td>
-            <img src="foto-icon.png" alt="Foto" />
-            <img src="firma-icon.png" alt="Firma" />
-            <img src="credencial-icon.png" alt="Credencial" />
-          </td>
+            <span [ngClass]="
+                colaborador.color_id === 'administracion' ? 'color-administracion' :
+                colaborador.color_id === 'packaging' ? 'color-packaging' :
+                colaborador.color_id === 'frigorifico' ? 'color-frigorifico' :
+                colaborador.color_id === 'patio' ? 'color-patio' :
+                colaborador.color_id === 'bodega' ? 'color-bodega' :
+                colaborador.color_id === 'agricola' ? 'color-agricola' :
+                colaborador.color_id === 'vivero' ? 'color-vivero' :
+                colaborador.color_id === 'mantencion' ? 'color-mantencion' :
+                colaborador.color_id === 'calidad' ? 'color-calidad' :
+                colaborador.color_id === 'v.clientes' ? 'color-v-clientes' :
+                colaborador.color_id === 'v.productores' ? 'color-v-productores' :
+                colaborador.color_id === 'v.proveedores' ? 'color-v-proveedores' : ''
+            ">
+                {{ colaborador.color_id }}
+            </span>
+        </td>
+<td>
+  <div class="icon-container">
+      <div class="icon-item">
+          <img src="/icons/image-regular.svg" alt="Foto" />
+          <span>Foto</span>
+      </div>
+      <div class="icon-item">
+          <img src="/icons/signature-solid.svg" alt="Firma" />
+          <span>Firma</span>
+      </div>
+      <div class="icon-item">
+          <img src="/icons/id-card-solid.svg" alt="Credencial" />
+          <span>Credencial</span>
+      </div>
+  </div>
+</td>
+
           <td>
-            <button class="btn-edit">Editar</button>
-            <button class="btn-delete">Eliminar</button>
-          </td>
+            <button class="btn-edit">
+                <img src="/icons/pen-to-square-solid.svg" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+            </button>
+            <button class="btn-delete">
+                <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+            </button>
+        </td>
+        
         </tr>
       </tbody>
     </table>

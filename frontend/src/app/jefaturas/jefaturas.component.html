@@ -1,7 +1,9 @@
 <body>
   <div class="table-container">
     <div class="toolbar">
-      <h1 class="title" >Mantenedores / Jefaturas</h1>
+      <h1 class="title" >Mantenedores / </h1>
+      <h1 class="title" style="color: grey;">Jefaturas</h1>
+
       <button class="btn btn-primary">Nueva Jefatura</button>
     </div>
 
@@ -23,11 +25,18 @@
           <td>{{ jefatura.jefatura }}</td>
           <td>{{ jefatura.fecha }}</td>
           <td>{{ jefatura.editado }}</td>
-          <td [ngClass]="jefatura.estado === 'activo' ? 'estado-activo' : 'estado-inactivo'">{{ jefatura.estado }}</td>
           <td>
-            <button class="btn-edit">Editar</button>
-            <button class="btn-delete">Eliminar</button>
-          </td>
+            <span [ngClass]="jefatura.estado === 'Activo' ? 'estado-activo' : 'estado-inactivo'">
+                {{ jefatura.estado }}
+            </span>
+        </td>          <td>
+            <button class="btn-edit">
+                <img src="/icons/pen-to-square-solid.svg" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+            </button>
+            <button class="btn-delete">
+                <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+            </button>
+        </td>
         </tr>
       </tbody>
     </table>

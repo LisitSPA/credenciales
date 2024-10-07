@@ -5,8 +5,9 @@ interface Area {
   centro_coste: string;
   fecha: string;
   editado: string;
-  estado: string;
+  color_id: string; 
 }
+
 @Component({
   selector: 'app-areas',
   standalone: true,
@@ -15,14 +16,27 @@ interface Area {
   styleUrl: './areas.component.css'
 })
 export class AreasComponent {
-   areas: Area[] = [
+  areas: Area[] = [
     {
-      centro_coste: 'Nombre Apellido',
-      fecha: '000000',
-      editado: '0000000',
-      estado: 'activo',
+      centro_coste: 'Administración',
+      fecha: '2024-10-01',
+      editado: '2024-10-01',
+      color_id: 'administracion',
+    },
+    {
+      centro_coste: 'Packaging',
+      fecha: '2024-10-01',
+      editado: '2024-10-01',
+      color_id: 'packaging',
+    },
+    {
+      centro_coste: 'Frigorífico',
+      fecha: '2024-10-01',
+      editado: '2024-10-01',
+      color_id: 'frigorifico',
     },
   ];
+  
   paginatedColaboradores: Area[] = [];
   currentPage = 1;
   itemsPerPage = 7;

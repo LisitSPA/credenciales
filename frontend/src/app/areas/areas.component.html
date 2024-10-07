@@ -1,7 +1,9 @@
 <body>
 <div class="table-container">
     <div class="toolbar">
-      <h1 class="title" >Mantenedores / Áreas</h1>
+      <h1 class="title" >Mantenedores / </h1>
+      <h1 class="title" style="color: grey;">Áreas</h1>
+
       <button class="btn btn-primary">Nueva Área</button>
     </div>
   
@@ -13,7 +15,7 @@
           <th>Centro de Coste / área</th>
           <th>Fecha creación</th>
           <th>Editado</th>
-          <th>Estado</th>
+          <th>Color ID</th> 
           <th>Acciones</th>
         </tr>
       </thead>
@@ -23,12 +25,33 @@
           <td>{{ area.centro_coste }}</td>
           <td>{{ area.fecha }}</td>
           <td>{{ area.editado }}</td>
-          <td [ngClass]="area.estado === 'activo' ? 'estado-activo' : 'estado-inactivo'">{{ area.estado }}</td>
           <td>
-            <button class="btn-edit">Editar</button>
-            <button class="btn-delete">Eliminar</button>
-          </td>
-        </tr>
+            <span [ngClass]="
+                area.color_id === 'administracion' ? 'color-administracion' :
+                area.color_id === 'packaging' ? 'color-packaging' :
+                area.color_id === 'frigorifico' ? 'color-frigorifico' :
+                area.color_id === 'patio' ? 'color-patio' :
+                area.color_id === 'bodega' ? 'color-bodega' :
+                area.color_id === 'agricola' ? 'color-agricola' :
+                area.color_id === 'vivero' ? 'color-vivero' :
+                area.color_id === 'mantencion' ? 'color-mantencion' :
+                area.color_id === 'calidad' ? 'color-calidad' :
+                area.color_id === 'v.clientes' ? 'color-v-clientes' :
+                area.color_id === 'v.productores' ? 'color-v-productores' :
+                area.color_id === 'v.proveedores' ? 'color-v-proveedores' : ''
+            ">
+                {{ area.color_id }}
+            </span>
+        </td>
+        
+<td>
+        <button class="btn-edit">
+            <img src="/icons/pen-to-square-solid.svg" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+        </button>
+        <button class="btn-delete">
+            <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+        </button>
+      </td>
       </tbody>
     </table>  
   </div>

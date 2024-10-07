@@ -9,7 +9,7 @@ interface Colaborador {
   cargo: string;
   celular: string;
   correo: string;
-  estado: string;
+  color_id: string;
 }
 
 @Component({
@@ -29,7 +29,7 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'administracion'
     },
     {
       nombre: 'Nombre Apellido', 
@@ -39,7 +39,7 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'packaging'
     },
     {
       nombre: 'Nombre Apellido', 
@@ -49,7 +49,7 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'frigorifico'
     },{
       nombre: 'Nombre Apellido', 
       rut: '000000',
@@ -58,64 +58,8 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'frigorifico'
     },
-    {
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },
-    // Agregar más colaboradores aquí
   ];
 
   paginatedColaboradores: Colaborador[] = [];
