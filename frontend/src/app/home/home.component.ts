@@ -46,7 +46,6 @@ export class HomeComponent {
 
     //segmento
     this.segmentService.uploadMissiveSegment(file);
- main
   }
 
   
