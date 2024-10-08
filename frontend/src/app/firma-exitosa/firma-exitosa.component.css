@@ -1,0 +1,176 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+body {
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to right, #87CEEB, #005bb5) no-repeat top left / 100% 50%, white 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  width: 100vw;  
+}
+
+
+.login-card {
+  position: relative; 
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  max-width: 600px;
+  width: 80%; 
+  max-width: 600px; 
+  max-height: 68vh; 
+  overflow-y: auto; 
+
+}
+
+.btn-secondary {
+    background-color: #005bb5;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-family: "Open Sans", sans-serif;
+    font-size: medium;
+}
+.btn-secondary-1 {
+    display: inline-block;  
+    background-color: white;
+    color: #005bb5;
+    border: 2px solid #005bb5;
+    cursor: pointer;
+    font-family: "Open Sans", sans-serif;
+    font-size: medium;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 8px 16px;  
+    white-space: nowrap; 
+    width: auto; 
+}
+
+
+.button {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+.business-card {
+    border: 1px solid #005bb5;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    font-family: 'Open Sans', sans-serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+}
+.logo-section {
+    margin-right: 10px; 
+}
+  .logo {
+    width: 280px;
+    margin-right: -15px;
+  }
+  
+  .contact-info {
+    flex-grow: 1;
+  }
+  
+  .company-name {
+    color: #005bb5;
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .tagline {
+    color: #000;
+    font-size: 14px;
+  }
+  
+  .name {
+    margin: 5px 0;
+    font-size: 18px;
+    color: #005bb5;
+  }
+  
+  .position {
+    margin: 0;
+    font-size: 16px;
+    color: #005bb5;
+  }
+  
+  .email, .phone {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .qr-section {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-left: 15px; 
+}
+
+.qr-code {
+    width: 100px;
+    height: 100px;
+}
+  
+  .office-info {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    margin-top: 15px; 
+}
+ 
+  .head-office-title {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .address {
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .website {
+    color: #005bb5;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: gray;
+    text-align: center;
+  }
+  
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+@media (max-width: 768px) {
+  .login-card {
+      max-width: 90%; 
+  }
+}

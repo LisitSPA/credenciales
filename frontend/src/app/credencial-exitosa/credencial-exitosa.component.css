@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column; 
+  background: linear-gradient(to right, #87CEEB, #005bb5) no-repeat top left / 100% 50%, white 50%;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  flex: 1; 
+}
+
+.login-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 700px;
+  height: auto; 
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center;
+  align-items: center;
+  gap: 20px; 
+  width: 100%;
+}
+
+.card {
+  width: 400px;  
+  height: 450px; 
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.front-card, .back-card {
+  background-size: cover;
+  background-position: center;
+}
+
+.front-card {
+  background-image: url('/Fondo_azul.png');
+}
+
+.back-card {
+  background-image: url('/fondo_blanco.png');
+}
+
+.logo-section {
+  text-align: center;
+  margin-top: 50px; 
+}
+
+.logo {
+  width: 50px; 
+  height: auto; 
+  transform: scale(5); 
+}
+
+.info-section {
+  padding: 20px;
+  text-align: center;
+}
+
+.profile-picture {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.position, .department, .hashtag, .website {
+  color: white;
+}
+
+.qr-code {
+  width: 80px;
+  height: 80px;
+  margin: 15px auto;
+}
+
+.footer-section {
+  background-color: #1abc9c;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.footer-text {
+  color: white;
+  font-size: 14px;
+}
+
+.back-card .footer-section {
+    background-color: transparent; 
+    text-align: center;
+    padding: 10px 0;
+    
+  }
+  
+  .back-card .footer-text {
+    color: blue; 
+    font-size: 14px;
+  }
+  
+
+.button {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  background-color: #005bb5;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary-1 {
+  background-color: white;
+  color: #005bb5;
+  border: 2px solid #005bb5;
+  padding: 8px 16px;
+  cursor: pointer;
+}

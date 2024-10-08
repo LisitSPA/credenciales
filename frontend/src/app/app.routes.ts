@@ -7,7 +7,8 @@ import { JefaturasComponent } from './jefaturas/jefaturas.component';
 import { GenerarCredencialComponent } from './generar-credencial/generar-credencial.component';
 import { DescargarCredencialComponent } from './descargar-credencial/descargar-credencial.component';   
 import { GenerarFirmaComponent } from './generar-firma/generar-firma.component';
-
+import { FirmaExitosaComponent } from './firma-exitosa/firma-exitosa.component';
+import { CredencialExitosaComponent } from './credencial-exitosa/credencial-exitosa.component';
 export const routes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'home', component: HomeComponent},
@@ -17,5 +18,7 @@ export const routes: Routes = [
     {path: 'generar', component:GenerarCredencialComponent},
     {path:'descargar', component:DescargarCredencialComponent},
     {path: 'generarfirma', component: GenerarFirmaComponent},
+    {path:'firmaexitosa', component:FirmaExitosaComponent},
+    {path:'credencialexitosa', component:CredencialExitosaComponent},
 
 ];
