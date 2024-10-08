@@ -79,3 +79,47 @@
   background-color: #ccc; 
   margin: 0 20px; 
 }
+.dropdown-menu {
+  border: 1px solid #005bb5;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute; 
+  z-index: 1000; 
+}
+
+.dropdown-option {
+  display: block;
+  background: transparent;
+  border: none;
+  color: #005bb5;
+  padding: 8px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-option:hover {
+  background-color: #f0f0f0; 
+}
+.selected {
+  background-color: #87CEEB; 
+  color: white; 
+}
+
+.load-excel-button {
+  background-color: #005bb5; 
+  color: white; 
+  border: none; 
+  padding: 10px; 
+  cursor: pointer; 
+  width: 100%; 
+  text-align: center; 
+  border-radius: 5px;
+}
+
+.load-excel-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed; 
+  color: darkgray; 
+}

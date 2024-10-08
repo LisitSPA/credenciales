@@ -1,20 +1,32 @@
 <body>
-  
-<div class="search-section">
-  <h2 class="title-search">Gestión de Firmas y Credenciales</h2>
-  <div class=" search-section-white">
-    <h3 class="text-search">Buscar en la plataforma</h3>
-  <input class="search"
-    type="text" 
-    placeholder="Buscar por Nombre, RUT, Correo Electrónico..." 
-    [(ngModel)]="searchQuery">
-    <div class="divider"></div>
-    <div class="flex-container">
-      <button (click)="onUpload()" class="btn-secondary-1">Carga Masiva de Documentos</button>
+  <div class="search-section">
+    <h2 class="title-search">Gestión de Firmas y Credenciales</h2>
+    <div class="search-section-white">
+      <h3 class="text-search">Buscar en la plataforma</h3>
+      <input class="search"
+        type="text"
+        placeholder="Buscar por Nombre, RUT, Correo Electrónico..."
+        [(ngModel)]="searchQuery">
+      <div class="divider"></div>
+      <div class="flex-container">
+        <button (click)="onUpload()" class="btn-secondary-1">Carga Masiva de Documentos</button>
 
-      <button (click)="onSearch()" class="btn-secondary">Buscar</button>
+        <div *ngIf="isDropdownVisible" class="dropdown-menu"> 
+          <h3 style="color: black;">Carga masiva de Documentos</h3>
+          <button (click)="onLoadOption('Colaboradores')" 
+                  class="dropdown-option" 
+                  [ngClass]="{'selected': selectedOption === 'Colaboradores'}">Colaboradores</button>
+          <button (click)="onLoadOption('Segmentos')" 
+                  class="dropdown-option" 
+                  [ngClass]="{'selected': selectedOption === 'Segmentos'}">Segmentos</button>
+          <button (click)="onLoadOption('Gerencias')" 
+                  class="dropdown-option" 
+                  [ngClass]="{'selected': selectedOption === 'Gerencias'}">Gerencias</button>
+          <button (click)="onLoadExcel()" class="dropdown-option load-excel-button" [disabled]="!selectedOption">Cargar excel o .zip</button>
+                </div>
+
+        <button (click)="onSearch()" class="btn-secondary">Buscar</button>
+      </div>
     </div>
   </div>
-</div>
-
 </body>
