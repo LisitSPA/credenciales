@@ -10,15 +10,15 @@ namespace Domain.Entities
     {
         public string RUT { get; set; }
         public string CompleteName { get; set; }
-        //public int AreaId { get; set; }
-        public string Area { get; set; }
+        public string Area { get; set; } //sede
         public int LeadershipId { get; set; }
+        public int SegmentId { get; set; }
         public string Position { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
         public ECollaboratorStatus ECollaboratorStatus { get; set; }
     
-        //public Area Area { get; set; }
+        public Segment Segment { get; set; }
         public Leadership Leadership { get; set; }
         public List<Attachment> Attachments { get; set; }
     }

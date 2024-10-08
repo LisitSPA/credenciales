@@ -14,6 +14,7 @@
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="ClosedXML" Version="0.104.1" />
     <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="23.2.3" />
     <PackageReference Include="FluentFTP" Version="49.0.1" />
     <!--<PackageReference Include="DevExpress.AspNetCore.Reporting" Version="21.1.5" />-->
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Interfaces\External\" />
+    <Folder Include="Segments\Queries\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />

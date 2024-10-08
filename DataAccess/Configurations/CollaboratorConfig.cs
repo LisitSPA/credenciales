@@ -18,7 +18,7 @@ namespace DataAccess.Configurations
                 .UseIdentityColumn();
 
             //Other Columns           
-            //builder.HasOne(x => x.Area);
+            builder.HasOne(x => x.Segment);
             builder.HasOne(x => x.Leadership);
             builder.HasMany(x => x.Attachments);
            

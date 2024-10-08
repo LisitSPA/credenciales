@@ -27,6 +27,7 @@ export class LoginComponent {
       password: this.usuario.password
     };
 
+   
     this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, loginCommand)
       .subscribe(response => {
         localStorage.setItem('token', response.token); 

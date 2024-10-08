@@ -7,7 +7,7 @@ namespace DataAccess.DBContexts
 {
     public interface IComplaintDbContext
     {
-        public DbSet<Area> Areas { get; set; }
+        public DbSet<Segment> Areas { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<Collaborator> Collaborators { get; set; }
         public DbSet<Leadership> leaderships { get; set; }

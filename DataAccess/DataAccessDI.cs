@@ -20,7 +20,7 @@ namespace DataAccess
             
             services.AddScoped<IComplaintDbContext,ComplaintDbContext>();
 
-            services.AddTransient<IRepository<Area>, Repository<Area>>();
+            services.AddTransient<IRepository<Segment>, Repository<Segment>>();
             services.AddTransient<IRepository<Attachment>, Repository<Attachment>>();
             services.AddTransient<IRepository<Collaborator>, Repository<Collaborator>>();
             services.AddTransient<IRepository<Leadership>, Repository<Leadership>>();

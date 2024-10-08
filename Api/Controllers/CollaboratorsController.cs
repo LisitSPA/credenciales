@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 namespace Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/collaborators")]
     public class CollaboratorsController : ControllerBase
@@ -21,6 +21,13 @@ namespace Api.Controllers
 
         [HttpPost("", Name = "CreateCollaborator")]
         public async Task<IActionResult> CreateCollaborator([FromQuery] CreateCollaboratorCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return HandleResult(result.Result, result.ErrorProvider);
+        }
+
+        [HttpPost("UpdateMassive", Name = "UpdateMassiveCollaborator")]
+        public async Task<IActionResult> UpdateMassiveCollaborator([FromQuery] CreateMasiveCollaboratorCommand command)
         {
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);
