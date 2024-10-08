@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 interface Jefatura {
   jefatura: string;
@@ -10,7 +11,7 @@ interface Jefatura {
 @Component({
   selector: 'app-jefaturas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, EliminarComponent],
   templateUrl: './jefaturas.component.html',
   styleUrl: './jefaturas.component.css'
 })
@@ -73,5 +74,14 @@ export class JefaturasComponent {
   goToPage(page: number) {
     this.currentPage = page;
     this.updatePaginatedColaboradores();
+  }
+
+  mostrarModalEliminar: boolean = false;
+  eliminar() {
+    this.mostrarModalEliminar = true;  
+  }
+
+  cerrarModalEliminar() {
+    this.mostrarModalEliminar = false; 
   }
 }

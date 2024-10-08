@@ -6,26 +6,27 @@
         <div class="form-row">
           <div class="form-group">
             <h3>Nombre completo</h3>
-            <input type="text" [(ngModel)]="nombre" name="nombre" required />
+            <input type="text" [(ngModel)]="nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" />
           </div>
+        
           <div class="form-group">
             <h3>RUT</h3>
-            <input type="text" [(ngModel)]="rut" name="rut" required />
+            <input type="text" [(ngModel)]="rut" name="rut" required placeholder="Ingresa tu RUT"/>
           </div>
           <div class="form-group">
             <h3>Gerencia</h3>
-            <input type="text" [(ngModel)]="gerencia" name="gerencia" required />
+            <input type="text" [(ngModel)]="gerencia" name="gerencia" required placeholder="Selecciona una opción" />
           </div>
         </div>
         
         <div class="form-row">
           <div class="form-group">
             <h3>Cargo</h3>
-            <input type="text" [(ngModel)]="cargo" name="cargo" required />
+            <input type="text" [(ngModel)]="cargo" name="cargo" required placeholder="Ingresa un cargo"/>
           </div>
           <div class="form-group">
             <h3>Segmento</h3>
-            <select [(ngModel)]="segmento" name="segmento" required>
+            <select [(ngModel)]="segmento" name="segmento" required placeholder="Selecciona una opción">
               <option value="">Seleccione un segmento</option>
               <option value="Segmento 1">Segmento 1</option>
               <option value="Segmento 2">Segmento 2</option>
@@ -33,18 +34,18 @@
           </div>
           <div class="form-group">
             <h3>Celular</h3>
-            <input type="text" [(ngModel)]="celular" name="celular" required />
+            <input type="text" [(ngModel)]="celular" name="celular" required placeholder="Ingrese su celular" />
           </div>
         </div>
         
         <div class="form-row">
             <div class="form-group">
               <h3>Correo electrónico</h3>
-              <input type="email" [(ngModel)]="correo" name="correo" required class="input-large" />
+              <input type="email" [(ngModel)]="correo" name="correo" required  placeholder="Ingresar e-mail" />
             </div>
             <div class="form-group">
               <h3>Sede</h3>
-              <input type="text" [(ngModel)]="sede" name="sede" required />
+              <input type="text" [(ngModel)]="sede" name="sede" required placeholder="Ingresar una sede"/>
           </div>
                   </div>
         
@@ -52,7 +53,7 @@
           <div class="form-group">
             <h3>Foto</h3>
             <div class="foto-container">
-              <div class="foto-placeholder">Foto</div>
+              <div class="foto-placeholder"></div>
               <input type="file" (change)="onFileSelected($event)" />
             </div>
 
@@ -77,7 +78,7 @@
 
         <div class="button">
         <button class="btn-secondary-1" (click)="cerrar.emit()">Atrás</button>
-        <button class="btn-secondary">Crear</button>   
+        <button class="btn-secondary" href="generar">Crear</button>   
     </div>     
       </form>
     </div>

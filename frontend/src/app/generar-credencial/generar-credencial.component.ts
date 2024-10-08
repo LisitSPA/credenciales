@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GenerarCredencialComponent } from '../generar-credencial/generar-credencial.component';
+import { DescargarCredencialComponent } from '../descargar-credencial/descargar-credencial.component';
+import { GenerarFirmaComponent } from '../generar-firma/generar-firma.component'; 
 
 @Component({
-  selector: 'app-nuevo-colaborador',
+  selector: 'app-generar-credencial',
   standalone: true,
-  imports: [FormsModule, CommonModule, GenerarCredencialComponent],
-  templateUrl: './nuevo-colaborador.component.html',
-  styleUrls: ['./nuevo-colaborador.component.css']
+  imports: [FormsModule, CommonModule,DescargarCredencialComponent,GenerarFirmaComponent,],
+  templateUrl: './generar-credencial.component.html',
+  styleUrl: './generar-credencial.component.css'
 })
-export class NuevoColaboradorComponent {
+export class GenerarCredencialComponent {
   nombre: string = '';
   rut: string = '';
   gerencia: string = '';

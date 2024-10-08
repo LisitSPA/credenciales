@@ -1,0 +1,67 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
+body {
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to right, #87CEEB, #005bb5) no-repeat top left / 100% 50%, white 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  width: 100vw;  
+}
+
+
+.login-card {
+  position: relative; 
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  max-width: 600px;
+  width: 80%; 
+  max-width: 600px; 
+  max-height: 68vh; 
+  overflow-y: auto; 
+
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 30vh;
+  text-align: center;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3; 
+  border-top: 8px solid #3498db; 
+  border-radius: 50%; 
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite; 
+  margin: 20px 0;
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+@media (max-width: 768px) {
+  .login-card {
+      max-width: 90%; 
+  }
+}

@@ -5,9 +5,17 @@
     <h1 class="title">Mantenedores / </h1>
    <h1 class="title" style="color: grey;">Colaboradores</h1>
    <div class=" btn btn-primary" (click)="abrirFormulario()">
-    <img src="/icons/vector-icono-identificarme.svg"  class="option-icon">
+    <img src="/icons/crear.svg"  class="option-icon" style="margin-right: 10px;">
     <span>Nuevo Colaborador</span>
   </div>
+  <div class="btn btn-primary-1">
+    <a href="generar" class="no-underline" style="display: flex; align-items: center;">
+        <img src="/icons/signature-solid.svg" class="option-icon" style="margin-right: 10px;"> <!-- Segundo ícono -->
+        <img src="/icons/id-card-solid.svg" class="option-icon" style="margin-right: 10px;">
+        <span>Re-imprimir</span>
+    </a>
+</div>
+
     </div>
 
   <input type="text" placeholder="Buscar por Nombre, RUT, Correo electrónico..." class="search-bar" />
@@ -78,8 +86,8 @@
             <button class="btn-edit">
                 <img src="/icons/pen-to-square-solid.svg" style="width: 16px; height: 16px; margin-right: 5px;" /> 
             </button>
-            <button class="btn-delete">
-                <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+            <button class="btn-delete" (click)="eliminar()">
+              <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
             </button>
         </td>
         
@@ -103,3 +111,4 @@
   </div>
 </body>
 <app-nuevo-colaborador *ngIf="mostrarFormulario" (cerrar)="cerrarFormulario()"></app-nuevo-colaborador>
+<app-eliminar *ngIf="mostrarModalEliminar" (cerrar)="cerrarModalEliminar()"></app-eliminar>

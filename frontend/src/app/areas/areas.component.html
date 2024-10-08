@@ -4,7 +4,10 @@
       <h1 class="title" >Mantenedores / </h1>
       <h1 class="title" style="color: grey;">Áreas</h1>
 
-      <button class="btn btn-primary">Nueva Área</button>
+      <button class="btn btn-primary">
+        <img src="/icons/crear.svg"  class="option-icon" style="margin-right: 10px;">
+        <span>Nueva Área</span>      
+      </button>
     </div>
   
     <div class="table-wrapper">
@@ -48,9 +51,11 @@
         <button class="btn-edit">
             <img src="/icons/pen-to-square-solid.svg" style="width: 16px; height: 16px; margin-right: 5px;" /> 
         </button>
-        <button class="btn-delete">
-            <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+        <button class="btn-delete" (click)="eliminar()">
+          <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
         </button>
+        
+      
       </td>
       </tbody>
     </table>  
@@ -69,3 +74,5 @@
     </div>
   </div>
 </body>
+
+<app-eliminar *ngIf="mostrarFormulario" (cerrar)="cerrarFormulario()"></app-eliminar>

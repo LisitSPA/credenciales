@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 import { AreasComponent } from './areas/areas.component';
 import { JefaturasComponent } from './jefaturas/jefaturas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { GenerarCredencialComponent } from './generar-credencial/generar-credencial.component';
+import { GenerarFirmaComponent } from './generar-firma/generar-firma.component';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     JefaturasComponent,
     FormsModule,
     ReactiveFormsModule,
+    GenerarCredencialComponent,
+    GenerarFirmaComponent,
 
   ],
   templateUrl: './app.component.html',

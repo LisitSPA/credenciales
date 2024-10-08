@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NuevoColaboradorComponent } from '../nuevo-colaborador/nuevo-colaborador.component';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 interface Colaborador {
   nombre: string;
@@ -16,7 +17,7 @@ interface Colaborador {
 @Component({
   selector: 'app-colaboradores',
   standalone: true,
-  imports: [CommonModule, NuevoColaboradorComponent],
+  imports: [CommonModule, NuevoColaboradorComponent,EliminarComponent],
   templateUrl: './colaboradores.component.html',
   styleUrls: ['./colaboradores.component.css']
 })
@@ -110,5 +111,14 @@ export class ColaboradoresComponent {
 
   cerrarFormulario() {
     this.mostrarFormulario = false;
+  }
+
+  mostrarModalEliminar: boolean = false;
+  eliminar() {
+    this.mostrarModalEliminar = true;  
+  }
+
+  cerrarModalEliminar() {
+    this.mostrarModalEliminar = false; 
   }
 }

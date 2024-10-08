@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 interface Area {
   centro_coste: string;
@@ -11,7 +12,7 @@ interface Area {
 @Component({
   selector: 'app-areas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,EliminarComponent,],
   templateUrl: './areas.component.html',
   styleUrl: './areas.component.css'
 })
@@ -75,5 +76,14 @@ export class AreasComponent {
   goToPage(page: number) {
     this.currentPage = page;
     this.updatePaginatedColaboradores();
+  }
+  mostrarFormulario: boolean = false;
+
+  eliminar() {
+    this.mostrarFormulario = true;
+  }
+
+  cerrarFormulario() {
+    this.mostrarFormulario = false;
   }
 }
