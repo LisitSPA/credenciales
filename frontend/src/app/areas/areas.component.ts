@@ -1,28 +1,43 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 interface Area {
   centro_coste: string;
   fecha: string;
   editado: string;
-  estado: string;
+  color_id: string; 
 }
+
 @Component({
   selector: 'app-areas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,EliminarComponent,],
   templateUrl: './areas.component.html',
   styleUrl: './areas.component.css'
 })
 export class AreasComponent {
-   areas: Area[] = [
+  areas: Area[] = [
     {
-      centro_coste: 'Nombre Apellido',
-      fecha: '000000',
-      editado: '0000000',
-      estado: 'activo',
+      centro_coste: 'Administración',
+      fecha: '2024-10-01',
+      editado: '2024-10-01',
+      color_id: 'administracion',
+    },
+    {
+      centro_coste: 'Packaging',
+      fecha: '2024-10-01',
+      editado: '2024-10-01',
+      color_id: 'packaging',
+    },
+    {
+      centro_coste: 'Frigorífico',
+      fecha: '2024-10-01',
+      editado: '2024-10-01',
+      color_id: 'frigorifico',
     },
   ];
+  
   paginatedColaboradores: Area[] = [];
   currentPage = 1;
   itemsPerPage = 7;
@@ -61,5 +76,14 @@ export class AreasComponent {
   goToPage(page: number) {
     this.currentPage = page;
     this.updatePaginatedColaboradores();
+  }
+  mostrarFormulario: boolean = false;
+
+  eliminar() {
+    this.mostrarFormulario = true;
+  }
+
+  cerrarFormulario() {
+    this.mostrarFormulario = false;
   }
 }

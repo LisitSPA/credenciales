@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NuevoColaboradorComponent } from '../nuevo-colaborador/nuevo-colaborador.component';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 interface Colaborador {
   nombre: string;
@@ -9,13 +11,13 @@ interface Colaborador {
   cargo: string;
   celular: string;
   correo: string;
-  estado: string;
+  color_id: string;
 }
 
 @Component({
   selector: 'app-colaboradores',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NuevoColaboradorComponent,EliminarComponent],
   templateUrl: './colaboradores.component.html',
   styleUrls: ['./colaboradores.component.css']
 })
@@ -29,7 +31,7 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'administracion'
     },
     {
       nombre: 'Nombre Apellido', 
@@ -39,7 +41,7 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'packaging'
     },
     {
       nombre: 'Nombre Apellido', 
@@ -49,7 +51,7 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'frigorifico'
     },{
       nombre: 'Nombre Apellido', 
       rut: '000000',
@@ -58,64 +60,8 @@ export class ColaboradoresComponent {
       cargo: 'Cargo',
       celular: '+00 0000 000 00',
       correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
+      color_id: 'frigorifico'
     },
-    {
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },{
-      nombre: 'Nombre Apellido', 
-      rut: '000000',
-      area: 'Área / Centro de Coste',
-      jefatura: 'Jefatura',
-      cargo: 'Cargo',
-      celular: '+00 0000 000 00',
-      correo: 'correo@ddc.co',
-      estado: 'Fijo'
-    },
-    // Agregar más colaboradores aquí
   ];
 
   paginatedColaboradores: Colaborador[] = [];
@@ -156,5 +102,23 @@ export class ColaboradoresComponent {
   goToPage(page: number) {
     this.currentPage = page;
     this.updatePaginatedColaboradores();
+  }
+  mostrarFormulario: boolean = false;
+
+  abrirFormulario() {
+    this.mostrarFormulario = true;
+  }
+
+  cerrarFormulario() {
+    this.mostrarFormulario = false;
+  }
+
+  mostrarModalEliminar: boolean = false;
+  eliminar() {
+    this.mostrarModalEliminar = true;  
+  }
+
+  cerrarModalEliminar() {
+    this.mostrarModalEliminar = false; 
   }
 }

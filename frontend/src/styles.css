@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.btn-primary {
+    background: linear-gradient(to right, #87CEEB, #005bb5) no-repeat top left / 100%;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 17px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse; 
+    table-layout: fixed; 
+    background-color: rgb(238, 238, 238);
+    font-family: "Open Sans", sans-serif;
+    font-size: medium;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: center; 
+    border: 1px solid #ddd; 
+    height: 50px; 
+}
+
+.table th {
+    background-color: #e3eef3; 
+}
+
+.estado-activo {
+    background-color: rgb(166, 215, 166);
+    color: green;
+    border-radius: 5px; 
+    padding: 5px 15px;
+}
+
+.estado-inactivo {
+    background-color: rgb(223, 122, 122);
+    color: red;
+    display: inline-block; 
+    border-radius: 5px;
+    padding: 5px 15px;
+}
+
+
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2; 
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: white; 
+}
+
+.btn-edit,
+.btn-delete {
+    display: inline-block; 
+    border: none; 
+    background: none; 
+    cursor: pointer; 
+    padding: 0; 
+    margin-right: 10px; 
+}
+
+
+.btn-edit img,
+.btn-delete img {
+    vertical-align: middle;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+    opacity: 0.8; 
+}
+.icon-container {
+  display: flex; 
+  justify-content: space-around;
+  align-items: center; 
+  font-size: small;
+}
+
+.icon-item {
+  text-align: center; 
+}
+
+.icon-item img {
+  width: 24px; 
+  height: 24px;
+  margin-bottom: 5px; 
+}
+.color-administracion {
+  background-color: #ffcccc; 
+  display: inline-block; 
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.color-packaging {
+  background-color: #ccffcc; 
+  display: inline-block; 
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.color-frigorifico {
+  background-color: #ccccff; 
+  display: inline-block; 
+  border-radius: 5px;
+  padding: 5px 15px;
+}
+
+.table-container {
+  margin-top: 150px;
+}
+
+h2{
+  font-family: "Titillium Web", sans-serif;
+  font-size: x-large;
+  font-weight: 700;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-top: 5px; 
+  transition: border-color 0.3s;
+}
+
+input[type="email"],
+input[type="file"]
+{
+  padding: 12px;
+  font-size: 16px;
+  width: 200%; 
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-top: 5px; 
+  transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #005bb5;
+  outline: none;
+}
+
+select {
+  appearance: none;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+select::after {
+  content: '\25BC'; 
+  padding-left: 5px;
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+}
+
+.form-group {
+  flex-basis: calc(33.33% - 10px); 
+  margin-bottom: 15px; 
+}
+
+h3{
+  font-family: "Open Sans", sans-serif;
+  font-size: medium;
+  font-weight: 400;
+  margin-bottom: 5px; 
+}
+
+input::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+
+
+.foto-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.foto-placeholder {
+  width: 300px;
+  height: 100px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-weight: bold;
+}

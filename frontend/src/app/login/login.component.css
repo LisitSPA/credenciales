@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
 body {
     height: 100vh;
     margin: 0;
-    background: linear-gradient(to right, #87CEEB, #0000FF) no-repeat top left / 100% 50%, white 50%;
+    background: linear-gradient(to right, #87CEEB, #005bb5) no-repeat top left / 100% 50%, white 50%;
 }
 
 .login-container {
@@ -20,8 +22,8 @@ body {
 }
 
 .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #005bb5;
+    border-color: #005bb5;
 }
 
 .btn-link {
@@ -32,4 +34,18 @@ body {
 
 .mt-5 {
     margin-top: 5rem;
+}
+
+.title{
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    margin-bottom: 20px;
+}
+.icono-login {
+    width: 70%; 
+    height: auto;
+    margin-top: 0; 
+    display: block; 
+    margin-right: auto; 
 }
