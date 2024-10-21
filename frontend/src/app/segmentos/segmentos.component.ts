@@ -29,6 +29,8 @@ export class SegmentosComponent {
   mostrarModalNuevoSegmento: boolean = false;  
   mostrarModalEliminar: boolean = false;
   idSegmentoSeleccionado: number | null = null;
+  currentPage = 1;  
+
   
   constructor(private segmentService: SegmentService) {
     this.cargarListaSegmentos(); 
