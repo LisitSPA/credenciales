@@ -45,7 +45,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  position: relative; 
+  position: relative;
 }
 
 .front-card, .back-card {
@@ -80,19 +80,15 @@ body {
 }
 
 .text-container {
-  text-align: left; 
+  text-align: left;
 }
 
 .qr-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-<<<<<<< HEAD
   margin-bottom: -170px;
   margin-left: -100px;
-=======
-  margin-bottom: -20px;
->>>>>>> d057ec9d2206c54abb9955c891c599cd3627b226
 }
 
 .profile-picture {
@@ -114,11 +110,7 @@ body {
 
 .position, .department, .hashtag1, .website {
   color: white;
-<<<<<<< HEAD
-  margin-bottom: -25px; 
-=======
-  margin-bottom: -25px; /* Añadir espacio entre los elementos */
->>>>>>> d057ec9d2206c54abb9955c891c599cd3627b226
+  margin-bottom: -25px;
   white-space: nowrap;
 }
 
@@ -139,17 +131,10 @@ body {
 .footer-section {
   background-color: #1abc9c;
   text-align: center;
-<<<<<<< HEAD
-  padding: 8px 0; 
-  position: absolute; 
+  padding: 8px 0;
+  position: absolute;
   bottom: 0; 
   width: 100%; 
-=======
-  padding: 8px 0; /* Reduce el padding para hacer el footer más pequeño */
-  position: absolute; /* Posiciona el footer al fondo de la tarjeta */
-  bottom: 0; /* Asegura que esté al fondo */
-  width: 100%; /* Hace el footer menos ancho */
->>>>>>> d057ec9d2206c54abb9955c891c599cd3627b226
   
 }
 
@@ -224,8 +209,8 @@ body {
   text-align: center;
   padding: 8px 0; 
   position: absolute; 
-  bottom: 0;
-  width: 100%; 
+  bottom: 0; 
+  width: 100%;
   
 }
 
@@ -245,7 +230,7 @@ body {
 }
 
 .info-container > * {
-  margin-bottom: -10px; 
+  margin-bottom: -10px;
   margin-left: 25px;
 }
 
@@ -263,8 +248,8 @@ body {
 }
 .footer-links {
   display: flex;
-  flex-direction: column; 
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: flex-end; 
   text-align: left; 
   margin-top: 20px;
   margin-left: 25px;
