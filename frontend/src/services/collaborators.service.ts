@@ -16,11 +16,7 @@ export class CollaboratorService {
 
     return lastValueFrom(
       this._httpClient.post(`${this.apiUrl}/UploadMassive`, formData).pipe(
-        catchError(error => {
-          console.error('Error al subir colaboradores masivos:', error);
-          this.handleError(error, 'No se pudo subir colaboradores masivos. Verifique la conexión.');
-          return throwError(() => error);
-        })
+        catchError(error => this.handleError(error, 'No se pudo subir colaboradores masivos. Verifique la conexión.'))
       )
     );
   }
@@ -29,11 +25,7 @@ export class CollaboratorService {
     const params = { page: page.toString(), pageSize: pageSize.toString() };
     return lastValueFrom(
       this._httpClient.get(`${this.apiUrl}/paginated`, { params }).pipe(
-        catchError(error => {
-          console.error('Error al obtener colaboradores paginados:', error);
-          this.handleError(error, 'No se pudo obtener la lista de colaboradores. Verifique la conexión.');
-          return throwError(() => error);
-        })
+        catchError(error => this.handleError(error, 'No se pudo obtener la lista de colaboradores. Verifique la conexión.'))
       )
     );  
   }
@@ -41,11 +33,7 @@ export class CollaboratorService {
   deleteCollaborator(id: number): Promise<any> {
     return lastValueFrom(
       this._httpClient.delete(`${this.apiUrl}/${id}`).pipe(
-        catchError(error => {
-          console.error('Error al eliminar colaborador:', error);
-          this.handleError(error, 'No se pudo eliminar el colaborador. Verifique la conexión.');
-          return throwError(() => error);
-        })
+        catchError(error => this.handleError(error, 'No se pudo eliminar el colaborador. Verifique la conexión.'))
       )
     );   
   }
@@ -68,11 +56,7 @@ export class CollaboratorService {
   
     return lastValueFrom(
       this._httpClient.post(`${this.apiUrl}`, formData).pipe(
-        catchError(error => {
-          console.error('Error al crear colaborador:', error);
-          this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.');
-          return throwError(() => error);
-        })
+        catchError(error => this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.'))
       )
     );
   }
@@ -92,11 +76,7 @@ export class CollaboratorService {
   
     return lastValueFrom(
       this._httpClient.put(`${this.apiUrl}/${id}`, payload).pipe(
-        catchError(error => {
-          console.error('Error al actualizar colaborador:', error);
-          this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.');
-          return throwError(() => error);
-        })
+        catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
       )
     );
   }
@@ -104,25 +84,24 @@ export class CollaboratorService {
   getCollaboratorById(id: number): Promise<any> {
     return lastValueFrom(
       this._httpClient.get(`${this.apiUrl}/${id}`).pipe(
-        catchError(error => {
-          console.error('Error al obtener colaborador:', error);
-          this.handleError(error, 'No se pudo obtener los detalles del colaborador. Verifique la conexión.');
-          return throwError(() => error);
-        })
+        catchError(error => this.handleError(error, 'No se pudo obtener los detalles del colaborador. Verifique la conexión.'))
       )
     );
   }
 
   private handleError(error: any, customMessage: string) {
     if (error.name === 'HttpErrorResponse' && error.status === 0) {
+      // Caso donde no se puede conectar al servidor (servidor caído o sin conexión a Internet)
       this._snackBar.open('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.', 'Cerrar', {
         duration: 5000,
       });
     } else {
-      this._snackBar.open(customMessage + ' ' + error.message, 'Cerrar', {
+      // Otros errores (puede ser HTTP 404, 500, etc.)
+      this._snackBar.open(customMessage, 'Cerrar', {
         duration: 5000,
       });
     }
+    return throwError(() => error);
   }
 
   private colaborador: any;
