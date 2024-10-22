@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorService {
@@ -12,16 +13,52 @@ export class CollaboratorService {
     const formData = new FormData();
     formData.append('fileData', file);  
 
-    return lastValueFrom(this._httpClient.post(`${this.apiUrl}/UploadMassive`, formData));
+    return lastValueFrom(
+      this._httpClient.post(`${this.apiUrl}/UploadMassive`, formData).pipe(
+        catchError(error => {
+          console.error('Error al subir colaboradores masivos:', error);
+          if (error.name === 'HttpErrorResponse' && error.status === 0) {
+            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+          } else {
+            console.error('Ocurrió un error al subir colaboradores masivos: ' + error.message);
+          }
+          return throwError(() => error);
+        })
+      )
+    );
   }
 
   getPaginatedCollaborators(page: number, pageSize: number): Promise<any> {
     const params = { page: page.toString(), pageSize: pageSize.toString() };
-    return lastValueFrom(this._httpClient.get(`${this.apiUrl}/paginated`, { params }));  
+    return lastValueFrom(
+      this._httpClient.get(`${this.apiUrl}/paginated`, { params }).pipe(
+        catchError(error => {
+          console.error('Error al obtener colaboradores paginados:', error);
+          if (error.name === 'HttpErrorResponse' && error.status === 0) {
+            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+          } else {
+            console.error('Ocurrió un error al obtener colaboradores paginados: ' + error.message);
+          }
+          return throwError(() => error);
+        })
+      )
+    );  
   }
 
   deleteCollaborator(id: number): Promise<any> {
-    return lastValueFrom(this._httpClient.delete(`${this.apiUrl}/${id}`));   
+    return lastValueFrom(
+      this._httpClient.delete(`${this.apiUrl}/${id}`).pipe(
+        catchError(error => {
+          console.error('Error al eliminar colaborador:', error);
+          if (error.name === 'HttpErrorResponse' && error.status === 0) {
+            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+          } else {
+            console.error('Ocurrió un error al eliminar colaborador: ' + error.message);
+          }
+          return throwError(() => error);
+        })
+      )
+    );   
   }
 
   private colaborador: any;
@@ -37,6 +74,7 @@ export class CollaboratorService {
   clearColaborador() {
     this.colaborador = null;
   }
+
   createCollaborator(colaborador: any): Promise<any> {
     const formData = new FormData();
     formData.append('CompleteName', colaborador.CompleteName);
@@ -53,7 +91,19 @@ export class CollaboratorService {
       formData.append('Photo', colaborador.Photo);
     }
   
-    return lastValueFrom(this._httpClient.post(`${this.apiUrl}`, formData));
+    return lastValueFrom(
+      this._httpClient.post(`${this.apiUrl}`, formData).pipe(
+        catchError(error => {
+          console.error('Error al crear colaborador:', error);
+          if (error.name === 'HttpErrorResponse' && error.status === 0) {
+            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+          } else {
+            console.error('Ocurrió un error al crear colaborador: ' + error.message);
+          }
+          return throwError(() => error);
+        })
+      )
+    );
   }
 
   updateCollaborator(id: number, colaborador: any): Promise<any> {
@@ -69,25 +119,34 @@ export class CollaboratorService {
       ECollaboratorStatus: colaborador.ECollaboratorStatus,
     };
   
-    return lastValueFrom(this._httpClient.put(`${this.apiUrl}/${id}`, payload));
+    return lastValueFrom(
+      this._httpClient.put(`${this.apiUrl}/${id}`, payload).pipe(
+        catchError(error => {
+          console.error('Error al actualizar colaborador:', error);
+          if (error.name === 'HttpErrorResponse' && error.status === 0) {
+            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+          } else {
+            console.error('Ocurrió un error al actualizar colaborador: ' + error.message);
+          }
+          return throwError(() => error);
+        })
+      )
+    );
   }
-  getCollaboratorById(id: number): Promise<any> {
-    return lastValueFrom(this._httpClient.get(`${this.apiUrl}/${id}`))
-      .then(response => {
-        console.log('Datos recibidos del colaborador:', response);  
-        return response;
-      })
-      .catch(error => {
-        console.error('Error al obtener colaborador:', error);
-        throw error;
-      });
-  }
-  
-}
-  
-  
-  
-  
-  
-  
 
+  getCollaboratorById(id: number): Promise<any> {
+    return lastValueFrom(
+      this._httpClient.get(`${this.apiUrl}/${id}`).pipe(
+        catchError(error => {
+          console.error('Error al obtener colaborador:', error);
+          if (error.name === 'HttpErrorResponse' && error.status === 0) {
+            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+          } else {
+            console.error('Ocurrió un error al obtener colaborador: ' + error.message);
+          }
+          return throwError(() => error);
+        })
+      )
+    );
+  }
+}
