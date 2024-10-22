@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorService {
   private apiUrl = 'http://localhost:5002/api/collaborators';  
 
-  constructor(private _httpClient: HttpClient) {}
+  constructor(private _httpClient: HttpClient, private _snackBar: MatSnackBar) {}
 
   uploadMissiveCollaborator(file: File): Promise<any> {
     const formData = new FormData();
@@ -114,11 +115,14 @@ export class CollaboratorService {
 
   private handleError(error: any, customMessage: string) {
     if (error.name === 'HttpErrorResponse' && error.status === 0) {
-      console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+      this._snackBar.open('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.', 'Cerrar', {
+        duration: 5000,
+      });
     } else {
-      console.error(customMessage + ' ' + error.message);
+      this._snackBar.open(customMessage + ' ' + error.message, 'Cerrar', {
+        duration: 5000,
+      });
     }
-    // Aquí podrías agregar lógica para notificar al usuario en la interfaz, como usar MatSnackBar.
   }
 
   private colaborador: any;
