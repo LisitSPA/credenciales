@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
+
+interface PaginatedResponse {
+  content?: {
+    data: any;
+  };
+  [key: string]: any;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +31,8 @@ export class SegmentService {
 
   getPaginatedSegments(page: number, pageSize: number): Observable<any> {
     const params = { page: page.toString(), pageSize: pageSize.toString() };
-    return this.http.get(`${this.apiUrl}/paginated`, { params }).pipe(
+    return this.http.get<PaginatedResponse>(`${this.apiUrl}/paginated`, { params }).pipe(
+      map(response => response.content?.data ?? response),
       catchError(error => {
         console.error('Error al obtener los segmentos paginados:', error);
         return throwError(error);
