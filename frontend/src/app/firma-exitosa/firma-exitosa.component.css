@@ -74,7 +74,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin:40px;
     overflow: visible;
-    background-color: #FFFFFF;
+    background-color: #FFFFFF; /* Fondo blanco explícito */
 
   }
   
@@ -89,11 +89,7 @@ body {
   .logo {
     width: 500px;
     margin-right: -90px;
-<<<<<<< HEAD
     margin-left: -155px;
-=======
-    margin-left: -110px;
->>>>>>> d057ec9d2206c54abb9955c891c599cd3627b226
     margin-top: -50px;
   }
   
@@ -150,11 +146,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center; 
-<<<<<<< HEAD
     margin-left:20px; 
-=======
-    margin-left: 120px; 
->>>>>>> d057ec9d2206c54abb9955c891c599cd3627b226
     margin-top: -70px ;
 }
 
@@ -164,11 +156,7 @@ body {
 }
   .office-details{
     margin-top: -10px; 
-<<<<<<< HEAD
     margin-right: 10px;
-=======
-    margin-right: -20px;
->>>>>>> d057ec9d2206c54abb9955c891c599cd3627b226
 
   }
   .office-info {
@@ -213,14 +201,10 @@ body {
   }
   
   .divider {
-    border: none; 
-    border-top: 1px solid #ccc; 
+    border: none; /* Elimina el borde por defecto */
+    border-top: 1px solid #ccc; /* Línea superior gris */
     width:20%;
-<<<<<<< HEAD
     margin-right: 140px;
-=======
-    margin-right:110px;
->>>>>>> d057ec9d2206c54abb9955c891c599cd3627b226
     margin-top: 0px;
   }
   
