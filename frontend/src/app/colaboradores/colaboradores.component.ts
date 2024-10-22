@@ -81,6 +81,14 @@ export class ColaboradoresComponent {
       });
   }
   
+  toggleSelection(colaborador: Colaborador, event: any) {
+    if (event.target.checked) {
+      this.selectedColaboradores.push(colaborador);
+    } else {
+      this.selectedColaboradores = this.selectedColaboradores.filter(c => c.id !== colaborador.id);
+    }
+  }
+
   onReimprimir() {
     if (this.selectedColaboradores.length === 0) {
       alert('Por favor, selecciona al menos un colaborador.');
@@ -180,7 +188,6 @@ export class ColaboradoresComponent {
         });
     }
   }
-  
 
   onColaboradorCreado() {
     this.updateColaboradores(); 
@@ -190,7 +197,6 @@ export class ColaboradoresComponent {
   redirigirFirmaExitosa(colaborador: Colaborador) {
     this.router.navigate(['/firmaexitosa', colaborador.id]); 
   }
-  
 
   redirigirCredencialExitosa(colaborador: Colaborador) {
     this.router.navigate(['/credencialexitosa', colaborador.id]);
