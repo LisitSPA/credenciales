@@ -66,6 +66,11 @@ export class GerenciasComponent {
       this.updatePaginatedGerencias();  
     }).catch((error: any) => {
       console.error('Error al obtener las gerencias:', error);
+      if (error.name === 'HttpErrorResponse' && error.status === 0) {
+        alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+      } else {
+        alert('Ocurrió un error al obtener las gerencias: ' + error.message);
+      }
     });
   }
   

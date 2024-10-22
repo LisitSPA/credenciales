@@ -58,11 +58,14 @@ export class SegmentosComponent {
       })
       .catch((error) => {
         console.error('Error al obtener segmentos:', error);
+        if (error.name === 'HttpErrorResponse' && error.status === 0) {
+          alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+        } else {
+          alert('Ocurrió un error al obtener los segmentos: ' + error.message);
+        }
       });
   }
-
-
-  updatePaginatedSegmentos() {
+    updatePaginatedSegmentos() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     this.paginatedSegmentos = this.segmentos.slice(start, end);

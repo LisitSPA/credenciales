@@ -49,38 +49,38 @@ export class ColaboradoresComponent {
       page: this.currentPage,
       pageSize: this.itemsPerPage
     };
-
-    this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage).then(response => {
-      if (response && response.content && response.content.data) {
-        this.colaboradores = response.content.data.map((item: any) => ({
-          id: item.id,
-          nombre: item.completeName,
-          rut: item.rut,
-          segmento: item.segment,
-          gerencia: item.leadership,
-          cargo: item.position,
-          celular: item.phone,
-          correo: item.email,
-          estado: item.status
-        }));
-
-        this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
-      } else {
-        this.colaboradores = [];
-      }
-    }).catch(error => {
-      console.error('Error al obtener colaboradores:', error);
-    });
+  
+    this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage)
+      .then(response => {
+        if (response && response.content && response.content.data) {
+          this.colaboradores = response.content.data.map((item: any) => ({
+            id: item.id,
+            nombre: item.completeName,
+            rut: item.rut,
+            segmento: item.segment,
+            gerencia: item.leadership,
+            cargo: item.position,
+            celular: item.phone,
+            correo: item.email,
+            estado: item.status
+          }));
+  
+          this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
+        } else {
+          this.colaboradores = [];
+        }
+      })
+      .catch(error => {
+        console.error('Error al obtener colaboradores:', error);
+        
+        if (error.name === 'HttpErrorResponse' && error.status === 0) {
+          alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+        } else {
+          alert('Ocurrió un error al obtener los colaboradores: ' + error.message);
+        }
+      });
   }
-
-  toggleSelection(colaborador: Colaborador, event: any) {
-    if (event.target.checked) {
-      this.selectedColaboradores.push(colaborador);
-    } else {
-      this.selectedColaboradores = this.selectedColaboradores.filter(c => c !== colaborador);
-    }
-  }
-
+  
   onReimprimir() {
     if (this.selectedColaboradores.length === 0) {
       alert('Por favor, selecciona al menos un colaborador.');
