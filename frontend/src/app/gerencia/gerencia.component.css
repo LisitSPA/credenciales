@@ -9,7 +9,12 @@ body {
   font-size: small;
   overflow-y: auto;
 
+} 
+main {
+  margin-top: 70px;
+  padding: 20px; 
 }
+
 .table-container {
   margin: 20px;
 }

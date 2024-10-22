@@ -8,8 +8,11 @@
       [(ngModel)]="searchQuery">
     <div class="divider"></div>
     <div class="flex-container">
-      <button (click)="onUpload()" class="btn-secondary-1">Carga Masiva de Documentos</button>
-
+      <button (click)="onUpload()" class="btn-secondary-1">
+        Carga Masiva de Documentos
+        <img src="/dropdown.svg" alt="Icono" style="width: 16px; height: 16px; margin-left: 10px;">
+      </button>
+      
       <div *ngIf="isDropdownVisible" class="dropdown-menu"> 
         <h3 style="color: black;">Carga masiva de Documentos</h3>
         <button (click)="onLoadOption('Colaboradores')" 

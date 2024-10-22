@@ -25,8 +25,7 @@ export class GenerarCredencialComponent {
 
   @Output() cerrar = new EventEmitter<void>();
 
-  // IP local del servidor Angular
-  private ipLocal: string = '192.168.3.102'; // Cambia esto a la IP correcta si es necesario
+  private ipLocal: string = '192.168.3.102'; 
 
   constructor(private router: Router) {}
 
@@ -48,16 +47,13 @@ export class GenerarCredencialComponent {
       foto: this.foto,
     };
 
-    // Generar QR y guardar datos en localStorage
     await this.generateQRCode();
     localStorage.setItem('colaboradorData', JSON.stringify({ ...userData, qrCodeUrl: this.qrCodeUrl }));
 
-    // Redirigir al componente de firma exitosa
     this.router.navigate(['/firmaexitosa']);
   }
 
   async generateQRCode() {
-    // URL que se utilizará para redirigir al escanear el QR
     const url = `http://${this.ipLocal}:4200/credencialweb`;
 
     try {

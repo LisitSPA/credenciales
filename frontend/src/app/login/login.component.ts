@@ -28,7 +28,7 @@ export class LoginComponent {
     };
 
    
-    this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, loginCommand)
+    this.http.post<{ token: string }>(`${environment.apiUrl}/login`, loginCommand)
       .subscribe(response => {
         localStorage.setItem('token', response.token); 
         console.log('Inicio de sesión exitoso');

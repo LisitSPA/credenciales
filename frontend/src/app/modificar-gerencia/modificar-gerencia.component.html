@@ -1,0 +1,29 @@
+<div class="modal">
+  <div class="modal-content">
+
+  <div class="modal-header">
+    <h3>Modificar Gerencia</h3>
+    <button (click)="cerrarModalModificar()">&times;</button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="gerenciaSeleccionada"> <!-- Validar que gerenciaSeleccionada exista -->
+      <div class="form-group">
+        <label for="nombreGerencia">Nombre de la Gerencia</label>
+        <input id="nombreGerencia" type="text" [(ngModel)]="gerenciaSeleccionada.name" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="estadoGerencia">Activo</label>
+        <input id="estadoGerencia" type="checkbox" [(ngModel)]="gerenciaSeleccionada.active">
+      </div>
+    </div>
+    <div *ngIf="!gerenciaSeleccionada">
+      <p>No hay una gerencia seleccionada para modificar.</p>
+    </div>
+  </div>
+  <div class="button-container">
+    <button class="btn btn-primary" (click)="guardarModificacionGerencia()" [disabled]="!gerenciaSeleccionada">Guardar</button>
+    <button class="btn btn-secondary" (click)="cerrarModalModificar()">Cancelar</button>
+  </div>
+</div>
+</div>
+

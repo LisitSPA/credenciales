@@ -20,8 +20,8 @@ export const routes: Routes = [
     {path: 'generar', component:GenerarCredencialComponent},
     {path:'descargar', component:DescargarCredencialComponent},
     {path: 'generarfirma', component: GenerarFirmaComponent},
-    {path:'firmaexitosa', component:FirmaExitosaComponent},
-    {path:'credencialexitosa', component:CredencialExitosaComponent},
+    { path: 'firmaexitosa/:id', component: FirmaExitosaComponent },
+    {path:'credencialexitosa/:id', component:CredencialExitosaComponent},
     {path:'credencialweb', component:CredencialWebComponent},
 
 ];

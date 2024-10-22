@@ -1,0 +1,29 @@
+<div class="modal-backdrop" *ngIf="mostrarModal">
+  <div class="modal">
+    <div class="modal-content">
+      <button class="close-btn" (click)="cerrarModal()">✖</button>
+      <h2>Nuevo Segmento</h2>
+
+      <div class="form-group">
+        <label for="nombreSegmento">Nombre del Segmento</label>
+        <input id="nombreSegmento" [(ngModel)]="nombreSegmento" name="nombreSegmento" />
+      </div>
+
+      <div class="form-group">
+        <label for="colorSegmento">Color del Segmento</label>
+        <input id="colorSegmento" type="color" [(ngModel)]="colorSegmento" name="colorSegmento" />
+      </div>
+
+      <div class="form-group">
+        <label for="estadoSegmento">Estado del Segmento</label>
+        <input id="estadoSegmento" type="checkbox" [(ngModel)]="estadoSegmento" />
+        <label for="estadoSegmento">Activo</label>
+      </div>
+
+      <div class="button">
+        <button class="btn-secondary" (click)="crearSegmento()">Crear</button>
+        <button class="btn-secondary-1" (click)="cerrarModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

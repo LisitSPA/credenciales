@@ -4,27 +4,26 @@ import { lastValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorService {
-  private apiUrl = 'http://localhost:5002/api/collaborators';  // Cambiar la ruta base a "/api/collaborators"
+  private apiUrl = 'http://localhost:5002/api/collaborators';  
 
   constructor(private _httpClient: HttpClient) {}
 
   uploadMissiveCollaborator(file: File): Promise<any> {
     const formData = new FormData();
-    formData.append('fileData', file);  // Asegúrate de que el nombre del archivo coincida con lo que espera el backend
+    formData.append('fileData', file);  
 
     return lastValueFrom(this._httpClient.post(`${this.apiUrl}/UploadMassive`, formData));
   }
 
   getPaginatedCollaborators(page: number, pageSize: number): Promise<any> {
     const params = { page: page.toString(), pageSize: pageSize.toString() };
-    return lastValueFrom(this._httpClient.get(`${this.apiUrl}/paginated`, { params }));  // Aquí usamos "/paginated" para obtener colaboradores
+    return lastValueFrom(this._httpClient.get(`${this.apiUrl}/paginated`, { params }));  
   }
 
   deleteCollaborator(id: number): Promise<any> {
-    return lastValueFrom(this._httpClient.delete(`${this.apiUrl}/${id}`));  // Aquí usamos "/api/collaborators/{id}" para eliminar
+    return lastValueFrom(this._httpClient.delete(`${this.apiUrl}/${id}`));   
   }
 
-  // Gestión del estado del colaborador
   private colaborador: any;
 
   setColaborador(colaborador: any) {
@@ -59,12 +58,12 @@ export class CollaboratorService {
 
   updateCollaborator(id: number, colaborador: any): Promise<any> {
     const payload = {
-      Id: id,  // Incluir el ID en el cuerpo del comando también
+      Id: id,  
       CompleteName: colaborador.CompleteName,
       LeadershipId: colaborador.LeadershipId,
       SegmentId: colaborador.SegmentId,
       Position: colaborador.Position,
-      Sede: colaborador.Sede || "Sin Sede",  // Valor predeterminado si está vacío
+      Sede: colaborador.Sede || "Sin Sede", 
       Phone: colaborador.Phone,
       Email: colaborador.Email,
       ECollaboratorStatus: colaborador.ECollaboratorStatus,
@@ -75,7 +74,7 @@ export class CollaboratorService {
   getCollaboratorById(id: number): Promise<any> {
     return lastValueFrom(this._httpClient.get(`${this.apiUrl}/${id}`))
       .then(response => {
-        console.log('Datos recibidos del colaborador:', response);  // Verificar los datos recibidos
+        console.log('Datos recibidos del colaborador:', response);  
         return response;
       })
       .catch(error => {

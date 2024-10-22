@@ -45,7 +45,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  position: relative; /* Para posicionar el footer */
+  position: relative;
 }
 
 .front-card, .back-card {
@@ -74,20 +74,21 @@ body {
 
 .info-section {
   display: flex;
-  justify-content: space-between; /* Alinea el texto a la izquierda y el QR a la derecha */
+  justify-content: space-between; 
   padding: 20px;
-  align-items: center; /* Centra verticalmente el contenido */
+  align-items: center; 
 }
 
 .text-container {
-  text-align: left; /* Alinea todo el texto a la izquierda */
+  text-align: left;
 }
 
 .qr-container {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: -20px;
+  margin-bottom: -170px;
+  margin-left: -100px;
 }
 
 .profile-picture {
@@ -109,7 +110,7 @@ body {
 
 .position, .department, .hashtag1, .website {
   color: white;
-  margin-bottom: -25px; /* Añadir espacio entre los elementos */
+  margin-bottom: -25px;
   white-space: nowrap;
 }
 
@@ -130,10 +131,10 @@ body {
 .footer-section {
   background-color: #1abc9c;
   text-align: center;
-  padding: 8px 0; /* Reduce el padding para hacer el footer más pequeño */
-  position: absolute; /* Posiciona el footer al fondo de la tarjeta */
-  bottom: 0; /* Asegura que esté al fondo */
-  width: 100%; /* Hace el footer menos ancho */
+  padding: 8px 0;
+  position: absolute;
+  bottom: 0; 
+  width: 100%; 
   
 }
 
@@ -203,14 +204,13 @@ body {
   margin-bottom: 10px;
 }
 
-/* Estilos para el footer en la back card */
 .back-card .footer-section {
   background-color: white;
   text-align: center;
-  padding: 8px 0; /* Reduce el padding para hacer el footer más pequeño */
-  position: absolute; /* Posiciona el footer al fondo de la tarjeta */
-  bottom: 0; /* Asegura que esté al fondo */
-  width: 100%; /* Hace el footer menos ancho */
+  padding: 8px 0; 
+  position: absolute; 
+  bottom: 0; 
+  width: 100%;
   
 }
 
@@ -230,7 +230,7 @@ body {
 }
 
 .info-container > * {
-  margin-bottom: -10px; /* Ajusta este valor para reducir el espacio */
+  margin-bottom: -10px;
   margin-left: 25px;
 }
 
@@ -248,20 +248,20 @@ body {
 }
 .footer-links {
   display: flex;
-  flex-direction: column; /* Coloca los elementos en una columna */
-  justify-content: flex-end; /* Alinea los elementos hacia el final del contenedor */
-  text-align: left; /* Centra el texto */
+  flex-direction: column;
+  justify-content: flex-end; 
+  text-align: left; 
   margin-top: 20px;
   margin-left: 25px;
 
 }
 
 .hashtag1, .website {
-  margin: 0; /* Elimina los márgenes predeterminados para que queden más pegados entre sí */
+  margin: 0; 
 }
 
 
 .website {
   text-decoration: none;
-  color: white; /* O el color que prefieras */
+  color: white; 
 }

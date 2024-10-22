@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import DomToImage from 'dom-to-image';
+
 
 @Component({
   selector: 'app-credencial-exitosa',
@@ -11,17 +13,15 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule]
 })
 export class CredencialExitosaComponent implements OnInit {
-  nombre: string = '';
-  cargo: string = '';
-  correo: string = '';
-  celular: string = '';
-  qrCodeDataUrl: string = '';
-  segmento: string = '';
-  area: string = '';
+  nombre: string = 'Juan Pérez';
+  cargo: string = 'Gerente de Ventas';
+  correo: string = 'juan.perez@example.com';
+  celular: string = '+56 9 1234 5678';
+  qrCodeDataUrl: string = 'https://via.placeholder.com/150';
+  segmento: string = 'Ventas';
+  area: string = 'Comercial';
 
-  constructor(
-    private route: ActivatedRoute
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -31,22 +31,45 @@ export class CredencialExitosaComponent implements OnInit {
   }
 
   cargarDatosColaborador(id: number) {
-    // Verifica primero si los datos están disponibles en localStorage
-    const colaboradorData = localStorage.getItem('colaboradorData');
-    if (colaboradorData) {
-      const colaborador = JSON.parse(colaboradorData);
-      
-      this.nombre = colaborador.nombre || 'Nombre no disponible';
-      this.cargo = colaborador.cargo || 'Cargo no disponible';
-      this.correo = colaborador.correo || 'Correo no disponible';
-      this.celular = colaborador.celular || 'Celular no disponible';
-      this.segmento = colaborador.segmento || 'Segmento no disponible';
-      this.area = colaborador.area || 'Área no disponible';
-      this.qrCodeDataUrl = colaborador.qrCodeUrl || '';  // Obtén el QR desde el localStorage
+ 
+    const colaborador = {
+      nombre: 'Valentina Darraidou Aguirre',
+      cargo: 'Brandmanager',
+      correo: 'ana.martinez@example.com',
+      celular: '+56 9 8765 4321',
+      segmento: 'Gerencia Comercial',
+      area: 'Gerencia Comercial',
+      qrCodeUrl: 'https://via.placeholder.com/150'
+    };
 
-      console.log('Datos del colaborador recuperados de localStorage:', colaborador);
-    } else {
-      console.error('No se encontraron datos del colaborador en localStorage');
+    this.nombre = colaborador.nombre || this.nombre;
+    this.cargo = colaborador.cargo || this.cargo;
+    this.correo = colaborador.correo || this.correo;
+    this.celular = colaborador.celular || this.celular;
+    this.segmento = colaborador.segmento || this.segmento;
+    this.area = colaborador.area || this.area;
+    this.qrCodeDataUrl = colaborador.qrCodeUrl || this.qrCodeDataUrl;
+
+    console.log('Datos del colaborador obtenidos:', colaborador);
+  }
+  descargarImagen() {
+    const cardContainer = document.querySelector('.card-container') as HTMLElement;
+    if (cardContainer) {
+      const options = {
+        quality: 1,
+        bgcolor: '#FFFFFF', 
+      };
+      
+      DomToImage.toPng(cardContainer, options)
+        .then((dataUrl) => {
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = 'firma.png';
+          link.click();
+        })
+        .catch((error) => {
+          console.error('Error al generar la imagen:', error);
+        });
     }
   }
 }

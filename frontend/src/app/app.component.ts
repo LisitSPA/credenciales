@@ -10,6 +10,7 @@ import { GerenciasComponent } from './gerencia/gerencia.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenerarCredencialComponent } from './generar-credencial/generar-credencial.component';
 import { GenerarFirmaComponent } from './generar-firma/generar-firma.component';
+import { SearchSectionComponent } from './search-section/search-section.component';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ import { GenerarFirmaComponent } from './generar-firma/generar-firma.component';
     ReactiveFormsModule,
     GenerarCredencialComponent,
     GenerarFirmaComponent,
+    SearchSectionComponent
 
   ],
   templateUrl: './app.component.html',

@@ -1,53 +1,54 @@
 <body>
-    <div class="login-container">
-      <div class="login-card">
-        <h2 style="text-align: center;">Generar Firma de Correo</h2>
-  
-        <div class="business-card">
-          <div class="content"> 
+  <div class="login-container">
+    <div class="login-card">
+      <h2 style="text-align: center;">Generar Firma de Correo</h2>
 
-          <div class="card-header">
-            <div class="logo-section">
-              <img src="/Logos DDC-04.svg" alt="Logo DDC" class="logo">
-            </div>
-            <div class="contact-info">
-              <h3 class="name">{{ nombre }}</h3>
-              <p class="position ">{{ cargo }}</p>
-              <p class="email">{{ correo }}</p>
-              <p class="phone">{{ celular }}</p>
-            </div>
+      <div class="business-card">
+        <div class="download">
+        <div class="content"> 
+
+        <div class="card-header">
+          <div class="logo-section">
+            <img src="/DDC-04.svg" class="logo">
           </div>
-          <hr class="divider">
-
-          <div class="office-info">
-            <div class="qr-section">
-              <img [src]="qrCodeUrl" alt="QR Code" class="qr-code">
-            </div>
-            <div class="office-details">
-              <p class="head-office-title">Head Office</p>
-              <p class="address">
-                Av Las Condes 11700<br>
-                Torre A, Of 704, Vitacura<br>
-                Santiago, Chile<br>
-                +562 0000 0000
-              </p>
-            </div>
-          </div>
-  
-          <div class="footer">
-            <a href="https://www.daviddelcurto.cl/" class="website">daviddelcurto.cl</a>
-
-            <p style="margin-top: 5px; font-size: 15px;">En DDC estamos comprometidos con el cuidado del planeta y sus recursos. <br>Por favor no imprima este correo si no es necesario.</p>
+          <div class="contact-info">
+            <h3 class="name">{{ nombre }}</h3>
+            <p class="position ">{{ cargo }}</p>
+            <p class="email">{{ correo }}</p>
+            <p class="phone">{{ celular }}</p>
           </div>
         </div>
-      </div>
-  
-        <div class="button">
-          <a class="btn-secondary-1">Reingresar datos</a>
-          <a class="btn-secondary-1" href="descargar"> Descargar credencial</a>
-          <a class="btn-secondary" href="generarfirma">Crear</a>
+        <hr class="divider">
+
+        <div class="office-info">
+          <div class="qr-section">
+            <img src="/images.png">
+          </div>
+          <div class="office-details">
+            <p class="head-office-title">Head Office</p>
+            <p class="address">
+              Av Las Condes 11700<br>
+              Torre A, Of 704, Vitacura<br>
+              Santiago, Chile<br>
+              +562 0000 0000
+            </p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <a href="https://www.daviddelcurto.cl/" class="website">daviddelcurto.cl</a>
+
+          <p style="margin-top: 5px; font-size: 15px;">En DDC estamos comprometidos con el cuidado del planeta y sus recursos. <br>Por favor no imprima este correo si no es necesario.</p>
         </div>
       </div>
     </div>
-  </body>
-  
+
+      <div class="button">
+        <a class="btn-secondary-1">Reingresar datos</a>
+        <a class="btn-secondary-1" (click)="descargarImagen()">Descargar credencial</a>
+        <a class="btn-secondary" href="generarfirma">Crear</a>
+      </div>
+    </div>
+    </div>
+  </div>
+  <body>

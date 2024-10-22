@@ -8,15 +8,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class EliminarComponent {
   @Output() cerrar = new EventEmitter<void>();
-  @Output() modalCerrado = new EventEmitter<void>();
+  @Output() confirmar = new EventEmitter<void>();
 
-  guardarDatos() {
-    const userData = {
-    };
-    
-    console.log(userData);
-    this.cerrar.emit(); 
+  confirmarEliminacion() {
+    this.confirmar.emit();  
   }
-  
-  
+
+  cancelarEliminacion() {
+    this.cerrar.emit();  
+  }
 }

@@ -14,10 +14,11 @@
         </div>
         <div class="form-group">
           <h3>Gerencia</h3>
-          <input type="text" [(ngModel)]="gerencia" name="gerencia" required placeholder="Selecciona una opción" />
+          <select [(ngModel)]="gerencia" name="gerencia" required>
+            <option value="">Selecciona una opción</option>
+            <option *ngFor="let gerencia of gerencias" [value]="gerencia.id">{{ gerencia.name }}</option>
+          </select>
         </div>
-      </div>
-      
       <div class="form-row">
         <div class="form-group">
           <h3>Cargo</h3>
@@ -27,9 +28,11 @@
           <h3>Segmento</h3>
           <select [(ngModel)]="segmento" name="segmento" required>
             <option value="">Seleccione un segmento</option>
-            <option value="Segmento 1">Segmento 1</option>
-            <option value="Segmento 2">Segmento 2</option>
+            <option *ngFor="let seg of segmentos" [value]="seg.id">{{ seg.description }}</option>
           </select>
+        </div>
+        
+
         </div>
         <div class="form-group">
           <h3>Celular</h3>
@@ -64,10 +67,7 @@
       </div>
     </form>
 
-    <div *ngIf="qrCodeUrl" class="qr-code-container">
-      <h3>Código QR generado:</h3>
-      <img [src]="qrCodeUrl" alt="Código QR">
-    </div>
+    
     
   </div>
 </div>

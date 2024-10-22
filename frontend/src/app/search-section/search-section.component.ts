@@ -54,35 +54,39 @@ export class SearchSectionComponent {
 
   onLoadExcel() {
     if (this.selectedFile && this.selectedOption) {
-      let uploadPromise;
+        let uploadPromise;
 
-      switch (this.selectedOption) {
-        case 'Colaboradores':
-          uploadPromise = this.collaboratorService.uploadMissiveCollaborator(this.selectedFile);
-          break;
-        case 'Segmentos':
-          uploadPromise = this.segmentService.uploadMissiveSegment(this.selectedFile);
-          break;
-        case 'Gerencias':
-          uploadPromise = this.gerenciaService.uploadMissiveGerencia(this.selectedFile);
-          break;
-        default:
-          console.warn('Opción no válida seleccionada.');
-          return;
-      }
+        switch (this.selectedOption) {
+            case 'Colaboradores':
+                uploadPromise = this.collaboratorService.uploadMissiveCollaborator(this.selectedFile);
+                break;
+            case 'Segmentos':
+                uploadPromise = this.segmentService.uploadMissiveSegment(this.selectedFile);
+                break;
+            case 'Gerencias':
+                uploadPromise = this.gerenciaService.uploadMissiveGerencia(this.selectedFile);
+                break;
+            default:
+                console.warn('Opción no válida seleccionada.');
+                return;
+        }
 
-      uploadPromise
-        .then(response => {
-          console.log('Carga exitosa:', response);
-          this.mostrarMensajeExito = true; // Mostrar el mensaje de éxito
-          setTimeout(() => this.mostrarMensajeExito = false, 3000); // Ocultar el mensaje después de 3 segundos
-        })
-        .catch(error => {
-          console.error('Error en la carga:', error);
-        });
+        uploadPromise
+            .then(response => {
+                console.log('Carga exitosa:', response);
+                this.mostrarMensajeExito = true;
+
+                if (this.selectedOption === 'Colaboradores') {
+                    this.colaboradoresActualizados.emit(response); 
+                }
+
+                setTimeout(() => this.mostrarMensajeExito = false, 3000);
+            })
+            .catch(error => {
+                console.error('Error en la carga:', error);
+            });
     } else {
-      console.warn('Por favor, selecciona un archivo y una opción.');
+        console.warn('Por favor, selecciona un archivo y una opción.');
     }
   }
-
 }

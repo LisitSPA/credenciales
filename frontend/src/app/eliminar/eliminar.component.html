@@ -1,11 +1,12 @@
 <div class="modal">
     <div class="modal-content">
-        <h2>Eliminar Segmento</h2>
-        <h3>¿Estás seguro que deseas eliminar este segmento? Esta acción cambiará el contenido <br> en las tablas</h3>
-
-        <div class="button-container"> 
-            <button class="btn-secondary-1" (click)="cerrar.emit()">Eliminar</button>
-            <button class="btn-secondary" (click)="cerrar.emit()">No eliminar</button>   
-        </div>     
+      <h2>Eliminar</h2>
+      <h3>¿Estás seguro de que deseas eliminar lo seleccionado? <br>Esta acción es irreversible.</h3>
+  
+      <div class="button-container">
+        <button class="btn-secondary-1" (click)="confirmarEliminacion()">Eliminar</button>
+        <button class="btn-secondary" (click)="cancelarEliminacion()">Cancelar</button>
+      </div>
     </div>
-</div>
+  </div>
+  

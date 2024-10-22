@@ -11,6 +11,10 @@ body {
   text-decoration: none;
   color: inherit;
 }
+main {
+  margin-top: 70px; 
+  padding: 20px; 
+}
 .table-container {
   margin: 20px;
 }
@@ -158,4 +162,10 @@ body {
 .arrow.disabled {
   color: gray; 
   cursor: not-allowed; 
+}
+.color-box {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
 }

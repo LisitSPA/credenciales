@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import * as QRCode from 'qrcode';
 
 @Component({
   selector: 'app-credencialWeb',
@@ -14,7 +13,6 @@ export class CredencialWebComponent implements OnInit {
   correo: string = '';
   celular: string = '';
   sede: string = '';
-  qrCodeUrl: string = '';
   segmento: string = '';
 
   constructor(private sanitizer: DomSanitizer) {}
@@ -33,10 +31,7 @@ export class CredencialWebComponent implements OnInit {
         this.correo = data.correo;
         this.celular = data.celular;
         this.sede = data.sede;
-        
-        // Generar QR con formato MECARD
-        const mecardData = this.generarMecard(data);
-        this.generarQRCode(mecardData);
+        this.segmento = data.segmento;
       } else {
         console.error('No se encontraron datos de colaborador en localStorage');
       }
@@ -45,19 +40,27 @@ export class CredencialWebComponent implements OnInit {
     }
   }
 
-  generarMecard(data: any): string {
-    // Construye la cadena MECARD con los datos del colaborador
-    return `MECARD:N:${data.nombre};TEL:${data.celular};EMAIL:${data.correo};ADR:${data.sede};;`;
+  descargarContacto() {
+    const vCardData = `BEGIN:VCARD
+    VERSION:3.0
+    FN:${this.nombre}
+    TEL:${this.celular}
+    EMAIL:${this.correo}
+    ADR:${this.sede}
+    ORG:David del Curto
+    TITLE:${this.cargo}
+    END:VCARD`;
+
+    const blob = new Blob([vCardData], { type: 'text/vcard' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${this.nombre}.vcf`;
+    a.click();
+    window.URL.revokeObjectURL(url);
   }
 
-  generarQRCode(mecardData: string) {
-    // Generar el QR a partir de la cadena MECARD
-    QRCode.toDataURL(mecardData, { errorCorrectionLevel: 'H' }, (err, url) => {
-      if (err) {
-        console.error(err);
-      } else {
-        this.qrCodeUrl = this.sanitizer.bypassSecurityTrustUrl(url) as string;
-      }
-    });
+  enviarCorreo() {
+    window.location.href = `mailto:${this.correo}`;
   }
 }

@@ -29,21 +29,36 @@
       <p class="name">{{ nombre }}</p>
       <hr class="divider">
 
-      <p class="contact-info">Contacto Telefónico: <a href="tel:+{{ celular }}">{{ celular }}</a></p>
+      <!-- Contacto Telefónico con opción de agendar contacto -->
+      <div class="contact-section">
+        <div class="contact-row">
+          <span class="label">Contacto Telefónico:</span>
+          <a href="tel:+{{ celular }}" class="contact-link">{{ celular }}</a>
+        </div>
+        
+          <!-- Botón para descargar vCard (contacto) -->
+          <button (click)="descargarContacto()" class="btn-action">
+            <img src="/icons/contact-icon.svg" alt="Agendar Contacto" class="icon">
+          </button>
+      </div>
       <hr class="divider">
-
-      <p class="email-info">Correo electrónico: <a href="mailto:{{ correo }}">{{ correo }}</a></p>
+      
+      <!-- Correo electrónico -->
+      <div class="email-section">
+        <div class="contact-row">
+          <span class="label">Correo electrónico:</span>
+          <a href="mailto:{{ correo }}" class="contact-link">{{ correo }}</a>
+          <!-- Botón para abrir el cliente de correo -->
+          <button (click)="enviarCorreo()" class="btn-action">
+            <img src="/icons/email-icon.svg" alt="Enviar Mail" class="icon">
+          </button>
+        </div>
+      </div>
       <hr class="divider">
-
-      <div class="qr-section">
-        <img [src]="qrCodeUrl" alt="Código QR" class="qr-code">
-        <img src="/logos.png" alt="Logo adicional">
     </div>
-    
+    <div class="qr-section">
+      <img src="/logos.png" alt="Logo adicional">
     </div>
-
-
-    <div class="footer">
-    </div>
+    <div class="footer"></div>
   </div>
 </div>

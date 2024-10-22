@@ -57,7 +57,6 @@ export class ModificarComponent implements OnChanges {
     };
 
     try {
-      //await this.collaboratorService.updateCollaborator(userData); 
       console.log('Colaborador modificado exitosamente');
     } catch (error) {
       console.error('Error al modificar colaborador:', error);

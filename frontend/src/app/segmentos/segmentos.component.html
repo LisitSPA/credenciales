@@ -1,45 +1,77 @@
 <body>
-<div class="table-container">
-    <div class="toolbar">
+  <main>
+    <div class="table-container">
+      <div class="toolbar">
         <h1 class="title">Mantenedores / </h1>
         <h1 class="title" style="color: grey;">Segmentos</h1>
 
-        <button class="btn btn-primary" (click)="cargarSegmentos()">
-            <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput />
-            <span (click)="fileInput.click()">Cargar Segmento</span>
+        <button class="btn btn-primary" (click)="abrirModalNuevoSegmento()">
+          <img src="/nuevo.svg" class="option-icon" style="margin-right: 10px" />
+          <span>Nuevo Segmento</span>
         </button>
+      </div>
 
-        <button class="btn btn-primary">
-            <img src="/icons/crear.svg" class="option-icon" style="margin-right: 10px;">
-            <span>Nuevo Segmento</span>
-        </button>
-    </div>
-
-    <div class="table-wrapper">
+      <div class="table-wrapper">
         <table class="table">
-            <thead>
-                <tr>
-                    <th><input type="checkbox"></th>
-                    <th>Nombre Completo</th>
-                    <th>Id</th>
-                    <th>Color</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let segmento of segmentos">
-                    <td><input type="checkbox"></td>
-                    <td>{{ segmento.nombreCompleto }}</td>
-                    <td>{{ segmento.id }}</td> 
-                    <td>{{ segmento.color }}</td> 
-                    <td>{{ segmento.activo ? 'Activo' : 'Inactivo' }}</td> 
-                    <td>
-                        <button class="btn-edit">...</button>
-                    </td>
-                </tr>
-            </tbody>
-            
-        </table>  
+          <thead>
+            <tr>
+              <th><input type="checkbox" /></th>
+              <th>Nombre</th>
+              <th>Color</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let segmento of paginatedSegmentos">
+              <td><input type="checkbox" /></td>
+              <td>{{ segmento.descripcion }}</td>
+              <td>
+                <div [style.background]="segmento.color" style="width: 20px; height: 20px"></div>
+              </td>
+              <td>{{ segmento.activo ? 'Activo' : 'Inactivo' }}</td>
+              <td>
+                <button class="btn-edit">
+                  <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;" />
+                </button>
+                <button class="btn-delete" (click)="abrirModalEliminar(segmento.id)">
+                  <img src="/trash-solid (1).svg" class="option-icon" />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Paginación -->
+      <div class="pagination">
+        <span class="label">Principio</span>
+        <span (click)="previousPage()" [class.disabled]="currentPage === 1" class="arrow">‹</span>
+        
+        <div class="page-numbers">
+          <button *ngFor="let page of pages()" (click)="goToPage(page)" [class.active]="currentPage === page">
+            {{ page }}
+          </button>
+        </div>
+
+        <span (click)="nextPage()" [class.disabled]="currentPage === totalPages" class="arrow">›</span>
+        <span class="label">Final</span>
+      </div>
     </div>
-</div>
+  </main>
+
+  <!-- Modal para nuevo segmento -->
+  <app-nueva-segmento
+    *ngIf="mostrarModalNuevoSegmento"
+    [mostrarModal]="mostrarModalNuevoSegmento"
+    (cerrar)="cerrarModalNuevoSegmento()"
+    (guardar)="guardarNuevoSegmento({Description: $event.Description, Color: $event.Color, Active: $event.Active})"
+  ></app-nueva-segmento>
+
+  <!-- Modal para eliminar -->
+  <app-eliminar
+  *ngIf="mostrarModalEliminar"
+  (cerrar)="cerrarModalEliminar()"
+  (confirmar)="eliminarSegmentoSeleccionado()">
+</app-eliminar>
 </body>

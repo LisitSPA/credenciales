@@ -1,0 +1,67 @@
+<div class="modal">
+  <div class="modal-content">
+    <button class="close-btn" (click)="cerrar.emit()">✖</button>
+    <h2>Modificar Colaborador</h2>
+    <form (ngSubmit)="guardarDatos()">
+      <div class="form-row">
+        <div class="form-group">
+          <h3>Nombre completo</h3>
+          <input type="text" [(ngModel)]="colaborador.nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" />
+        </div>
+
+        <div class="form-group">
+          <h3>Gerencia</h3>
+          <select [(ngModel)]="colaborador.gerencia" name="gerencia" required>
+            <option value="">Selecciona una opción</option>
+            <option *ngFor="let gerencia of gerencias" [value]="gerencia.id">{{ gerencia.name }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <h3>Cargo</h3>
+          <input type="text" [(ngModel)]="colaborador.cargo" name="cargo" required placeholder="Ingresa un cargo"/>
+        </div>
+        <div class="form-group">
+          <h3>Segmento</h3>
+          <select [(ngModel)]="colaborador.segmento" name="segmento" required>
+            <option value="">Seleccione un segmento</option>
+            <option *ngFor="let seg of segmentos" [value]="seg.id">{{ seg.description }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <h3>Celular</h3>
+        <input type="text" [(ngModel)]="colaborador.celular" name="celular" required placeholder="Ingrese su celular" />
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <h3>Correo electrónico</h3>
+          <input type="email" [(ngModel)]="colaborador.correo" name="correo" required placeholder="Ingresar e-mail" />
+        </div>
+        <div class="form-group">
+          <h3>Sede</h3>
+          <input type="text" [(ngModel)]="colaborador.sede" name="sede" required placeholder="Ingresar una sede"/>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <h3>Foto</h3>
+          <div class="foto-container">
+            <div class="foto-placeholder"></div>
+            <input type="file" (change)="onFileSelected($event)" />
+          </div>
+        </div>
+      </div>
+
+      <div class="button">
+        <button type="submit" class="btn-secondary">Editar</button>
+        <button class="btn-secondary-1" (click)="cerrar.emit()">Atrás</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="modal-backdrop" *ngIf="mostrarModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Crear nueva gerencia</h3>
+      <button class="close" (click)="cerrarModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="nombreGerencia">Nombre de la Gerencia</label>
+        <input id="nombreGerencia" type="text" [(ngModel)]="nombreGerencia" class="form-control" placeholder="Ingresa el nombre de la gerencia">
+      </div>
+      <div class="form-group">
+        <label for="estadoGerencia">Activo</label>
+        <input id="estadoGerencia" type="checkbox" [(ngModel)]="estadoGerencia"> <!-- Checkbox para el estado -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="crearGerencia()">Guardar</button>
+      <button class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+</div>

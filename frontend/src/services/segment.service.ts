@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class SegmentService {
-  private apiUrl = 'https://localhost:5001/api/segment';
+  private apiUrl = 'http://localhost:5002/api/segment';
 
   constructor(private http: HttpClient) {}
 
@@ -15,9 +15,38 @@ export class SegmentService {
     return this.http.post(`${this.apiUrl}/UploadMassive`, formData).toPromise();
   }
 
-  getAllSegmentPaginated(params: any = {}): Promise<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/paginated`, { params }).toPromise().then(data => {
-      return data || []; 
-    });
+  
+  getPaginatedSegments(page: number, pageSize: number): Promise<any> {
+    const params = { page: page.toString(), pageSize: pageSize.toString() };
+    return this.http.get(`${this.apiUrl}/paginated`, { params }).toPromise();
   }
+
+
+createSegment(nombreSegmento: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
+  const formData = new FormData();
+  formData.append('Description', nombreSegmento);
+  formData.append('Color', colorSegmento);
+  formData.append('Active', estadoSegmento.toString());
+
+  return this.http.post(`${this.apiUrl}`, formData).toPromise().then(response => {
+    console.log('Respuesta del servidor:', response);
+    return response;
+  }).catch(error => {
+    console.error('Error en la creación del segmento en el servidor:', error);
+    throw error;
+  });
 }
+
+
+deleteSegment(id: number): Promise<any> {
+  return this.http.delete(`${this.apiUrl}/${id}`).toPromise();
+}
+
+}
+
+
+
+
+
+
+

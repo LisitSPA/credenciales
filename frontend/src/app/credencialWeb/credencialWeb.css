@@ -6,8 +6,8 @@ body {
     background-color: #f4f4f4;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinea el contenido desde el principio de la página */
-    min-height: 100vh; /* Se asegura de que el contenido ocupe al menos la altura de la pantalla */
+    align-items: flex-start; 
+    min-height: 100vh;
     margin: 0;
     padding: 0;
 }
@@ -18,9 +18,9 @@ body {
     background: #ffffff;
     border-radius: 15px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    margin-top: 80px; /* Espacio debajo del header */
+    margin-top: 80px;
     overflow: hidden;
-    min-height: calc(100vh - 80px); /* Asegura que el contenido ocupe el espacio completo bajo el header */
+    min-height: calc(100vh - 80px); 
 }
 
 
@@ -45,41 +45,39 @@ header {
     padding: 20px;
     position: relative;
     display: flex;
-    align-items: center; /* Alinea el contenido verticalmente */
+    align-items: center;
 }
 
 .card-header {
     display: flex;
-    justify-content: space-between; /* Asegura que la imagen y el texto estén separados */
+    justify-content: space-between; 
     align-items: center;
     width: 100%;
     text-align: left;
 }
 
-/* Sección de la imagen del lado izquierdo */
 .image-section {
     flex: 1;
 }
 
 .repo-image {
-    width: 120px; /* Ajusta el tamaño según lo necesario */
+    width: 120px;
     height: auto;
     border-radius: 8px;
-    margin-right: 20px; /* Espacio entre la imagen y el texto */
+    margin-right: 20px; 
 }
 
-/* Sección de la información del lado derecho */
 .contact-info {
     display: flex;
-    flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
-    align-items: flex-start; /* Alinea los elementos al principio (izquierda) */
-    text-align: left; /* Alinea el texto a la izquierda */
+    flex-direction: column; 
+    align-items: flex-start; 
+    text-align: left;
 }
 
 .contact-info h3,
 .contact-info p,
 .contact-info span {
-    margin: 5px 0; /* Añade un pequeño espacio entre los elementos */
+    margin: 5px 0; 
 }
 
 
@@ -121,13 +119,13 @@ header {
 
 .qr-section {
     display: flex;
-    justify-content: space-evenly; /* Alinea el QR y la imagen de manera uniforme */
-    align-items: center; /* Asegura que estén alineados verticalmente */
+    justify-content: space-evenly; 
+    align-items: center;
     padding: 10px;
 }
 
 img {
-    width: 200px; /* Establece el mismo tamaño para ambas imágenes */
+    width: 200px;
     height: 100px;
 }
 
@@ -146,13 +144,14 @@ img {
     border-top: 1px solid #ddd;
 }
 .divider {
-    border-bottom: 1px solid rgb(224, 213, 213); /* Línea más gruesa */
-    margin: 10px 0; /* Espacio antes y después del divisor */
-    width: 100%; /* Ocupa todo el ancho del contenedor */
+    border-bottom: 1px solid rgb(224, 213, 213);
+    margin: 10px 0; 
+    width: 100%; 
 }
 
-p, h3{
+p, h3, div{
     font-family: "Open Sans", sans-serif;
+    font-size: 14px;
 
 }
 
@@ -161,4 +160,58 @@ h2{
     font-weight: 300;
     font-size: medium;
     margin-top: 40px;
+} 
+.btn-action {
+    background-color: #5280b1;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center; 
+    transition: background-color 0.3s ease;
 }
+
+.btn-action:hover {
+    background-color: #0056b3;
+}
+
+.btn-action .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px; 
+}
+
+
+.contact-section, .email-section {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+hr.divider {
+    border-bottom: 1px solid rgb(224, 213, 213);
+    margin: 10px 0;
+    width: 100%;
+}
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.contact-link {
+    color: #007BFF; 
+    text-decoration: none; 
+    font-weight: bold;
+}
+
+.contact-link:hover {
+    text-decoration: underline; 
+}
+
+

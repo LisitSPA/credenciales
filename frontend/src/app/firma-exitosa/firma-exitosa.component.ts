@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CollaboratorService } from '../../services/collaborators.service';
+import DomToImage from 'dom-to-image';
 
 @Component({
   selector: 'app-firma-exitosa',
@@ -12,50 +12,54 @@ import { CollaboratorService } from '../../services/collaborators.service';
   imports: [FormsModule, CommonModule]
 })
 export class FirmaExitosaComponent implements OnInit {
-  nombre: string = '';
-  cargo: string = '';
-  correo: string = '';
-  celular: string = '';
-  qrCodeUrl: string = '';
+  nombre: string = 'Juan Pérez';
+  cargo: string = 'Export Manager';
+  correo: string = 'juan.perez@example.com';
+  celular: string = '+56 9 8765 4321';
+  qrCodeDataUrl: string = '';
+  segmento: string = 'Segmento Comercial';
+  area: string = 'Área de Ventas';
 
-  constructor(
-    private route: ActivatedRoute,
-    private colaboradoresService: CollaboratorService
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      this.cargarDatosColaborador(id);
-    });
+    this.nombre = 'Nicolás Troncoso';
+    this.cargo = 'Export Manager';
+    this.correo = 'nicolas.troncoso@ddc.cl';
+    this.celular = '+56 9 8765 4321';
+    this.segmento = 'Segmento Comercial';
+    this.area = 'Área de Ventas';
   }
-
-  cargarDatosColaborador(id: number) {
-    this.colaboradoresService.getCollaboratorById(id)
-      .then(response => {
-        console.log('Respuesta de la API:', response);
-        const colaborador = response.content;
-        
-        // Asigna los datos a las variables del componente
-        this.nombre = colaborador.completeName || 'Nombre no disponible';
-        this.cargo = colaborador.position || 'Cargo no disponible';
-        this.correo = colaborador.email || 'Correo no disponible';
-        this.celular = colaborador.phone || 'Celular no disponible';
-        
-        // Asigna el código QR desde la API o revisa si no está presente
-        this.qrCodeUrl = colaborador.qrCodeUrl || '';
-        
-        // Si no existe el QR Code en la respuesta de la API, búscalo en el localStorage
-        if (!this.qrCodeUrl) {
-          const colaboradorData = localStorage.getItem('colaboradorData');
-          if (colaboradorData) {
-            const storedData = JSON.parse(colaboradorData);
-            this.qrCodeUrl = storedData.qrCodeUrl || ''; // Usa el QR almacenado en el localStorage
-          }
+  descargarImagen() {
+    const cardContainer = document.querySelector('.download') as HTMLElement;
+    if (cardContainer) {
+      const options = {
+        quality: 1,
+        bgcolor: '#FFFFFF', 
+        width: cardContainer.offsetWidth, 
+        height: cardContainer.offsetHeight, 
+        style: {
+          transform: 'scale(1)',
+          transformOrigin: 'top left',
+          backgroundColor: '#FFFFFF',
+          width: `${cardContainer.offsetWidth}px`,
+          height: `${cardContainer.offsetHeight}px` ,
         }
-      })
-      .catch(error => {
-        console.error('Error al cargar los datos del colaborador:', error);
-      });
+      };
+  
+      DomToImage.toPng(cardContainer, options)
+        .then((dataUrl) => {
+          const link = document.createElement('a');
+          link.href = dataUrl;
+          link.download = 'firma.png';
+          link.click();
+        })
+        .catch((error) => {
+          console.error('Error al generar la imagen:', error);
+        });
+    }
   }
+  
+  
+  
 }

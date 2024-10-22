@@ -1,116 +1,115 @@
 <body>
-  <div class="table-container">
-  
-    <div class="toolbar">
-      <h1 class="title">Mantenedores / </h1>
-     <h1 class="title" style="color: grey;">Colaboradores</h1>
-     <div class=" btn btn-primary" (click)="abrirFormulario()">
-      <img src="/icons/crear.svg"  class="option-icon" style="margin-right: 10px;">
-      <span>Nuevo Colaborador</span>
-    </div>
-    <div class="btn btn-primary-1">
-      <a href="generar" class="no-underline" style="display: flex; align-items: center;">
-          <img src="/reimprimir.svg" class="option-icon" style="margin-right: 10px;">
-          <span>Re-imprimir</span>
-      </a>
-  </div>
-  
+  <main> 
+    <div class="table-container">
+      <div class="toolbar">
+        <h1 class="title">Mantenedores / </h1>
+        <h1 class="title" style="color: grey;">Colaboradores</h1>
+        <div class="btn btn-primary" (click)="abrirFormulario()">
+          <img src="/nuevo.svg" class="option-icon" style="margin-right: 10px;">
+          <span>Nuevo Colaborador</span>
+        </div>
+        <div class="btn btn-primary-1" (click)="onReimprimir()">
+          <a href="generar" class="no-underline" style="display: flex; align-items: center;">
+            <img src="/reimprimir.svg" class="option-icon" style="margin-right: 10px;">
+            <span>Re-imprimir</span>
+          </a>
+        </div>
       </div>
-  
-    <input type="text" placeholder="Buscar por Nombre, RUT, Correo electrónico..." class="search-bar" />
-  
-    <div class="table-wrapper">
-      <table class="table">
-        <thead>
-          <tr>
-            <th><input type="checkbox"></th>
-            <th>Nombre completo</th>
-            <th>RUT</th>
-            <th>Área / Centro de Coste</th>
-            <th>Gerencia</th>
-            <th>Cargo</th>
-            <th>Celular</th>
-            <th>Correo</th>
-            <th>Estado</th>
-            <th>Adjuntos</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let colaborador of paginatedColaboradores">
-            <td><input type="checkbox"></td>
-            <td>{{ colaborador.nombre }}</td>
-            <td>{{ colaborador.rut }}</td>
-            <td>{{ colaborador.segmento }}</td>
-            <td>{{ colaborador.gerencia }}</td>
-            <td>{{ colaborador.cargo }}</td>
-            <td>{{ colaborador.celular }}</td>
-            <td>{{ colaborador.correo }}</td>
-            <td>
-              <span [ngClass]="
-                  colaborador.color_id === 'administracion' ? 'color-administracion' :
-                  colaborador.color_id === 'packaging' ? 'color-packaging' :
-                  colaborador.color_id === 'frigorifico' ? 'color-frigorifico' :
-                  colaborador.color_id === 'patio' ? 'color-patio' :
-                  colaborador.color_id === 'bodega' ? 'color-bodega' :
-                  colaborador.color_id === 'agricola' ? 'color-agricola' :
-                  colaborador.color_id === 'vivero' ? 'color-vivero' :
-                  colaborador.color_id === 'mantencion' ? 'color-mantencion' :
-                  colaborador.color_id === 'calidad' ? 'color-calidad' :
-                  colaborador.color_id === 'v.clientes' ? 'color-v-clientes' :
-                  colaborador.color_id === 'v.productores' ? 'color-v-productores' :
-                  colaborador.color_id === 'v.proveedores' ? 'color-v-proveedores' : ''
-              ">
-                  {{ colaborador.color_id }}
-              </span>
-          </td>
-  <td>
-    <div class="icon-container">
-        <div class="icon-item">
-            <img src="/icons/image-regular.svg" alt="Foto" />
-            <span>Foto</span>
-        </div>
-        <div class="icon-item">
-            <img src="/icons/signature-solid.svg" alt="Firma" />
-            <span>Firma</span>
-        </div>
-        <div class="icon-item">
-            <img src="/icons/id-card-solid.svg" alt="Credencial" />
-            <span>Credencial</span>
-        </div>
-    </div>
-  </td>
-  
-            <td>
-              <button class="btn-edit" (click)="editar(colaborador)">
-                <img src="/icons/pen-to-square-solid.svg" style="width: 16px; height: 16px; margin-right: 5px;" /> 
-              </button>
-              <button class="btn-delete" (click)="eliminar()">
-                <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
-              </button>
-          </td>
-          
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="pagination">
-      <span class="label">Principio</span>
-      <span (click)="previousPage()" [class.disabled]="currentPage === 1" class="arrow">‹</span>
-      
-      <div class="page-numbers">
-        <button *ngFor="let page of pages()" (click)="goToPage(page)" [class.active]="currentPage === page">
-          {{ page }}
-        </button>
+
+      <input type="text" placeholder="Buscar por Nombre, RUT, Correo electrónico..." class="search-bar" />
+
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th><input type="checkbox"></th>
+              <th>Nombre completo</th>
+              <th>RUT</th>
+              <th>Segmento</th>
+              <th>Gerencia</th>
+              <th>Cargo</th>
+              <th>Celular</th>
+              <th>Correo</th>
+              <th>Adjuntos</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let colaborador of colaboradores">
+              <input type="checkbox" (change)="toggleSelection(colaborador, $event)" />
+              <td>{{ colaborador.nombre }}</td>
+              <td>{{ colaborador.rut }}</td>
+              <td>{{ colaborador.segmento }}</td>
+              <td>{{ colaborador.gerencia }}</td>
+              <td>{{ colaborador.cargo }}</td>
+              <td>{{ colaborador.celular }}</td>
+              <td>{{ colaborador.correo }}</td>
+              <td></td>
+              <td>
+                <div class="icon-container">
+                  <div class="icon-item">
+                    <img src="/image-regular.svg" alt="Foto" />
+                    <span>Foto</span>
+                  </div>
+                  <div class="icon-item" (click)="redirigirFirmaExitosa(colaborador)">
+                    <img src="/signature-solid.svg" alt="Firma" />
+                    <span>Firma</span>
+                  </div>
+                  
+                  
+                  <div class="icon-item " (click)="redirigirCredencialExitosa(colaborador)">
+                    <img src="/id-card-solid.svg" alt="Credencial" />
+                    <span>Credencial</span>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <button class="btn-edit" (click)="editar(colaborador)">
+                  <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;" /> 
+                </button>
+                <button class="btn-delete" (click)="mostrarModalEliminar(colaborador)">
+                  <img src="/trash-solid (1).svg" class="option-icon" />
+                </button>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      
-      <span (click)="nextPage()" [class.disabled]="currentPage === totalPages" class="arrow">›</span>
-      <span class="label">Final</span>
+
+      <div class="pagination">
+        <span class="label">Principio</span>
+        <span (click)="previousPage()" [class.disabled]="currentPage === 1" class="arrow">‹</span>
+        
+        <div class="page-numbers">
+          <button *ngFor="let page of pages()" (click)="goToPage(page)" [class.active]="currentPage === page">
+            {{ page }}
+          </button>
+        </div>
+        
+        <span (click)="nextPage()" [class.disabled]="currentPage === totalPages" class="arrow">›</span>
+        <span class="label">Final</span>
+      </div>
     </div>
-    </div>
-  </body>
-  <app-nuevo-colaborador *ngIf="mostrarFormulario" (cerrar)="cerrarFormulario()"></app-nuevo-colaborador>
-  <app-modificar *ngIf="mostrarModificar" [colaborador]="selectedColaborador" (cerrar)="cerrarFormulario()"></app-modificar>
-  <app-eliminar *ngIf="mostrarModalEliminar" (cerrar)="cerrarModalEliminar()"></app-eliminar>
-  
-  
+  </main>
+
+<app-eliminar 
+  *ngIf="mostrarModalEliminarFlag" 
+  (cerrar)="cerrarModalEliminar()" 
+  (confirmar)="eliminarColaborador()">
+</app-eliminar>
+
+<app-modificar-colaborador 
+  *ngIf="mostrarModificar" 
+  [colaborador]="selectedColaborador" 
+  (guardar)="guardarModificaciones($event)" 
+  (cerrar)="cerrarFormulario()">
+</app-modificar-colaborador>
+
+
+<app-nuevo-colaborador 
+*ngIf="mostrarFormulario" 
+(cerrar)="cerrarFormulario()" 
+(colaboradorCreado)="onColaboradorCreado()">
+</app-nuevo-colaborador>
+</body>

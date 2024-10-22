@@ -1,57 +1,46 @@
 <body>
-
-<div class="table-container">
-  <div class="toolbar">
-      <h1 class="title">Mantenedores / </h1>
-      <h1 class="title" style="color: grey;">Gerencias</h1>
-
-      <button class="btn btn-primary" (click)="cargarGerencias()">
-          <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput />
-          <span (click)="fileInput.click()">Cargar Gerencias</span>
-      </button>
-      
-      <button class="btn btn-primary">
-          <img src="/icons/crear.svg" class="option-icon" style="margin-right: 10px;">
-          <span>Nueva Gerencia</span>      
-      </button>
+<main> 
+  <div class="table-container">
+    <div class="toolbar">
+        <h1 class="title">Mantenedores / </h1>
+        <h1 class="title" style="color: grey;">Gerencias</h1>
+        <button class="btn btn-primary" (click)="abrirModalNuevaGerencia()">
+          <img src="/nuevo.svg" class="option-icon" style="margin-right: 10px;">
+          <span>Nueva Gerencia</span>
+        </button>
+    </div>
   </div>
-
+  
   <div class="table-wrapper">
       <table class="table">
           <thead>
               <tr>
                   <th><input type="checkbox"></th>
-                  <th>Gerencia</th>
-                  <th>Fecha creación</th>
+                  <th>Gerencia</th> 
                   <th>Editado</th>
                   <th>Estado</th>
                   <th>Acciones</th>
               </tr>
           </thead>
           <tbody>
-              <tr *ngFor="let gerencia of paginatedGerencias">
-                  <td><input type="checkbox"></td>
-                  <td>{{ gerencia.gerencia }}</td>
-                  <td>{{ gerencia.fecha }}</td>
-                  <td>{{ gerencia.editado }}</td>
-                  <td>
-                      <span [ngClass]="gerencia.estado === 'Activo' ? 'estado-activo' : 'estado-inactivo'">
-                          {{ gerencia.estado }}
-                      </span>
-                  </td>
-                  <td>
-                      <button class="btn-edit"> 
-                          <img src="/icons/pen-to-square-solid.svg" style="width: 16px; height: 16px; margin-right: 5px;" /> 
-                      </button>
-                      <button class="btn-delete" (click)="eliminar()">
-                          <img src="/icons/trash-solid.svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;" /> 
-                      </button>
-                  </td>
-              </tr>
+            <tr *ngFor="let gerencia of paginatedGerencias">
+              <td><input type="checkbox" (change)="seleccionarGerencia(gerencia.id)"></td>
+              <td>{{ gerencia.name }}</td>  <!-- Cambiado de gerencia a name -->
+              <td>{{ gerencia.fechaCreacion | date:'dd/MM/yyyy' }}</td>  <!-- Fecha de creación -->
+              <td>{{ gerencia.active ? 'Activo' : 'Inactivo' }}</td> <!-- Muestra si está activo o inactivo -->
+              <td>
+                <button class="btn-edit" (click)="abrirModalModificar(gerencia)">
+                  <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;">
+                </button>
+                <button class="btn-delete" (click)="abrirModalEliminar()">
+                  <img src="/trash-solid (1).svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;">
+                </button>
+              </td>
+            </tr>
           </tbody>
       </table>
   </div>
-
+  
   <div class="pagination">
       <span class="label">Principio</span>
       <span (click)="previousPage()" [class.disabled]="currentPage === 1" class="arrow">‹</span>
@@ -64,7 +53,32 @@
       <span (click)="nextPage()" [class.disabled]="currentPage === totalPages" class="arrow">›</span>
       <span class="label">Final</span>
   </div>
-</div>
-</body>
+</main>
 
-<app-eliminar *ngIf="mostrarModalEliminar" (cerrar)="cerrarModalEliminar()"></app-eliminar>
+  </body>
+  
+  <!-- Modal para eliminar -->
+  <app-eliminar-gerencia
+    *ngIf="mostrarModalEliminar"
+    (confirmar)="eliminarGerenciaConfirmada()"
+    (cerrar)="cerrarModalEliminar()">
+  </app-eliminar-gerencia>
+
+
+  <!-- Modal para modificar -->
+  <app-modificar-gerencia
+  *ngIf="mostrarModalModificar && gerenciaSeleccionada"
+  [gerenciaSeleccionada]="gerenciaSeleccionada!"
+  (cerrar)="cerrarModalModificar()"
+  (guardar)="guardarModificacionGerencia($event)">
+</app-modificar-gerencia>
+  
+  <!-- Modal para nueva gerencia -->
+  <app-nueva-gerencia
+  *ngIf="mostrarModalNuevaGerencia"
+  [mostrarModal]="mostrarModalNuevaGerencia"
+  (cerrar)="cerrarModalNuevaGerencia()"
+  (guardar)="guardarNuevaGerencia($event)">
+</app-nueva-gerencia>
+
+  

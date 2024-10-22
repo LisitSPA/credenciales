@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-credencial',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],  // Asegúrate de importar ReactiveFormsModule aquí
+  imports: [ReactiveFormsModule, CommonModule], 
   templateUrl: './credencial.component.html',
-  styleUrls: ['./credencial.component.css']  // Corregido: styleUrls en plural
+  styleUrls: ['./credencial.component.css'] 
 })
 export class CredencialComponent {
   
