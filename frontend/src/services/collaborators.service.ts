@@ -17,11 +17,7 @@ export class CollaboratorService {
       this._httpClient.post(`${this.apiUrl}/UploadMassive`, formData).pipe(
         catchError(error => {
           console.error('Error al subir colaboradores masivos:', error);
-          if (error.name === 'HttpErrorResponse' && error.status === 0) {
-            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-          } else {
-            console.error('Ocurrió un error al subir colaboradores masivos: ' + error.message);
-          }
+          this.handleError(error, 'No se pudo subir colaboradores masivos. Verifique la conexión.');
           return throwError(() => error);
         })
       )
@@ -34,11 +30,7 @@ export class CollaboratorService {
       this._httpClient.get(`${this.apiUrl}/paginated`, { params }).pipe(
         catchError(error => {
           console.error('Error al obtener colaboradores paginados:', error);
-          if (error.name === 'HttpErrorResponse' && error.status === 0) {
-            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-          } else {
-            console.error('Ocurrió un error al obtener colaboradores paginados: ' + error.message);
-          }
+          this.handleError(error, 'No se pudo obtener la lista de colaboradores. Verifique la conexión.');
           return throwError(() => error);
         })
       )
@@ -50,29 +42,11 @@ export class CollaboratorService {
       this._httpClient.delete(`${this.apiUrl}/${id}`).pipe(
         catchError(error => {
           console.error('Error al eliminar colaborador:', error);
-          if (error.name === 'HttpErrorResponse' && error.status === 0) {
-            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-          } else {
-            console.error('Ocurrió un error al eliminar colaborador: ' + error.message);
-          }
+          this.handleError(error, 'No se pudo eliminar el colaborador. Verifique la conexión.');
           return throwError(() => error);
         })
       )
     );   
-  }
-
-  private colaborador: any;
-
-  setColaborador(colaborador: any) {
-    this.colaborador = colaborador;
-  }
-
-  getColaborador() {
-    return this.colaborador;
-  }
-
-  clearColaborador() {
-    this.colaborador = null;
   }
 
   createCollaborator(colaborador: any): Promise<any> {
@@ -95,11 +69,7 @@ export class CollaboratorService {
       this._httpClient.post(`${this.apiUrl}`, formData).pipe(
         catchError(error => {
           console.error('Error al crear colaborador:', error);
-          if (error.name === 'HttpErrorResponse' && error.status === 0) {
-            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-          } else {
-            console.error('Ocurrió un error al crear colaborador: ' + error.message);
-          }
+          this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.');
           return throwError(() => error);
         })
       )
@@ -123,11 +93,7 @@ export class CollaboratorService {
       this._httpClient.put(`${this.apiUrl}/${id}`, payload).pipe(
         catchError(error => {
           console.error('Error al actualizar colaborador:', error);
-          if (error.name === 'HttpErrorResponse' && error.status === 0) {
-            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-          } else {
-            console.error('Ocurrió un error al actualizar colaborador: ' + error.message);
-          }
+          this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.');
           return throwError(() => error);
         })
       )
@@ -139,14 +105,33 @@ export class CollaboratorService {
       this._httpClient.get(`${this.apiUrl}/${id}`).pipe(
         catchError(error => {
           console.error('Error al obtener colaborador:', error);
-          if (error.name === 'HttpErrorResponse' && error.status === 0) {
-            console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-          } else {
-            console.error('Ocurrió un error al obtener colaborador: ' + error.message);
-          }
+          this.handleError(error, 'No se pudo obtener los detalles del colaborador. Verifique la conexión.');
           return throwError(() => error);
         })
       )
     );
+  }
+
+  private handleError(error: any, customMessage: string) {
+    if (error.name === 'HttpErrorResponse' && error.status === 0) {
+      console.error('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
+    } else {
+      console.error(customMessage + ' ' + error.message);
+    }
+    // Aquí podrías agregar lógica para notificar al usuario en la interfaz, como usar MatSnackBar.
+  }
+
+  private colaborador: any;
+
+  setColaborador(colaborador: any) {
+    this.colaborador = colaborador;
+  }
+
+  getColaborador() {
+    return this.colaborador;
+  }
+
+  clearColaborador() {
+    this.colaborador = null;
   }
 }
