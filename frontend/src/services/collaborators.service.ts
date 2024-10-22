@@ -88,21 +88,19 @@ export class CollaboratorService {
       )
     );
   }
-
   private handleError(error: any, customMessage: string) {
-    if (error.name === 'HttpErrorResponse' && error.status === 0) {
-      // Caso donde no se puede conectar al servidor (servidor caído o sin conexión a Internet)
+    if (error.status === 0) {
       this._snackBar.open('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.', 'Cerrar', {
         duration: 5000,
       });
     } else {
-      // Otros errores (puede ser HTTP 404, 500, etc.)
-      this._snackBar.open(customMessage, 'Cerrar', {
+      this._snackBar.open(customMessage + ' ' + error.message, 'Cerrar', {
         duration: 5000,
       });
     }
     return throwError(() => error);
   }
+
 
   private colaborador: any;
 
