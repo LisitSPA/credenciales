@@ -1,14 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-
-interface PaginatedResponse {
-  content?: {
-    data: any;
-  };
-  [key: string]: any;
-}
 
 @Injectable({
   providedIn: 'root',
@@ -18,48 +9,44 @@ export class SegmentService {
 
   constructor(private http: HttpClient) {}
 
-  uploadMissiveSegment(file: File): Observable<any> {
+  uploadMissiveSegment(file: File): Promise<any> {
     const formData = new FormData();
     formData.append('FileData', file);
-    return this.http.post(`${this.apiUrl}/UploadMassive`, formData).pipe(
-      catchError(error => {
-        console.error('Error al subir el segmento masivo:', error);
-        return throwError(error);
-      })
-    );
+    return this.http.post(`${this.apiUrl}/UploadMassive`, formData).toPromise();
   }
 
-  getPaginatedSegments(page: number, pageSize: number): Observable<any> {
+  
+  getPaginatedSegments(page: number, pageSize: number): Promise<any> {
     const params = { page: page.toString(), pageSize: pageSize.toString() };
-    return this.http.get<PaginatedResponse>(`${this.apiUrl}/paginated`, { params }).pipe(
-      map(response => response.content?.data ?? response),
-      catchError(error => {
-        console.error('Error al obtener los segmentos paginados:', error);
-        return throwError(error);
-      })
-    );
+    return this.http.get(`${this.apiUrl}/paginated`, { params }).toPromise();
   }
 
-  createSegment(nombreSegmento: string, colorSegmento: string, estadoSegmento: boolean): Observable<any> {
-    const formData = new FormData();
-    formData.append('Description', nombreSegmento);
-    formData.append('Color', colorSegmento);
-    formData.append('Active', estadoSegmento.toString());
 
-    return this.http.post(`${this.apiUrl}`, formData).pipe(
-      catchError(error => {
-        console.error('Error en la creación del segmento en el servidor:', error);
-        return throwError(error);
-      })
-    );
-  }
+createSegment(nombreSegmento: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
+  const formData = new FormData();
+  formData.append('Description', nombreSegmento);
+  formData.append('Color', colorSegmento);
+  formData.append('Active', estadoSegmento.toString());
 
-  deleteSegment(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`).pipe(
-      catchError(error => {
-        console.error('Error al eliminar el segmento:', error);
-        return throwError(error);
-      })
-    );
-  }
+  return this.http.post(`${this.apiUrl}`, formData).toPromise().then(response => {
+    console.log('Respuesta del servidor:', response);
+    return response;
+  }).catch(error => {
+    console.error('Error en la creación del segmento en el servidor:', error);
+    throw error;
+  });
 }
+
+
+deleteSegment(id: number): Promise<any> {
+  return this.http.delete(`${this.apiUrl}/${id}`).toPromise();
+}
+
+}
+
+
+
+
+
+
+
