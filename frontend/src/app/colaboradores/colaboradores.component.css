@@ -158,39 +158,3 @@ main {
   color: gray; 
   cursor: not-allowed; 
 }
-.color-administracion {
-  color: #3498db; 
-}
-.color-packaging {
-  color: #2ecc71; 
-}
-.color-frigorifico {
-  color: #e74c3c;
-}
-.color-patio {
-  color: #f1c40f; 
-}
-.color-bodega {
-  color: #9b59b6; 
-}
-.color-agricola {
-  color: #e67e22; 
-}
-.color-vivero {
-  color: #16a085; 
-}
-.color-mantencion {
-  color: #d35400;
-}
-.color-calidad {
-  color: #7f8c8d; 
-}
-.color-v-clientes {
-  color: #2980b9; 
-}
-.color-v-productores {
-  color: #27ae60; 
-}
-.color-v-proveedores {
-  color: #c0392b; 
-}

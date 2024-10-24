@@ -24,7 +24,7 @@
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: medium;
 }
 
@@ -33,7 +33,7 @@
     color: #005bb5;
     border: 2px solid #005bb5; 
     cursor: pointer;
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: medium;
 }
 .button-container {
