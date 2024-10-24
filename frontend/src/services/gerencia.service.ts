@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class GerenciaService {
-  private apiUrl = 'http://localhost:5002/api/leadership';  
+  private apiUrl = 'https://credenciales-api-evcvgchfgmguc3gf.canadacentral-01.azurewebsites.net/ap/i';  
 
   constructor(private http: HttpClient) {}
 
