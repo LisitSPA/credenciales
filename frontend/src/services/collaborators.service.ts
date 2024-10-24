@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorService {
-  private apiUrl = 'https://credenciales-api-evcvgchfgmguc3gf.canadacentral-01.azurewebsites.net/ap/i';  
+  private apiUrl = 'https://credenciales-api-evcvgchfgmguc3gf.canadacentral-01.azurewebsites.net/api/';  
 
   constructor(private _httpClient: HttpClient, private _snackBar: MatSnackBar) {}
 

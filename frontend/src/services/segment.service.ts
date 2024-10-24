@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class SegmentService {
-  private apiUrl = 'https://credenciales-api-evcvgchfgmguc3gf.canadacentral-01.azurewebsites.net/ap/i';  
+  private apiUrl = 'https://credenciales-api-evcvgchfgmguc3gf.canadacentral-01.azurewebsites.net/api/';  
 
   constructor(private http: HttpClient) {}
 
