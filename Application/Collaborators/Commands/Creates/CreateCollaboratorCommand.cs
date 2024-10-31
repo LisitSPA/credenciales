@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Utility.DTOs;
+using Utility.PasswordHasher;
 
 namespace Application.Collaborators.Commands.Creates;
 
@@ -28,6 +29,7 @@ public record CreateCollaboratorCommand : IRequest<Response<int>>
     public string Sede { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
+    public string Password { get; set; }
     public ECollaboratorStatus ECollaboratorStatus { get; set; }
     public IFormFile Photo { get; set; }
 }
@@ -35,8 +37,10 @@ public record CreateCollaboratorCommand : IRequest<Response<int>>
 public class CreateCollaboratorCommandHandler
     (
         IRepository<Collaborator> _repository,
+        IRepository<User> _userRepository,
         IMediator _mediator,
-        IEmailNotificationService _emailNotification
+        IEmailNotificationService _emailNotification,
+        IPasswordHasherService _passwordHasherService
     )
     : IRequestHandler<CreateCollaboratorCommand, Response<int>>
 {
@@ -72,6 +76,20 @@ public class CreateCollaboratorCommandHandler
                 _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
 
             SendEmail(collaborator);
+
+            if(request.Password != null)
+            {
+                _userRepository.Add(new User
+                {
+                    CollaboratorId = collaborator.Id,
+                    Email = request.Email,
+                    ERoleUser = ERoleUser.Jefatura,
+                    Password = _passwordHasherService.HashPassword(request.Password),
+                    ChangePassword = true,
+                    Active = true
+                });
+                _userRepository.Save();
+            }
 
             result.Result = collaborator.Id;
 

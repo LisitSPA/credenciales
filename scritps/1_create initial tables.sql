@@ -8,24 +8,31 @@ CREATE TABLE dbo.Attachments (
 	Active bit NOT NULL
 );
 
-CREATE TABLE dbo.Leadership --gerencia(
+CREATE TABLE dbo.Leadership(--gerencia
     Id INT PRIMARY KEY IDENTITY(1,1),
     Name VARCHAR(150) NOT NULL,
 	Active bit NULL,
 );
 
+CREATE TABLE dbo.Segment (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Color VARCHAR(150) NOT NULL,
+	Name VARCHAR(150) NULL,
+	Active bit NOT NULL
+);
 
 CREATE TABLE dbo.Collaborators (
     RUT VARCHAR(50)  NULL,
     CompleteName VARCHAR(250)  NULL,
 	Area varchar(200) not NULL, --sede
 	LeadershipId int not NULL,
+	SegmentId int not null,
 	Position VARCHAR(180) NULL,
 	ECollaboratorStatus INT not NULL,
 	Phone VARCHAR(20) NULL,
 	Email VARCHAR(200) NULL,
 	Active bit NOT NULL
-    --FOREIGN KEY (AreaId) REFERENCES Areas(Id),
+    FOREIGN KEY (SegmentId) REFERENCES Segment(Id),
     FOREIGN KEY (LeadershipId) REFERENCES Leadership(Id)
 );
 
@@ -40,14 +47,4 @@ CREATE TABLE dbo.Users (
 	Active bit NOT NULL
 );
 
-CREATE TABLE dbo.Segment (
-    Id INT PRIMARY KEY IDENTITY(1,1),
-    Color VARCHAR(150) NOT NULL,
-	Description VARCHAR(150) NULL,
-	Active bit NOT NULL
-);
-
-
-alter table dbo.Collaborators add SegmentId int not null;
-alter table dbo.Collaborators add FOREIGN KEY (SegmentId) REFERENCES Segment(Id)
 

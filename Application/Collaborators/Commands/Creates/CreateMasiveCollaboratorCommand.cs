@@ -62,6 +62,7 @@ public class CreateMasiveCollaboratorCommandHandler
                         var segmentName = cells[7].Value.ToString();
                         var photoName = cells[8].Value.ToString();
                         var status = (int)cells[9].Value;
+                        var password = cells[10]?.Value; //opcional
 
                         var segment = _repoSegment.GetAll().Where(x => x.Name == segmentName).FirstOrDefault();
                         if (segment == null)
@@ -106,6 +107,7 @@ public class CreateMasiveCollaboratorCommandHandler
                                 Position = position,
                                 RUT = rut,
                                 Sede = sede,
+                                Password = password?.ToString()
                             });
 
                             if (!res.ErrorProvider.HasError() && res.Result > 0)
