@@ -25,8 +25,8 @@ CREATE TABLE dbo.Collaborators (
     RUT VARCHAR(50)  NULL,
     CompleteName VARCHAR(250)  NULL,
 	Area varchar(200) not NULL, --sede
-	LeadershipId int not NULL,
-	SegmentId int not null,
+	LeadershipId int  NULL,
+	SegmentId int  null,
 	Position VARCHAR(180) NULL,
 	ECollaboratorStatus INT not NULL,
 	Phone VARCHAR(20) NULL,
@@ -39,7 +39,7 @@ CREATE TABLE dbo.Collaborators (
 
 CREATE TABLE dbo.Users (
     Id INT PRIMARY KEY IDENTITY(1,1),
-	CollaboratorId INT not NULL,
+	CollaboratorId INT  NULL,
 	ERoleUser INT not NULL,
 	Email VARCHAR(200) NULL,
 	Password VARCHAR(200) NULL,
