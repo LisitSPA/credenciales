@@ -49,11 +49,14 @@ public class CreateCollaboratorCommandHandler
         Response<int> result = new();
         try
         {
+            var a = _passwordHasherService.HashPassword(request.Password);
+
             var exists = _repository.GetAll().Any(x => x.RUT == request.RUT);
             if (exists)
             {
                 throw new Exception($"El colaborador {request.RUT} ya existe");
             }
+
 
             var collaborator = new Collaborator()
             {
