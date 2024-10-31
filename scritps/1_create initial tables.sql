@@ -3,7 +3,7 @@ CREATE TABLE dbo.Attachments (
     Id INT PRIMARY KEY IDENTITY(1,1),
 	CollaboratorId int not null,
     FileName VARCHAR(50) NOT NULL,
-    Description VARCHAR(150) NOT NULL,
+    Description VARCHAR(150) NULL,
 	EAttachmentType int not null,
 	Active bit NOT NULL
 );

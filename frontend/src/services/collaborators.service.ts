@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorService {
-  private apiUrl = 'https://credenciales-api-evcvgchfgmguc3gf.canadacentral-01.azurewebsites.net/api/';  
+  private apiUrl = environment.apiUrl;  
 
   constructor(private _httpClient: HttpClient, private _snackBar: MatSnackBar) {}
 

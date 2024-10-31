@@ -3,6 +3,6 @@ export const environment = {
     //apiUrl: 'applicationUrl": "https://localhost:5001;http://localhost:5000',
     //apiUrl: 'https://localhost:5002/api',
     //apiUrl : 'https://credenciales-api-evcvgchfgmguc3gf.canadacentral-01.azurewebsites.net/api/'
-    apiUrl : 'https://backend-credenciales-gtdqgnadc6efh7ee.scm.canadacentral-01.azurewebsites.net'
+    apiUrl : 'https://back-credenciales-hehpdwc2f6gkd7dy.canadacentral-01.azurewebsites.net/api'
   };
   
