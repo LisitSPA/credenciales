@@ -8,7 +8,7 @@ namespace Domain.Entities
 {
     public class User : BaseEntity
     {
-        public int? CollaboratorId { get; set; }
+        public int CollaboratorId { get; set; }
         public ERoleUser ERoleUser { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

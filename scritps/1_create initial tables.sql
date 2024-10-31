@@ -22,6 +22,7 @@ CREATE TABLE dbo.Segment (
 );
 
 CREATE TABLE dbo.Collaborators (
+	Id INT PRIMARY KEY IDENTITY(1,1),
     RUT VARCHAR(50)  NULL,
     CompleteName VARCHAR(250)  NULL,
 	Area varchar(200) not NULL, --sede
@@ -39,7 +40,7 @@ CREATE TABLE dbo.Collaborators (
 
 CREATE TABLE dbo.Users (
     Id INT PRIMARY KEY IDENTITY(1,1),
-	CollaboratorId INT  NULL,
+	CollaboratorId INT not NULL,
 	ERoleUser INT not NULL,
 	Email VARCHAR(200) NULL,
 	Password VARCHAR(200) NULL,
@@ -48,3 +49,4 @@ CREATE TABLE dbo.Users (
 );
 
 
+alter table dbo.Users add FOREIGN KEY (CollaboratorId) REFERENCES Collaborators(Id);
