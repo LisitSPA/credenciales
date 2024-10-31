@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../environment/environment';
 
 @Injectable({
@@ -7,29 +7,37 @@ import { environment } from '../environment/environment';
 })
 export class SegmentService {
   private apiUrl = environment.apiUrl+"/segment";  
+  headers: HttpHeaders;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    });
+  }
 
   uploadMissiveSegment(file: File): Promise<any> {
+    let headers = this.headers;
     const formData = new FormData();
     formData.append('FileData', file);
-    return this.http.post(`${this.apiUrl}/UploadMassive`, formData).toPromise();
+    return this.http.post(`${this.apiUrl}/UploadMassive`, formData, {headers}).toPromise();
   }
 
   
   getPaginatedSegments(page: number, pageSize: number): Promise<any> {
+    let headers = this.headers;
     const params = { page: page.toString(), pageSize: pageSize.toString() };
-    return this.http.get(`${this.apiUrl}/paginated`, { params }).toPromise();
+    return this.http.get(`${this.apiUrl}/paginated`, { params, headers }).toPromise();
   }
 
 
 createSegment(nombreSegmento: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
+  let headers = this.headers;
   const formData = new FormData();
   formData.append('Description', nombreSegmento);
   formData.append('Color', colorSegmento);
   formData.append('Active', estadoSegmento.toString());
 
-  return this.http.post(`${this.apiUrl}`, formData).toPromise().then(response => {
+  return this.http.post(`${this.apiUrl}`, formData, {headers}).toPromise().then(response => {
     console.log('Respuesta del servidor:', response);
     return response;
   }).catch(error => {
@@ -40,7 +48,8 @@ createSegment(nombreSegmento: string, colorSegmento: string, estadoSegmento: boo
 
 
 deleteSegment(id: number): Promise<any> {
-  return this.http.delete(`${this.apiUrl}/${id}`).toPromise();
+  let headers = this.headers;
+  return this.http.delete(`${this.apiUrl}/${id}`,{headers}).toPromise();
 }
 
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { lastValueFrom, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -8,38 +8,48 @@ import { environment } from '../environment/environment';
 @Injectable({ providedIn: 'root' })
 export class CollaboratorService {
   private apiUrl = environment.apiUrl+"/collaborators";  
+  headers: any;
 
-  constructor(private _httpClient: HttpClient, private _snackBar: MatSnackBar) {}
+  constructor(private _httpClient: HttpClient, private _snackBar: MatSnackBar) {
+    this.headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    }); 
+   }
 
   uploadMissiveCollaborator(file: File): Promise<any> {
+
+    let headers = this.headers;
     const formData = new FormData();
     formData.append('fileData', file);  
 
     return lastValueFrom(
-      this._httpClient.post(`${this.apiUrl}/UploadMassive`, formData).pipe(
+      this._httpClient.post(`${this.apiUrl}/UploadMassive`, formData,{headers}).pipe(
         catchError(error => this.handleError(error, 'No se pudo subir colaboradores masivos. Verifique la conexión.'))
       )
     );
   }
 
   getPaginatedCollaborators(page: number, pageSize: number): Promise<any> {
+    let headers = this.headers;
     const params = { page: page.toString(), pageSize: pageSize.toString() };
     return lastValueFrom(
-      this._httpClient.get(`${this.apiUrl}/paginated`, { params }).pipe(
+      this._httpClient.get(`${this.apiUrl}/paginated`, { params, headers }).pipe(
         catchError(error => this.handleError(error, 'No se pudo obtener la lista de colaboradores. Verifique la conexión.'))
       )
     );  
   }
 
   deleteCollaborator(id: number): Promise<any> {
+    let headers = this.headers;
     return lastValueFrom(
-      this._httpClient.delete(`${this.apiUrl}/${id}`).pipe(
+      this._httpClient.delete(`${this.apiUrl}/${id}`,{headers}).pipe(
         catchError(error => this.handleError(error, 'No se pudo eliminar el colaborador. Verifique la conexión.'))
       )
     );   
   }
 
   createCollaborator(colaborador: any): Promise<any> {
+    let headers = this.headers;
     const formData = new FormData();
     formData.append('CompleteName', colaborador.CompleteName);
     formData.append('RUT', colaborador.RUT);
@@ -56,13 +66,14 @@ export class CollaboratorService {
     }
   
     return lastValueFrom(
-      this._httpClient.post(`${this.apiUrl}`, formData).pipe(
+      this._httpClient.post(`${this.apiUrl}`, formData, {headers}).pipe(
         catchError(error => this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.'))
       )
     );
   }
 
   updateCollaborator(id: number, colaborador: any): Promise<any> {
+    let headers = this.headers;
     const payload = {
       Id: id,  
       CompleteName: colaborador.CompleteName,
@@ -76,15 +87,16 @@ export class CollaboratorService {
     };
   
     return lastValueFrom(
-      this._httpClient.put(`${this.apiUrl}/${id}`, payload).pipe(
+      this._httpClient.put(`${this.apiUrl}/${id}`, payload, {headers}).pipe(
         catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
       )
     );
   }
 
   getCollaboratorById(id: number): Promise<any> {
+    let headers = this.headers;
     return lastValueFrom(
-      this._httpClient.get(`${this.apiUrl}/${id}`).pipe(
+      this._httpClient.get(`${this.apiUrl}/${id}`,{headers}).pipe(
         catchError(error => this.handleError(error, 'No se pudo obtener los detalles del colaborador. Verifique la conexión.'))
       )
     );
