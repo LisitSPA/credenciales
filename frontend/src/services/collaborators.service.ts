@@ -7,7 +7,7 @@ import { environment } from '../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CollaboratorService {
-  private apiUrl = environment.apiUrl;  
+  private apiUrl = environment.apiUrl+"/collaborators";  
 
   constructor(private _httpClient: HttpClient, private _snackBar: MatSnackBar) {}
 

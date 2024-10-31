@@ -7,7 +7,7 @@ import { environment } from '../environment/environment';
   providedIn: 'root',
 })
 export class GerenciaService {
-  private apiUrl = environment.apiUrl;  
+  private apiUrl = environment.apiUrl+"/leadership";  
 
   constructor(private http: HttpClient) {}
 

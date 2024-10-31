@@ -6,7 +6,7 @@ import { environment } from '../environment/environment';
   providedIn: 'root',
 })
 export class SegmentService {
-  private apiUrl = environment.apiUrl;  
+  private apiUrl = environment.apiUrl+"/segment";  
 
   constructor(private http: HttpClient) {}
 
