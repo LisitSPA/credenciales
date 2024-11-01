@@ -46,6 +46,9 @@ export class CredencialExitosaComponent implements OnInit {
         this.area = colaborador.leadership || this.area;
         this.qrCodeDataUrl = colaborador.qrCodeUrl || this.qrCodeDataUrl;
         
+        console.log('Nombre obtenido:', this.nombre);
+        console.log('Cargo obtenido:', this.cargo);
+
         this.cdr.detectChanges();
       }
 
