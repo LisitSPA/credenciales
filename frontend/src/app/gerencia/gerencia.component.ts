@@ -16,7 +16,7 @@ interface Gerencia {
 @Component({
   selector: 'app-gerencia',
   standalone: true,
-  imports: [ModificarGerenciaComponent,CommonModule, EliminarGerenciaComponent, NuevaGerenciaComponent, FormsModule],
+  imports: [ModificarGerenciaComponent, CommonModule, EliminarGerenciaComponent, NuevaGerenciaComponent, FormsModule],
   templateUrl: './gerencia.component.html',
   styleUrls: ['./gerencia.component.css']
 })
@@ -46,7 +46,6 @@ export class GerenciasComponent {
     this.paginatedGerencias = this.gerencias.slice(start, end); 
     console.log('Gerencias paginadas:', this.paginatedGerencias);  
   }
-  
 
   cargarListaGerencias() {
     this.gerenciaService.getPaginatedGerencias(this.currentPage, this.itemsPerPage).then((response: any) => {
@@ -73,8 +72,6 @@ export class GerenciasComponent {
       }
     });
   }
-  
-  
 
   previousPage() {
     if (this.currentPage > 1) {
@@ -106,6 +103,7 @@ export class GerenciasComponent {
   cerrarModalNuevaGerencia() {
     this.mostrarModalNuevaGerencia = false;
   }
+
   async guardarNuevaGerencia({ name, active }: { name: string, active: boolean }) {
     if (!name.trim()) {
       console.error('El nombre de la gerencia no puede estar vacío.');
@@ -121,8 +119,6 @@ export class GerenciasComponent {
       console.error('Error al crear la gerencia:', error);
     }
   }
-  
-
 
   abrirModalModificar(gerencia: { id: number; name: string; active: boolean }) {
     this.gerenciaSeleccionada = { ...gerencia };  
