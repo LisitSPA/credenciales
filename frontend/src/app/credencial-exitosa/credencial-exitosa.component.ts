@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import DomToImage from 'dom-to-image';
 import { CollaboratorService } from '../../services/collaborators.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-credencial-exitosa',
@@ -13,15 +14,19 @@ import { CollaboratorService } from '../../services/collaborators.service';
   imports: [FormsModule, CommonModule]
 })
 export class CredencialExitosaComponent implements OnInit {
-  nombre: string = 'Juan Pérez';
-  cargo: string = 'Gerente de Ventas';
-  correo: string = 'juan.perez@example.com';
-  celular: string = '+56 9 1234 5678';
+  nombre: string = '';
+  cargo: string = '';
+  correo: string = '';
+  celular: string = '';
   qrCodeDataUrl: string = 'https://via.placeholder.com/150';
-  segmento: string = 'Ventas';
-  area: string = 'Comercial';
+  segmento: string = '';
+  area: string = '';
 
-  constructor(private route: ActivatedRoute, private collaboratorService: CollaboratorService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private collaboratorService: CollaboratorService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -32,13 +37,17 @@ export class CredencialExitosaComponent implements OnInit {
 
   cargarDatosColaborador(id: number) {
     this.collaboratorService.getCollaboratorById(id).then(colaborador => {
-      this.nombre = colaborador.completeName || this.nombre;
-      this.cargo = colaborador.position || this.cargo;
-      this.correo = colaborador.email || this.correo;
-      this.celular = colaborador.phone || this.celular;
-      this.segmento = colaborador.segment || this.segmento;
-      this.area = colaborador.leadership || this.area;
-      this.qrCodeDataUrl = colaborador.qrCodeUrl || this.qrCodeDataUrl;
+      if (colaborador) {
+        this.nombre = colaborador.completeName || this.nombre;
+        this.cargo = colaborador.position || this.cargo;
+        this.correo = colaborador.email || this.correo;
+        this.celular = colaborador.phone || this.celular;
+        this.segmento = colaborador.segment || this.segmento;
+        this.area = colaborador.leadership || this.area;
+        this.qrCodeDataUrl = colaborador.qrCodeUrl || this.qrCodeDataUrl;
+        
+        this.cdr.detectChanges();
+      }
 
       console.log('Datos del colaborador obtenidos:', colaborador);
     }).catch(error => {
