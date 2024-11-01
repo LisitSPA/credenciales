@@ -18,8 +18,12 @@ export class SegmentService {
     }
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json', 
     });
+  }
+
+  private createJsonHeaders(): HttpHeaders {
+    const headers = this.createHeaders();
+    return headers.set('Content-Type', 'application/json');
   }
 
   uploadMissiveSegment(file: File): Promise<any> {
@@ -47,7 +51,12 @@ export class SegmentService {
 
   createSegment(nombreCompleto: string, colorSegmento: string): Promise<any> {
     try {
-      const headers = this.createHeaders();
+      const headers = this.createJsonHeaders(); 
+
+      console.log('Valores antes de crear el segmento:');
+      console.log('Nombre del segmento:', nombreCompleto);
+      console.log('Color del segmento:', colorSegmento);
+
       const payload = {
         Name: nombreCompleto,
         Color: colorSegmento,
