@@ -104,51 +104,59 @@ export class GerenciasComponent {
     this.mostrarModalNuevaGerencia = false;
   }
 
-  async guardarNuevaGerencia(gerenciaCreada: Gerencia) {
-    if (gerenciaCreada) {
-      console.log('Guardando nueva gerencia:', gerenciaCreada);
-      return;
-    }
-  
+  async guardarNuevaGerencia(gerenciaCreada: { name: string; active: boolean }) {
     try {
+      console.log('Guardando nueva gerencia:', gerenciaCreada);
       await this.gerenciaService.crearGerencia(gerenciaCreada);  
-      console.log('Gerencia creada exitosamente ');
+      console.log('Gerencia creada exitosamente');
       this.cargarListaGerencias();  
       this.cerrarModalNuevaGerencia();
     } catch (error) {
       console.error('Error al crear la gerencia:', error);
     }
   }
+  
 
-  abrirModalModificar(gerencia: { id: number; name: string; active: boolean }) {
-    this.gerenciaSeleccionada = { ...gerencia };  
-    this.mostrarModalModificar = true;  
+  abrirModalModificar(gerencia: Gerencia) {
+    if (gerencia.id !== undefined) {
+      this.gerenciaSeleccionada = { ...gerencia };
+      this.mostrarModalModificar = true;
+    } else {
+      console.error('No se puede abrir el modal de modificar: ID no válido');
+    }
   }
-
+  
   cerrarModalModificar() {
     this.mostrarModalModificar = false; 
   }
 
   async guardarModificacionGerencia(gerenciaModificada: Gerencia) {
-    if (gerenciaModificada) {
+    if (gerenciaModificada && gerenciaModificada.id !== undefined) {
       console.log('Guardando cambios en la gerencia:', gerenciaModificada);
-
+  
       try {
-        await this.gerenciaService.modificarGerencia(gerenciaModificada);
+        await this.gerenciaService.modificarGerencia(gerenciaModificada as Required<Gerencia>); 
         console.log('Gerencia modificada exitosamente');
-        this.cargarListaGerencias(); 
-        this.cerrarModalModificar(); 
+        this.cargarListaGerencias();
+        this.cerrarModalModificar();
       } catch (error) {
         console.error('Error al modificar la gerencia:', error);
       }
+    } else {
+      console.error('ID de gerencia no válido para modificar');
     }
   }
+  
 
-  seleccionarGerencia(id: number) {
+  seleccionarGerencia(id: number | undefined) {
+    if (id === undefined) {
+      console.error('ID de gerencia no válido');
+      return;
+    }
     this.gerenciaSeleccionada = this.gerencias.find(g => g.id === id) || null;
     console.log('Gerencia seleccionada con ID:', id);
   }
-
+  
   abrirModalEliminar() {
     if (this.gerenciaSeleccionada !== null) {
       this.mostrarModalEliminar = true;
@@ -162,7 +170,7 @@ export class GerenciasComponent {
   }
 
   async eliminarGerenciaConfirmada() {
-    if (this.gerenciaSeleccionada !== null) {
+    if (this.gerenciaSeleccionada?.id !== undefined) {
       try {
         await this.gerenciaService.eliminarGerencia(this.gerenciaSeleccionada.id);
         console.log('Gerencia eliminada exitosamente');
@@ -171,8 +179,11 @@ export class GerenciasComponent {
       } catch (error) {
         console.error('Error al eliminar la gerencia:', error);
       }
+    } else {
+      console.error('ID de gerencia no válido para eliminar');
     }
   }
+  
 
   async cargarGerencias() {
     if (this.selectedFile) {

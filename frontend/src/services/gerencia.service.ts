@@ -35,7 +35,7 @@ export class GerenciaService {
     return this.http.get(this.apiUrl + '/paginated', { params, headers }).toPromise();
   }
 
-  crearGerencia(gerencia: { id: number; name: string; active: boolean }): Promise<any> {
+  crearGerencia(gerencia: { name: string; active: boolean }): Promise<any> {
     if (!gerencia.name || gerencia.name.trim() === '') {
       return Promise.reject(new Error('El nombre de la gerencia no puede estar vacío.'));
     }

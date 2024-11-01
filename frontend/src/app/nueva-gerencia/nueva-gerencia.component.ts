@@ -13,6 +13,7 @@ export class NuevaGerenciaComponent {
   @Input() mostrarModal: boolean = false;
   @Output() cerrar = new EventEmitter<void>();
   @Output() guardar = new EventEmitter<{ name: string, active: boolean }>();
+  @Input() gerenciaSeleccionada!: { id: number; name: string; active: boolean };  
 
   nombreGerencia: string = '';  
   estadoGerencia: boolean = true;  
@@ -28,5 +29,11 @@ export class NuevaGerenciaComponent {
     } else {
       console.error('El nombre de la gerencia no puede estar vacío.');
     }
+  }
+  
+
+  guardarNuevaGerencia() {
+    console.log('Guardando cambios para la gerencia seleccionada:', this.gerenciaSeleccionada);
+    this.guardar.emit(this.gerenciaSeleccionada); 
   }
 }
