@@ -57,7 +57,7 @@ export class NuevoColaboradorComponent {
   
       if (response && response.content && response.content.data) {
         this.segmentos = response.content.data
-          .filter((item: any) => item.active) 
+          .filter((item: any) => item.active) // Filtrar solo segmentos activos
           .map((item: any) => ({
             id: item.id,
             nombreCompleto: item.name,  
@@ -76,26 +76,27 @@ export class NuevoColaboradorComponent {
   
 
   async guardarDatos() {
-    if (!this.nombre || !this.celular || !this.correo) {
+    if (!this.nombre || !this.celular || !this.correo || !this.segmento) {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
   
-    if (!this.segmento) {
-      alert('Por favor, selecciona un segmento.');
+    const segmentoSeleccionado = this.segmentos.find(segmento => segmento.id === +this.segmento);
+    if (!segmentoSeleccionado) {
+      alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
       return;
     }
   
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
-    console.log('Valor de Sede antes de enviar:', this.sede);
-  
+    console.log('Valor de Sede antes de enviar:', this.sede);    
+    
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
-      LeadershipId: parseInt(this.gerencia),  
-      SegmentId: parseInt(this.segmento),    
+      LeadershipId: this.gerencia,
+      SegmentId: this.segmento,
       Position: this.cargo,
-      Area: this.sede,
+      Area: this.sede,  
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
@@ -106,8 +107,8 @@ export class NuevoColaboradorComponent {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);
       await this.collaboratorService.createCollaborator(nuevoColaborador);
       console.log('Colaborador creado con éxito.');
-      this.colaboradorCreado.emit();
-      this.cerrar.emit();
+      this.colaboradorCreado.emit(); 
+      this.cerrar.emit(); 
     } catch (error) {
       console.error('Error al crear colaborador:', error);
       alert('Hubo un error al crear el colaborador.');
