@@ -35,7 +35,7 @@ export class GerenciaService {
     return this.http.get(this.apiUrl + '/paginated', { params, headers }).toPromise();
   }
 
-  crearGerencia(gerencia: { name: string; active: boolean }): Promise<any> {
+ /* crearGerencia(gerencia: { name: string; active: boolean }): Promise<any> {
     if (!gerencia.name || gerencia.name.trim() === '') {
       return Promise.reject(new Error('El nombre de la gerencia no puede estar vacío.'));
     }
@@ -57,8 +57,39 @@ export class GerenciaService {
         console.error('Error en la creación de gerencia:', error);
         throw error;
       });
-  }
-  
+  }*/
+    private createJsonHeaders(): HttpHeaders {
+        const headers = this.createHeaders();
+        return headers.set('Content-Type', 'application/json');
+      }
+    createGerencia(nombreCompleto: string, active: boolean): Promise<any> {
+        try {
+          const headers = this.createJsonHeaders(); 
+    
+          console.log('Valores antes de crear el segmento:');
+          console.log('Nombre del segmento:', nombreCompleto);
+          console.log('Color del segmento:', active);
+    
+          const payload = {
+            Name: nombreCompleto,
+            Active: active,
+          };
+    
+          return this.http.post(`${this.apiUrl}`, payload, { headers }).toPromise()
+            .then(response => {
+              console.log('Respuesta del servidor:', response);
+              return response;
+            })
+            .catch(error => {
+              console.error('Error en la creación de la gerencia en el servidor:', error);
+              throw error;
+            });
+        } catch (error) {
+          console.error('Error al intentar crear el encabezado o al crear la gerencia:', error);
+          return Promise.reject(error);
+        }
+      }
+
   eliminarGerencia(id: number): Promise<any> {
     const headers = this.headers;
     return this.http.delete(`${this.apiUrl}/${id}`, { headers }).toPromise();
