@@ -38,8 +38,8 @@ export class CredencialExitosaComponent implements OnInit {
   cargarDatosColaborador(id: number) {
     this.collaboratorService.getCollaboratorById(id).then(colaborador => {
       if (colaborador) {
-        this.nombre = colaborador.completeName || this.nombre;
-        this.cargo = colaborador.position || this.cargo;
+        this.nombre = colaborador.completeName ? colaborador.completeName : 'No Disponible';
+        this.cargo = colaborador.position ? colaborador.cargo :'No Disponible';
         this.correo = colaborador.email || this.correo;
         this.celular = colaborador.phone || this.celular;
         this.segmento = colaborador.segment || this.segmento;
