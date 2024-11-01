@@ -34,7 +34,7 @@
               </td>
               <td>{{ segmento.activo ? 'Activo' : 'Inactivo' }}</td>
               <td>
-                <button class="btn-edit">
+                <button class="btn-edit" (click)="abrirFormularioModificar(segmento)">
                   <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;" />
                 </button>
                 <button class="btn-delete" (click)="abrirModalEliminar(segmento.id)">
@@ -74,4 +74,11 @@
   (cerrar)="cerrarModalEliminar()"
   (confirmar)="eliminarSegmentoSeleccionado()">
 </app-eliminar>
+
+<app-modificar-segmento 
+  *ngIf="mostrarModificar" 
+  (guardar)="guardarModificaciones($event)" 
+  (cerrar)="cerrarFormulario()">
+</app-modificar-segmento>
+
 </body>

@@ -4,6 +4,7 @@ import { SegmentService } from '../../services/segment.service';
 import { EliminarComponent } from '../eliminar/eliminar.component';
 import { NuevaSegmentoComponent } from '../nueva-segmento/nueva-segmento.component';
 import { FormsModule } from '@angular/forms';
+import { ModificarSegmentoComponent } from '../modificar-segmento/modificar-segmento.component';
 
 interface Segmento {
   id: number;
@@ -17,7 +18,7 @@ interface Segmento {
 @Component({
   selector: 'app-segmentos',
   standalone: true,
-  imports: [CommonModule, EliminarComponent, NuevaSegmentoComponent, FormsModule],
+  imports: [CommonModule, EliminarComponent, NuevaSegmentoComponent, FormsModule, ModificarSegmentoComponent],
   templateUrl: './segmentos.component.html',
   styleUrls: ['./segmentos.component.css'],
 })
@@ -29,7 +30,9 @@ export class SegmentosComponent {
   mostrarModalNuevoSegmento: boolean = false;  
   mostrarModalEliminar: boolean = false;
   idSegmentoSeleccionado: number | null = null;
+  segmentoSeleccionado: Segmento | null = null; 
   currentPage = 1;  
+  mostrarModificar: boolean = false;
 
   constructor(private segmentService: SegmentService) {
     this.cargarListaSegmentos(); 
@@ -84,7 +87,7 @@ export class SegmentosComponent {
     } else {
       console.log('Color no necesita transformación o no cumple con las condiciones:', color);
     }
-      return color;
+    return color;
   }
   
 
@@ -174,7 +177,30 @@ export class SegmentosComponent {
     }
   }
   
+  guardarModificaciones(segmentoModificado: Segmento) {
+    if (segmentoModificado && segmentoModificado.id) {
+      this.segmentService.updateSegment(segmentoModificado.id, segmentoModificado.nombreCompleto, segmentoModificado.color, segmentoModificado.activo)
+        .then(response => {
+          console.log('Segmento actualizado:', response);
+          this.cargarListaSegmentos(); 
+          this.cerrarFormulario(); 
+        })
+        .catch(error => {
+          if (error.status === 400 && error.error && error.error.message) {
+            alert('Error: ' + error.error.message);
+          } else {
+            alert('Error al modificar segmento: ' + error.message);
+          }
+        });
+    }
+  }
   
-
- 
+  abrirFormularioModificar(segmento: Segmento) {
+    this.segmentoSeleccionado = segmento; 
+    this.mostrarModificar = true; 
+  }
+  
+  cerrarFormulario() {
+    this.mostrarModificar = false;
+  }
 }

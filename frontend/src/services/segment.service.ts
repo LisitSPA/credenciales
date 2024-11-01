@@ -87,4 +87,31 @@ export class SegmentService {
       return Promise.reject(error);
     }
   }
+
+  updateSegment(id: number, nombre: string, color: string, active: boolean): Promise<any> {
+    try {
+      const headers = this.createJsonHeaders();
+      const payload = {
+        Id: id,
+        Name: nombre,
+        Color: color,
+        Active: active,
+      };
+      console.log('Actualizando segmento con los valores:', payload);
+
+      return this.http.put(`${this.apiUrl}`, payload, { headers }).toPromise()
+        .then(response => {
+          console.log('Respuesta del servidor al actualizar el segmento:', response);
+          return response;
+        })
+        .catch(error => {
+          console.error('Error al actualizar el segmento en el servidor:', error);
+          throw error;
+        });
+    } catch (error) {
+      console.error('Error al intentar actualizar el segmento:', error);
+      return Promise.reject(error);
+    }
+  }
 }
+
