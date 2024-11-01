@@ -78,8 +78,10 @@ export class NuevoColaboradorComponent {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
-    console.log('Valor de Sede antes de enviar:', this.sede);
-
+    if (!this.sede.trim()) {
+      console.log('El valor de Sede está vacío, asignando valor por defecto "Sin Sede"');
+      this.sede = 'Sin Sede';
+    }
 
     const nuevoColaborador = {
       CompleteName: this.nombre,
