@@ -52,20 +52,11 @@ export class NuevoColaboradorComponent {
 
   async loadSegmentos() {
     try {
-      const page = 1;        
-      const pageSize = 100;   
-      const response = await this.segmentoService.getPaginatedSegments(page, pageSize);
-      if (response && response.content && response.content.data) {
-        this.segmentos = response.content.data.map((segment: any) => ({
-          id: segment.id,
-          description: segment.description,
-        }));
-        console.log('Segmentos cargados:', this.segmentos);
-      } else {
-        console.error('No se encontraron datos en la respuesta:', response);
-      }
+      const response = await this.segmentoService.getPaginatedSegments(1, 100);  
+      this.segmentos = response.content.data;
+      console.log('Segmentos cargados:', this.segmento);
     } catch (error) {
-      console.error('Error al cargar segmentos:', error);
+      console.error('Error al cargar segmentos!', error);
     }
   }
 
