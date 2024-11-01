@@ -28,7 +28,7 @@
           <h3>Segmento</h3>
           <select [(ngModel)]="segmento" name="segmento" required>
             <option value="">Seleccione un segmento</option>
-            <option *ngFor="let seg of segmentos" [value]="seg.id">{{ seg.description }}</option>
+            <option *ngFor="let seg of segmentos" [value]="seg.id">{{ seg.nombreCompleto }}</option>
           </select>
         </div>
         
