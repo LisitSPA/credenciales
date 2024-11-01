@@ -42,7 +42,7 @@ export class SegmentosComponent {
   cargarListaSegmentos() {
     this.segmentService.getPaginatedSegments(this.currentPage, this.itemsPerPage)
       .then((response: any) => {
-        if (Array.isArray(response.content?.data)) {
+        if (response && response.content && response.content.data) {
           this.segmentos = response.content.data.map((item: any) => ({
             id: item.id,
             nombreCompleto: item.name, 
@@ -50,7 +50,7 @@ export class SegmentosComponent {
             activo: item.active,
             seleccionado: false,
           }));
-          this.totalPages = this.totalPagesCalculation;
+          this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
           this.updatePaginatedSegmentos();  
           console.log('Segmentos obtenidos:', this.segmentos);
         } else {
