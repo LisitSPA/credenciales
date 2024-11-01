@@ -34,7 +34,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("", Name = "CreateSegment")]
-        public async Task<IActionResult> CreateSegment([FromQuery] CreateSegmentCommand command)
+        public async Task<IActionResult> CreateSegment([FromBody] CreateSegmentCommand command)
         {
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);
