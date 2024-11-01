@@ -142,14 +142,14 @@ export class SegmentosComponent {
     this.mostrarModalEliminar = false;
   }
 
-  async guardarNuevoSegmento(nuevoSegmento: { Description: string, Color: string, Active: boolean }) {
+  async guardarNuevoSegmento(nuevoSegmento: { Description: string, Color: string }) {
     if (!nuevoSegmento.Description.trim() || !nuevoSegmento.Color.trim()) {
       console.error('El nombre o el color del segmento no pueden estar vacíos.');
       return;
     }
 
     try {
-      await this.segmentService.createSegment(nuevoSegmento.Description, nuevoSegmento.Color, nuevoSegmento.Active);
+      await this.segmentService.createSegment(nuevoSegmento.Description, nuevoSegmento.Color);
       console.log('Segmento creado exitosamente');
       this.cargarListaSegmentos();  
       this.cerrarModalNuevoSegmento();  

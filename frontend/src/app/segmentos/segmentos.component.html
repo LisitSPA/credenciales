@@ -62,15 +62,13 @@
     </div>
   </main>
 
-  <!-- Modal para nuevo segmento -->
   <app-nueva-segmento
     *ngIf="mostrarModalNuevoSegmento"
     [mostrarModal]="mostrarModalNuevoSegmento"
     (cerrar)="cerrarModalNuevoSegmento()"
-    (guardar)="guardarNuevoSegmento({Description: $event.Description, Color: $event.Color, Active: $event.Active})"
+    (guardar)="guardarNuevoSegmento({Description: $event.Description, Color: $event.Color})"
   ></app-nueva-segmento>
 
-  <!-- Modal para eliminar -->
   <app-eliminar
   *ngIf="mostrarModalEliminar"
   (cerrar)="cerrarModalEliminar()"
