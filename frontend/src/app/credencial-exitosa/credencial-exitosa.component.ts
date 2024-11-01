@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import DomToImage from 'dom-to-image';
-
+import { CollaboratorService } from '../../services/collaborators.service';
 
 @Component({
   selector: 'app-credencial-exitosa',
@@ -21,7 +21,7 @@ export class CredencialExitosaComponent implements OnInit {
   segmento: string = 'Ventas';
   area: string = 'Comercial';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private collaboratorService: CollaboratorService) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -31,27 +31,21 @@ export class CredencialExitosaComponent implements OnInit {
   }
 
   cargarDatosColaborador(id: number) {
- 
-    const colaborador = {
-      nombre: 'Valentina Darraidou Aguirre',
-      cargo: 'Brandmanager',
-      correo: 'ana.martinez@example.com',
-      celular: '+56 9 8765 4321',
-      segmento: 'Gerencia Comercial',
-      area: 'Gerencia Comercial',
-      qrCodeUrl: 'https://via.placeholder.com/150'
-    };
+    this.collaboratorService.getCollaboratorById(id).then(colaborador => {
+      this.nombre = colaborador.completeName || this.nombre;
+      this.cargo = colaborador.position || this.cargo;
+      this.correo = colaborador.email || this.correo;
+      this.celular = colaborador.phone || this.celular;
+      this.segmento = colaborador.segment || this.segmento;
+      this.area = colaborador.leadership || this.area;
+      this.qrCodeDataUrl = colaborador.qrCodeUrl || this.qrCodeDataUrl;
 
-    this.nombre = colaborador.nombre || this.nombre;
-    this.cargo = colaborador.cargo || this.cargo;
-    this.correo = colaborador.correo || this.correo;
-    this.celular = colaborador.celular || this.celular;
-    this.segmento = colaborador.segmento || this.segmento;
-    this.area = colaborador.area || this.area;
-    this.qrCodeDataUrl = colaborador.qrCodeUrl || this.qrCodeDataUrl;
-
-    console.log('Datos del colaborador obtenidos:', colaborador);
+      console.log('Datos del colaborador obtenidos:', colaborador);
+    }).catch(error => {
+      console.error('Error al cargar los datos del colaborador:', error);
+    });
   }
+
   descargarImagen() {
     const cardContainer = document.querySelector('.card-container') as HTMLElement;
     if (cardContainer) {
@@ -64,7 +58,7 @@ export class CredencialExitosaComponent implements OnInit {
         .then((dataUrl) => {
           const link = document.createElement('a');
           link.href = dataUrl;
-          link.download = 'firma.png';
+          link.download = 'credencial.png';
           link.click();
         })
         .catch((error) => {
