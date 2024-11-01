@@ -35,29 +35,7 @@ export class GerenciaService {
     return this.http.get(this.apiUrl + '/paginated', { params, headers }).toPromise();
   }
 
- /* crearGerencia(gerencia: { name: string; active: boolean }): Promise<any> {
-    if (!gerencia.name || gerencia.name.trim() === '') {
-      return Promise.reject(new Error('El nombre de la gerencia no puede estar vacío.'));
-    }
-  
-    const headers = this.createHeaders();
-    const payload = {
-      Name: gerencia.name.trim(),
-      Active: gerencia.active
-    };
-  
-    console.log('Payload enviado para crear gerencia:', payload);  
-  
-    return this.http.post(this.apiUrl, payload, { headers }).toPromise()
-      .then(response => {
-        console.log('Respuesta de creación de gerencia:', response);
-        return response;
-      })
-      .catch(error => {
-        console.error('Error en la creación de gerencia:', error);
-        throw error;
-      });
-  }*/
+
     private createJsonHeaders(): HttpHeaders {
         const headers = this.createHeaders();
         return headers.set('Content-Type', 'application/json');
