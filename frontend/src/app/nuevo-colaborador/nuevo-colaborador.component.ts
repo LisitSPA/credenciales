@@ -74,7 +74,7 @@ export class NuevoColaboradorComponent {
   }
 
   async guardarDatos() {
-    if (!this.nombre || !this.celular || !this.correo) {
+    if (!this.nombre || !this.celular || !this.correo || !this.sede)  {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
