@@ -30,12 +30,11 @@ export class SegmentService {
     return this.http.get(`${this.apiUrl}/paginated`, { params, headers }).toPromise();
   }
 
-  createSegment(nombreCompleto: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
+  createSegment(nombreCompleto: string, colorSegmento: string): Promise<any> {
     let headers = this.headers.set('Content-Type', 'application/json'); 
     const payload = {
       NombreCompleto: nombreCompleto,
       Color: colorSegmento,
-      Active: estadoSegmento
     };
   
     return this.http.post(`${this.apiUrl}`, payload, { headers }).toPromise()

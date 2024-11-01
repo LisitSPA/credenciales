@@ -13,10 +13,9 @@ import { SegmentService } from '../../services/segment.service';
 export class NuevaSegmentoComponent {
   @Input() mostrarModal: boolean = false;
   @Output() cerrar = new EventEmitter<void>();
-  @Output() guardar = new EventEmitter<{ Description: string, Color: string, Active: boolean }>(); 
+  @Output() guardar = new EventEmitter<{ Description: string, Color: string}>(); 
   nombreSegmento: string = '';
   colorSegmento: string = '';
-  estadoSegmento: boolean = true;  
 
   constructor(private segmentService: SegmentService) { }
 
@@ -29,13 +28,13 @@ export class NuevaSegmentoComponent {
       try {
         console.log('Color seleccionado:', this.colorSegmento);
   
-        await this.segmentService.createSegment(this.nombreSegmento, this.colorSegmento, this.estadoSegmento);
+        await this.segmentService.createSegment(this.nombreSegmento, this.colorSegmento);
         console.log('Segmento creado exitosamente');
   
         this.guardar.emit({
           Description: this.nombreSegmento,
           Color: this.colorSegmento,
-          Active: this.estadoSegmento
+          
         });
   
         this.cerrarModal(); 
