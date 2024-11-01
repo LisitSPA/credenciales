@@ -8,7 +8,7 @@ import { CollaboratorService } from '../../services/collaborators.service';
 @Component({
   selector: 'app-nuevo-colaborador',
   standalone: true,
-  imports: [FormsModule, CommonModule,],
+  imports: [FormsModule, CommonModule],
   templateUrl: './nuevo-colaborador.component.html',
   styleUrls: ['./nuevo-colaborador.component.css']
 })
@@ -54,9 +54,7 @@ export class NuevoColaboradorComponent {
     try {
       const page = 1;        
       const pageSize = 100;   
-  
       const response = await this.segmentoService.getPaginatedSegments(page, pageSize);
-      
       if (response && response.content && response.content.data) {
         this.segmentos = response.content.data.map((segment: any) => ({
           id: segment.id,
@@ -70,7 +68,6 @@ export class NuevoColaboradorComponent {
       console.error('Error al cargar segmentos:', error);
     }
   }
-  
 
   async guardarDatos() {
     if (!this.nombre || !this.celular || !this.correo) {
@@ -92,7 +89,9 @@ export class NuevoColaboradorComponent {
     };
 
     try {
+      console.log('Enviando colaborador al servidor:', nuevoColaborador);
       await this.collaboratorService.createCollaborator(nuevoColaborador);
+      console.log('Colaborador creado con éxito.');
       this.colaboradorCreado.emit(); 
       this.cerrar.emit(); 
     } catch (error) {

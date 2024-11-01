@@ -66,12 +66,11 @@ export class CollaboratorService {
     }
   
     return lastValueFrom(
-      this._httpClient.post(`${this.apiUrl}`, formData, {headers}).pipe(
+      this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(
         catchError(error => this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.'))
       )
     );
   }
-
   updateCollaborator(id: number, colaborador: any): Promise<any> {
     let headers = this.headers;
     const payload = {
