@@ -62,7 +62,7 @@ public class CreateCollaboratorCommandHandler
             {
                 CompleteName = request.CompleteName,
                 RUT = request.RUT,
-                Area = request.Sede,
+                Area = request.Sede ?? "Sin Sede",   
                 LeadershipId = request.LeadershipId,
                 Position = request.Position,
                 Phone = request.Phone,

@@ -80,7 +80,7 @@ export class NuevoColaboradorComponent {
     }
   
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
-    console.log('Valor de Sede antes de enviar:', this.sede);
+    console.log('Valor de Sede antes de enviar:', this.sede);    
   
     const nuevoColaborador = {
       CompleteName: this.nombre,
