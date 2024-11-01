@@ -79,34 +79,39 @@ export class NuevoColaboradorComponent {
       return;
     }
   
+    if (!this.segmento) {
+      alert('Por favor, selecciona un segmento.');
+      return;
+    }
+  
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
-    console.log('Valor de Sede antes de enviar:', this.sede);    
+    console.log('Valor de Sede antes de enviar:', this.sede);
   
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
-      LeadershipId: this.gerencia,
-      SegmentId: this.segmento,
+      LeadershipId: parseInt(this.gerencia),  
+      SegmentId: parseInt(this.segmento),    
       Position: this.cargo,
-      Area: this.sede,  
+      Area: this.sede,
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
       Photo: this.foto,
     };
-    
-
+  
     try {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);
       await this.collaboratorService.createCollaborator(nuevoColaborador);
       console.log('Colaborador creado con éxito.');
-      this.colaboradorCreado.emit(); 
-      this.cerrar.emit(); 
+      this.colaboradorCreado.emit();
+      this.cerrar.emit();
     } catch (error) {
       console.error('Error al crear colaborador:', error);
       alert('Hubo un error al crear el colaborador.');
     }
   }
+  
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
