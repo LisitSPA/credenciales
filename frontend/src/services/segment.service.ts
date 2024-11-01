@@ -30,10 +30,10 @@ export class SegmentService {
   }
 
 
-createSegment(nombreSegmento: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
+createSegment(nombreCompleto: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
   let headers = this.headers;
   const formData = new FormData();
-  formData.append('Description', nombreSegmento);
+  formData.append('NombreCompleto', nombreCompleto);
   formData.append('Color', colorSegmento);
   formData.append('Active', estadoSegmento.toString());
 
