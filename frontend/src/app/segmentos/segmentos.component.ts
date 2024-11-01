@@ -44,8 +44,10 @@ export class SegmentosComponent {
       .then((response: any) => {
         if (Array.isArray(response.content?.data)) {
           this.segmentos = response.content.data.map((item: any) => ({
-            ...item,
-            descripcion: item.description,
+            id: item.id,
+            nombreCompleto: item.name, 
+            color: item.color,
+            activo: item.active,
             seleccionado: false,
           }));
           this.totalPages = this.totalPagesCalculation;
@@ -65,6 +67,7 @@ export class SegmentosComponent {
         }
       });
   }
+  
     updatePaginatedSegmentos() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
