@@ -31,10 +31,10 @@ export class SegmentosComponent {
   idSegmentoSeleccionado: number | null = null;
   currentPage = 1;  
 
-  
   constructor(private segmentService: SegmentService) {
     this.cargarListaSegmentos(); 
   }
+
   get totalPagesCalculation() {
     return Math.ceil(this.segmentos.length / this.itemsPerPage);
   }
@@ -67,8 +67,14 @@ export class SegmentosComponent {
         }
       });
   }
-  
-    updatePaginatedSegmentos() {
+
+  isValidColor(color: string): boolean {
+    const s = new Option().style;
+    s.color = color;
+    return s.color !== '';
+  }
+
+  updatePaginatedSegmentos() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     this.paginatedSegmentos = this.segmentos.slice(start, end);
@@ -93,10 +99,10 @@ export class SegmentosComponent {
     this.currentPage = page;
     this.updatePaginatedSegmentos();
   }
+
   pages() {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
-
 
   abrirModalNuevoSegmento() {
     this.mostrarModalNuevoSegmento = true;
@@ -137,7 +143,6 @@ export class SegmentosComponent {
       this.cerrarModalEliminar();  
     }
   }
-  
 
   eliminarSegmentoLocal(id: number) {
     const index = this.segmentos.findIndex(segmento => segmento.id === id);
