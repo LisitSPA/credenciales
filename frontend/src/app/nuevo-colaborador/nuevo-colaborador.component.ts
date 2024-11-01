@@ -86,15 +86,16 @@ export class NuevoColaboradorComponent {
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
-      LeadershipId: this.gerencia,  
-      SegmentId: this.segmento, 
+      LeadershipId: this.gerencia,
+      SegmentId: this.segmento,
       Position: this.cargo,
-      Area: this.sede,
+      Sede: this.sede,  
       Phone: this.celular,
       Email: this.correo,
-      ECollaboratorStatus: 1, 
-      Photo: this.foto
+      ECollaboratorStatus: 1,
+      Photo: this.foto,
     };
+    
 
     try {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);

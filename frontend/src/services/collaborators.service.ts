@@ -56,7 +56,7 @@ export class CollaboratorService {
     formData.append('LeadershipId', colaborador.LeadershipId.toString());
     formData.append('SegmentId', colaborador.SegmentId.toString());
     formData.append('Position', colaborador.Position);
-    formData.append('Area', colaborador.Area);
+    formData.append('Sede', colaborador.Sede);
     formData.append('Phone', colaborador.Phone);
     formData.append('Email', colaborador.Email);
     formData.append('ECollaboratorStatus', colaborador.ECollaboratorStatus.toString());
