@@ -53,6 +53,8 @@ export class NuevoColaboradorComponent {
   async loadSegmentos() {
     try {
       const response = await this.segmentoService.getPaginatedSegments(1, 100);  
+      console.log('Respuesta completa del servicio de segmentos:', response);
+
       
       if (response && response.content && response.content.data) {
         this.segmentos = response.content.data.map((item: any) => ({
