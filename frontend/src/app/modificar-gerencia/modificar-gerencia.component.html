@@ -6,7 +6,7 @@
     <button (click)="cerrarModalModificar()">&times;</button>
   </div>
   <div class="modal-body">
-    <div *ngIf="gerenciaSeleccionada"> <!-- Validar que gerenciaSeleccionada exista -->
+    <div *ngIf="gerenciaSeleccionada"> 
       <div class="form-group">
         <label for="nombreGerencia">Nombre de la Gerencia</label>
         <input id="nombreGerencia" type="text" [(ngModel)]="gerenciaSeleccionada.name" class="form-control">

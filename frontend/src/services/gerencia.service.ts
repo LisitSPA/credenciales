@@ -41,7 +41,16 @@ export class GerenciaService {
       name: nombreGerencia,
       active: active,
     };
-    return this.http.post(this.apiUrl, payload, { headers }).toPromise();
+    console.log('Payload enviado para crear gerencia:', payload); // Log para depurar
+    return this.http.post(this.apiUrl, payload, { headers }).toPromise()
+      .then(response => {
+        console.log('Respuesta de creación de gerencia:', response);
+        return response;
+      })
+      .catch(error => {
+        console.error('Error en la creación de gerencia:', error);
+        throw error;
+      });
   }
 
   eliminarGerencia(id: number): Promise<any> {
