@@ -80,6 +80,7 @@ export class SegmentService {
   deleteSegment(id: number): Promise<any> {
     try {
       const headers = this.createHeaders();
+      console.log(`Eliminando el segmento con ID: ${id}`);
       return this.http.delete(`${this.apiUrl}/${id}`, { headers }).toPromise();
     } catch (error) {
       console.error('Error al eliminar el segmento:', error);

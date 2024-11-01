@@ -158,21 +158,20 @@ export class SegmentosComponent {
     }
   }
 
-  eliminarSegmentoSeleccionado() {
+  async eliminarSegmentoSeleccionado() {
     if (this.idSegmentoSeleccionado !== null) {
-      this.eliminarSegmentoLocal(this.idSegmentoSeleccionado);
-      this.cerrarModalEliminar();  
+      try {
+        await this.segmentService.deleteSegment(this.idSegmentoSeleccionado);
+        console.log('Segmento eliminado exitosamente del backend');
+        this.cargarListaSegmentos(); 
+        this.cerrarModalEliminar(); 
+      } catch (error) {
+        console.error('Error al eliminar el segmento del backend:', error);
+      }
     }
   }
+  
+  
 
-  eliminarSegmentoLocal(id: number) {
-    const index = this.segmentos.findIndex(segmento => segmento.id === id);
-    if (index !== -1) {
-      this.segmentos.splice(index, 1);  
-      this.updatePaginatedSegmentos();  
-      console.log('Segmento eliminado del frontend:', id);
-    } else {
-      console.error('Segmento no encontrado en el frontend para eliminar:', id);
-    }
-  }
+ 
 }
