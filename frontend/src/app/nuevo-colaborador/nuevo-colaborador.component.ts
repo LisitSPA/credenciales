@@ -54,16 +54,17 @@ export class NuevoColaboradorComponent {
     try {
       const response = await this.segmentoService.getPaginatedSegments(1, 100);  
       console.log('Respuesta completa del servicio de segmentos:', response);
-
-      
+  
       if (response && response.content && response.content.data) {
-        this.segmentos = response.content.data.map((item: any) => ({
-          id: item.id,
-          nombreCompleto: item.name,  
-          color: item.color,
-          activo: item.active,
-        }));
-        console.log('Segmentos después de mapear:', this.segmentos);
+        this.segmentos = response.content.data
+          .filter((item: any) => item.active) 
+          .map((item: any) => ({
+            id: item.id,
+            nombreCompleto: item.name,  
+            color: item.color,
+            activo: item.active,
+          }));
+        console.log('Segmentos después de filtrar y mapear:', this.segmentos);
       } else {
         console.error('No se encontraron segmentos en la respuesta:', response);
       }
@@ -72,6 +73,7 @@ export class NuevoColaboradorComponent {
       console.error('Error al cargar segmentos:', error);
     }
   }
+  
 
   async guardarDatos() {
     if (!this.nombre || !this.celular || !this.correo) {
