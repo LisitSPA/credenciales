@@ -89,7 +89,7 @@ export class NuevoColaboradorComponent {
       LeadershipId: this.gerencia,  
       SegmentId: this.segmento, 
       Position: this.cargo,
-      Sede: this.sede,
+      Area: this.sede,
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1, 
