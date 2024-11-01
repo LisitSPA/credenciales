@@ -35,15 +35,15 @@ export class GerenciaService {
     return this.http.get(this.apiUrl + '/paginated', { params, headers }).toPromise();
   }
 
-  crearGerencia(nombreGerencia: string, active: boolean): Promise<any> {
-    if (!nombreGerencia || nombreGerencia.trim() === '') {
+  crearGerencia(gerencia: { id: number; name: string; active: boolean }): Promise<any> {
+    if (!gerencia.name || gerencia.name.trim() === '') {
       return Promise.reject(new Error('El nombre de la gerencia no puede estar vacío.'));
     }
 
     const headers = this.createHeaders();
     const payload = {
-      Name: nombreGerencia.trim(),
-      Active: active,
+      Name: gerencia.name.trim(),
+      Active: gerencia.active,
     };
     console.log('Payload enviado para crear gerencia:', payload); 
     return this.http.post(this.apiUrl, payload, { headers }).toPromise()
