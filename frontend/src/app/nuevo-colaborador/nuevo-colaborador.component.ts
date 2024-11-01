@@ -81,13 +81,8 @@ export class NuevoColaboradorComponent {
       return;
     }
   
-    if (!this.segmento) {
-      console.error('Segmento no seleccionado o no válido.');
-      alert('Por favor, selecciona un segmento válido.');
-      return;
-    }
-  
-    if (typeof this.segmento !== 'number' || !Number.isInteger(this.segmento)) {
+    const segmentoId = parseInt(this.segmento, 10);
+    if (isNaN(segmentoId)) {
       console.error('El SegmentId no es un número válido.');
       alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
       return;
@@ -95,13 +90,13 @@ export class NuevoColaboradorComponent {
   
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
     console.log('Valor de Sede antes de enviar:', this.sede);
-    console.log('Segmento seleccionado:', this.segmento); 
+    console.log('Segmento seleccionado:', segmentoId);
   
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
       LeadershipId: this.gerencia,
-      SegmentId: this.segmento,
+      SegmentId: segmentoId,
       Position: this.cargo,
       Area: this.sede,
       Phone: this.celular,
@@ -114,15 +109,14 @@ export class NuevoColaboradorComponent {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);
       await this.collaboratorService.createCollaborator(nuevoColaborador);
       console.log('Colaborador creado con éxito.');
-      this.colaboradorCreado.emit(); 
-      this.cerrar.emit(); 
+      this.colaboradorCreado.emit();
+      this.cerrar.emit();
     } catch (error) {
       console.error('Error al crear colaborador:', error);
       alert('Hubo un error al crear el colaborador.');
     }
   }
   
-
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
