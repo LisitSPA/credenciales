@@ -38,15 +38,18 @@ export class NuevaGerenciaComponent {
       alert('Por favor, ingresa un nombre válido para la gerencia.');
       return;
     }
-    
+  
     const nuevaGerencia = {
       name: this.nombreGerencia.trim(),
       active: this.estadoGerencia
     };
   
     console.log('Guardando nueva gerencia:', nuevaGerencia);
+  
     this.guardar.emit(nuevaGerencia);
-    this.cerrarModal(); 
+  
+    this.cerrarModal();
   }
+  
   
 }
