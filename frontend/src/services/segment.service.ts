@@ -45,13 +45,12 @@ export class SegmentService {
     }
   }
 
-  createSegment(nombreCompleto: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
+  createSegment(nombreCompleto: string, colorSegmento: string): Promise<any> {
     try {
       const headers = this.createHeaders();
       const payload = {
         Name: nombreCompleto,
         Color: colorSegmento,
-        Active: estadoSegmento,
       };
 
       return this.http.post(`${this.apiUrl}`, payload, { headers }).toPromise()
