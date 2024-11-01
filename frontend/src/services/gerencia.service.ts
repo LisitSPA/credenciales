@@ -42,10 +42,12 @@ export class GerenciaService {
   
     const headers = this.createHeaders();
     const payload = {
-      name: gerencia.name.trim(), 
-      active: gerencia.active,
+      Name: gerencia.name.trim(),
+      Active: gerencia.active
     };
-    console.log('Payload enviado para crear gerencia:', payload);
+  
+    console.log('Payload enviado para crear gerencia:', payload);  
+  
     return this.http.post(this.apiUrl, payload, { headers }).toPromise()
       .then(response => {
         console.log('Respuesta de creación de gerencia:', response);
@@ -57,7 +59,6 @@ export class GerenciaService {
       });
   }
   
-
   eliminarGerencia(id: number): Promise<any> {
     const headers = this.headers;
     return this.http.delete(`${this.apiUrl}/${id}`, { headers }).toPromise();

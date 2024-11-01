@@ -47,7 +47,6 @@ export class NuevaGerenciaComponent {
     console.log('Guardando nueva gerencia:', nuevaGerencia);
   
     this.guardar.emit(nuevaGerencia);
-  
     this.cerrarModal();
   }
   
