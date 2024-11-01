@@ -31,20 +31,24 @@ export class SegmentService {
   }
 
   createSegment(nombreCompleto: string, colorSegmento: string, estadoSegmento: boolean): Promise<any> {
-    let headers = this.headers;
-    const formData = new FormData();
-    formData.append('NombreCompleto', nombreCompleto);
-    formData.append('Color', colorSegmento);  
-    formData.append('Active', estadoSegmento.toString());
+    let headers = this.headers.set('Content-Type', 'application/json'); 
+    const payload = {
+      NombreCompleto: nombreCompleto,
+      Color: colorSegmento,
+      Active: estadoSegmento
+    };
   
-    return this.http.post(`${this.apiUrl}`, formData, { headers }).toPromise().then(response => {
-      console.log('Respuesta del servidor:', response);
-      return response;
-    }).catch(error => {
-      console.error('Error en la creación del segmento en el servidor:', error);
-      throw error;
-    });
+    return this.http.post(`${this.apiUrl}`, payload, { headers }).toPromise()
+      .then(response => {
+        console.log('Respuesta del servidor:', response);
+        return response;
+      })
+      .catch(error => {
+        console.error('Error en la creación del segmento en el servidor:', error);
+        throw error;
+      });
   }
+  
   
 
   deleteSegment(id: number): Promise<any> {
