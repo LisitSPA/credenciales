@@ -72,6 +72,18 @@ export class SegmentosComponent {
         }
       });
   }
+  transformColor(color: string): string {
+    console.log('Transformando el color:', color);
+  
+    if (color && color.startsWith('#') && (color.length === 4 || color.length === 5)) {
+      color = color + '0';
+      console.log('Color transformado a:', color);
+    } else {
+      console.log('Color no necesita transformación o no cumple con las condiciones:', color);
+    }
+      return color;
+  }
+  
 
   isValidColor(color: string): boolean {
     console.log('Verificando si el color es válido:', color);
