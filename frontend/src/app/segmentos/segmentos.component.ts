@@ -42,6 +42,8 @@ export class SegmentosComponent {
   cargarListaSegmentos() {
     this.segmentService.getPaginatedSegments(this.currentPage, this.itemsPerPage)
       .then((response: any) => {
+        console.log('Respuesta obtenida del servicio:', response);
+
         if (response && response.content && response.content.data) {
           this.segmentos = response.content.data.map((item: any) => ({
             id: item.id,
@@ -50,6 +52,9 @@ export class SegmentosComponent {
             activo: item.active,
             seleccionado: false,
           }));
+
+          console.log('Segmentos después de mapear:', this.segmentos);
+
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
           this.updatePaginatedSegmentos();  
           console.log('Segmentos obtenidos:', this.segmentos);
@@ -69,9 +74,13 @@ export class SegmentosComponent {
   }
 
   isValidColor(color: string): boolean {
+    console.log('Verificando si el color es válido:', color);
+
     const s = new Option().style;
     s.color = color;
-    return s.color !== '';
+    const isValid = s.color !== '';
+    console.log('Resultado de la verificación del color:', isValid);
+    return isValid;
   }
 
   updatePaginatedSegmentos() {

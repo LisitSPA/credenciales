@@ -28,7 +28,9 @@
               <td>{{ segmento.nombreCompleto }}</td> 
               <td>
                 <div *ngIf="isValidColor(segmento.color); else noColor" [style.background]="segmento.color" style="width: 20px; height: 20px"></div>
-                <ng-template #noColor>{{ segmento.color }}</ng-template>
+                <ng-template #noColor>
+                  <span>{{ segmento.color }}</span>
+                </ng-template>
               </td>
               <td>{{ segmento.activo ? 'Activo' : 'Inactivo' }}</td>
               <td>
@@ -40,8 +42,7 @@
                 </button>
               </td>
             </tr>
-          </tbody>
-          
+          </tbody>       
         </table>
       </div>
 
