@@ -82,14 +82,13 @@ export class NuevoColaboradorComponent {
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
     console.log('Valor de Sede antes de enviar:', this.sede);
   
-
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
       LeadershipId: this.gerencia,
       SegmentId: this.segmento,
       Position: this.cargo,
-      Sede: this.sede,  
+      Area: this.sede,  
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
