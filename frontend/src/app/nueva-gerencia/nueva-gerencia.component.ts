@@ -23,17 +23,7 @@ export class NuevaGerenciaComponent {
   }
 
   crearGerencia() {
-    if (this.nombreGerencia.trim()) {
-      this.guardar.emit({ name: this.nombreGerencia, active: this.estadoGerencia });
-      this.cerrarModal(); 
-    } else {
-      console.error('El nombre de la gerencia no puede estar vacío.');
-    }
-  }
-  
-
-  guardarNuevaGerencia() {
-    if (!this.nombreGerencia.trim()) {
+    if (!this.nombreGerencia || !this.nombreGerencia.trim()) {
       console.error('El nombre de la gerencia no puede estar vacío.');
       alert('Por favor, ingresa un nombre válido para la gerencia.');
       return;
@@ -41,14 +31,14 @@ export class NuevaGerenciaComponent {
   
     const nuevaGerencia = {
       name: this.nombreGerencia.trim(),
-      active: this.estadoGerencia
+      active: this.estadoGerencia,
     };
   
     console.log('Guardando nueva gerencia:', nuevaGerencia);
-  
     this.guardar.emit(nuevaGerencia);
     this.cerrarModal();
   }
+  
   
   
 }
