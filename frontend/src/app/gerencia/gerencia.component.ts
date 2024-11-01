@@ -105,6 +105,12 @@ export class GerenciasComponent {
   }
 
   async guardarNuevaGerencia(gerenciaCreada: { name: string; active: boolean }) {
+    if (!gerenciaCreada || !gerenciaCreada.name.trim()) {
+      console.error('El nombre de la gerencia no puede estar vacío.');
+      alert('Por favor, ingresa un nombre válido para la gerencia.');
+      return;
+    }
+  
     try {
       console.log('Guardando nueva gerencia:', gerenciaCreada);
       await this.gerenciaService.crearGerencia(gerenciaCreada);  
@@ -113,6 +119,7 @@ export class GerenciasComponent {
       this.cerrarModalNuevaGerencia();
     } catch (error) {
       console.error('Error al crear la gerencia:', error);
+      alert('Ocurrió un error al crear la gerencia. Verifica los datos e inténtalo nuevamente.');
     }
   }
   

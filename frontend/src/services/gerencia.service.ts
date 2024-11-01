@@ -39,13 +39,13 @@ export class GerenciaService {
     if (!gerencia.name || gerencia.name.trim() === '') {
       return Promise.reject(new Error('El nombre de la gerencia no puede estar vacío.'));
     }
-
+  
     const headers = this.createHeaders();
     const payload = {
-      Name: gerencia.name.trim(),
-      Active: gerencia.active,
+      name: gerencia.name.trim(), 
+      active: gerencia.active,
     };
-    console.log('Payload enviado para crear gerencia:', payload); 
+    console.log('Payload enviado para crear gerencia:', payload);
     return this.http.post(this.apiUrl, payload, { headers }).toPromise()
       .then(response => {
         console.log('Respuesta de creación de gerencia:', response);
@@ -56,6 +56,7 @@ export class GerenciaService {
         throw error;
       });
   }
+  
 
   eliminarGerencia(id: number): Promise<any> {
     const headers = this.headers;
