@@ -23,8 +23,11 @@ export class ModificarSegmentoComponent implements OnInit {
   constructor(
     private segmentoService: SegmentService
   ) {}
-  async ngOnInit() {
-    this.loadSegmentos();
+  ngOnInit() {
+    if (this.segmento) {
+      this.nombreSegmento = this.segmento.nombreCompleto;
+      this.colorSegmento = this.segmento.color;
+    }
   }
 
 
@@ -56,11 +59,13 @@ export class ModificarSegmentoComponent implements OnInit {
       id: this.segmento.id, 
       nombreCompleto: this.nombreSegmento,
       color: this.colorSegmento,
-      activo: this.segmento.activo 
+      activo: this.segmento.activo
     };
-    
+  
+    console.log('Guardando datos del segmento:', segmentoModificado);
     this.guardar.emit(segmentoModificado);  
   }
+  
   onFileSelected(event: any) {
     const file = event.target.files[0];
   }

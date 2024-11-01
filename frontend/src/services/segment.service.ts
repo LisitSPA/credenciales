@@ -98,7 +98,7 @@ export class SegmentService {
         Active: active,
       };
       console.log('Actualizando segmento con los valores:', payload);
-
+  
       return this.http.put(`${this.apiUrl}`, payload, { headers }).toPromise()
         .then(response => {
           console.log('Respuesta del servidor al actualizar el segmento:', response);
@@ -113,5 +113,6 @@ export class SegmentService {
       return Promise.reject(error);
     }
   }
+  
 }
 
