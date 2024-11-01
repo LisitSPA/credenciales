@@ -55,15 +55,21 @@ export class ModificarSegmentoComponent implements OnInit {
   }
   
   guardarDatos() {
+    if (!this.segmento || !this.segmento.id) {
+      console.error('El segmento no está definido o no tiene ID válido:', this.segmento);
+      alert('Error: No se pudo editar el segmento porque la información no es válida.');
+      return;
+    }
+  
     const segmentoModificado = {
-      id: this.segmento.id, 
+      id: this.segmento.id,
       nombreCompleto: this.nombreSegmento,
       color: this.colorSegmento,
       activo: this.segmento.activo
     };
   
     console.log('Guardando datos del segmento:', segmentoModificado);
-    this.guardar.emit(segmentoModificado);  
+    this.guardar.emit(segmentoModificado);
   }
   
   onFileSelected(event: any) {

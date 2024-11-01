@@ -76,9 +76,11 @@
 </app-eliminar>
 
 <app-modificar-segmento 
-  *ngIf="mostrarModificar" 
-  (guardar)="guardarModificaciones($event)" 
-  (cerrar)="cerrarFormulario()">
+  *ngIf="mostrarModificar"
+  [segmento]="segmentoSeleccionado"
+  (cerrar)="cerrarFormulario()"
+  (guardar)="guardarModificaciones($event)">
 </app-modificar-segmento>
+
 
 </body>

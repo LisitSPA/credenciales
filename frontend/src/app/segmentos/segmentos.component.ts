@@ -196,9 +196,14 @@ export class SegmentosComponent {
   }
   
   abrirFormularioModificar(segmento: Segmento) {
-    this.segmentoSeleccionado = segmento; 
-    this.mostrarModificar = true; 
+    if (segmento && segmento.id) {
+      this.segmentoSeleccionado = segmento; 
+      this.mostrarModificar = true; 
+    } else {
+      console.error('El segmento seleccionado no es válido:', segmento);
+    }
   }
+  
   
   cerrarFormulario() {
     this.mostrarModificar = false;
