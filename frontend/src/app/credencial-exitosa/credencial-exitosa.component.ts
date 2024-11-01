@@ -38,24 +38,24 @@ export class CredencialExitosaComponent implements OnInit {
   cargarDatosColaborador(id: number) {
     this.collaboratorService.getCollaboratorById(id).then(colaborador => {
       if (colaborador) {
-        this.nombre = colaborador.completeName ? colaborador.completeName : 'No Disponible';
-        this.cargo = colaborador.position ? colaborador.cargo :'No Disponible';
-        this.correo = colaborador.email || this.correo;
-        this.celular = colaborador.phone || this.celular;
-        this.segmento = colaborador.segment || this.segmento;
-        this.area = colaborador.leadership || this.area;
+        this.nombre = colaborador.completeName;
+        console.log('Nombre asignado:nn', this.nombre);  
+        this.cargo = colaborador.position;
+        console.log('Cargo asignado:', this.cargo);    
+        this.correo = colaborador.email;
+        this.celular = colaborador.phone;
+        this.segmento = colaborador.segment;
+        this.area = colaborador.leadership;
         this.qrCodeDataUrl = colaborador.qrCodeUrl || this.qrCodeDataUrl;
         
-
         this.cdr.detectChanges();
       }
-      console.log('Nombre obtenido:', this.nombre);
-      console.log('Cargo obtenido:', this.cargo);
-
+    
       console.log('Datos del colaborador obtenidos:', colaborador);
     }).catch(error => {
       console.error('Error al cargar los datos del colaborador:', error);
     });
+    
   }
 
   descargarImagen() {
