@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import QRCode from 'qrcode';
 import { Router } from '@angular/router';
+import { CollaboratorService } from '../../services/collaborators.service';
 
 @Component({
   selector: 'app-generar-credencial',
@@ -11,7 +12,9 @@ import { Router } from '@angular/router';
   templateUrl: './generar-credencial.component.html',
   styleUrls: ['./generar-credencial.component.css']
 })
-export class GenerarCredencialComponent {
+export class GenerarCredencialComponent implements OnInit {
+  colaboradores: any[] = []; 
+  selectedColaboradorId: string = ''; 
   nombre: string = '';
   rut: string = '';
   gerencia: string = '';
@@ -23,11 +26,46 @@ export class GenerarCredencialComponent {
   foto: File | null = null;
   qrCodeUrl: string | undefined;
 
+  disableFields: boolean = true; 
+
   @Output() cerrar = new EventEmitter<void>();
 
-  private ipLocal: string = '192.168.3.102'; 
+  private ipLocal: string = '192.168.3.102';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private collaboratorService: CollaboratorService) {}
+
+  ngOnInit() {
+    this.loadColaboradores();
+  }
+
+  async loadColaboradores() {
+    try {
+      const response = await this.collaboratorService.getPaginatedCollaborators(1, 100);
+      if (response && response.content && response.content.data) {
+        this.colaboradores = response.content.data;
+      }
+    } catch (error) {
+      console.error('Error al cargar colaboradores:', error);
+    }
+  }
+
+  onSelectColaborador() {
+    const colaborador = this.colaboradores.find(c => c.id === parseInt(this.selectedColaboradorId, 10));
+    if (colaborador) {
+      this.nombre = colaborador.completeName;
+      this.rut = colaborador.rut;
+      this.gerencia = colaborador.leadership;
+      this.cargo = colaborador.position;
+      this.segmento = colaborador.segment;
+      this.celular = colaborador.phone;
+      this.correo = colaborador.email;
+      this.sede = colaborador.area;
+
+      this.disableFields = false;
+    } else {
+      this.disableFields = true;
+    }
+  }
 
   async guardarDatos() {
     if (!this.nombre || !this.cargo || !this.correo) {
