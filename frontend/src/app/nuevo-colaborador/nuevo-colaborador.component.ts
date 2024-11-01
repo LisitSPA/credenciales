@@ -78,6 +78,8 @@ export class NuevoColaboradorComponent {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
+    console.log('Valor de Sede antes de enviar:', this.sede);
+
 
     const nuevoColaborador = {
       CompleteName: this.nombre,
