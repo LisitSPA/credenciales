@@ -40,33 +40,29 @@ export class GerenciaService {
         const headers = this.createHeaders();
         return headers.set('Content-Type', 'application/json');
       }
-    createGerencia(nombreCompleto: string, active: boolean): Promise<any> {
-        try {
-          const headers = this.createJsonHeaders(); 
-    
-          console.log('Valores antes de crear el segmento:');
-          console.log('Nombre del segmento:', nombreCompleto);
-          console.log('Color del segmento:', active);
-    
-          const payload = {
-            Name: nombreCompleto,
-            Active: active,
-          };
-    
-          return this.http.post(`${this.apiUrl}`, payload, { headers }).toPromise()
-            .then(response => {
-              console.log('Respuesta del servidor:', response);
-              return response;
-            })
-            .catch(error => {
-              console.error('Error en la creación de la gerencia en el servidor:', error);
-              throw error;
-            });
-        } catch (error) {
-          console.error('Error al intentar crear el encabezado o al crear la gerencia:', error);
-          return Promise.reject(error);
+      crearGerencia(name: string, active: boolean): Promise<any> {
+        if (!name || name.trim() === '') {
+          return Promise.reject(new Error('El nombre de la gerencia no puede estar vacío.'));
         }
+      
+        const headers = this.createJsonHeaders();
+        const payload = {
+          Name: name.trim(),
+          Active: active,
+        };
+      
+        console.log('Payload enviado para crear gerencia:', payload);
+        return this.http.post(this.apiUrl, payload, { headers }).toPromise()
+          .then(response => {
+            console.log('Respuesta de creación de gerencia:', response);
+            return response;
+          })
+          .catch(error => {
+            console.error('Error en la creación de gerencia:', error);
+            throw error;
+          });
       }
+      
 
   eliminarGerencia(id: number): Promise<any> {
     const headers = this.headers;

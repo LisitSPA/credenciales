@@ -113,7 +113,7 @@ export class GerenciasComponent {
   
     try {
       console.log('Guardando nueva gerencia:', gerenciaCreada);
-      await this.gerenciaService.crearGerencia(gerenciaCreada);  
+      await this.gerenciaService.crearGerencia(gerenciaCreada.name, gerenciaCreada.active);
       console.log('Gerencia creada exitosamente');
       this.cargarListaGerencias();  
       this.cerrarModalNuevaGerencia();
