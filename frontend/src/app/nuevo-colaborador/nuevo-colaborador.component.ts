@@ -74,10 +74,14 @@ export class NuevoColaboradorComponent {
   }
 
   async guardarDatos() {
-    if (!this.nombre || !this.celular || !this.correo || !this.sede)  {
+    if (!this.nombre || !this.celular || !this.correo) {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
+  
+    this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
+    console.log('Valor de Sede antes de enviar:', this.sede);
+  
 
     const nuevoColaborador = {
       CompleteName: this.nombre,
@@ -85,7 +89,7 @@ export class NuevoColaboradorComponent {
       LeadershipId: this.gerencia,  
       SegmentId: this.segmento, 
       Position: this.cargo,
-      Sede: this.sede,
+      Area: this.sede,
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1, 
