@@ -76,27 +76,34 @@ export class NuevoColaboradorComponent {
   
 
   async guardarDatos() {
-    if (!this.nombre || !this.celular || !this.correo || !this.segmento) {
+    if (!this.nombre || !this.celular || !this.correo) {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
   
-    const segmentoSeleccionado = this.segmentos.find(segmento => segmento.id === +this.segmento);
-    if (!segmentoSeleccionado) {
+    if (!this.segmento) {
+      console.error('Segmento no seleccionado o no válido.');
+      alert('Por favor, selecciona un segmento válido.');
+      return;
+    }
+  
+    if (typeof this.segmento !== 'number' || !Number.isInteger(this.segmento)) {
+      console.error('El SegmentId no es un número válido.');
       alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
       return;
     }
   
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
-    console.log('Valor de Sede antes de enviar:', this.sede);    
-    
+    console.log('Valor de Sede antes de enviar:', this.sede);
+    console.log('Segmento seleccionado:', this.segmento); 
+  
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
       LeadershipId: this.gerencia,
       SegmentId: this.segmento,
       Position: this.cargo,
-      Area: this.sede,  
+      Area: this.sede,
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
