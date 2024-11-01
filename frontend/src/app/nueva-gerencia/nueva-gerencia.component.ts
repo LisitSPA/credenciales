@@ -12,11 +12,10 @@ import { FormsModule } from '@angular/forms';
 export class NuevaGerenciaComponent {
   @Input() mostrarModal: boolean = false;
   @Output() cerrar = new EventEmitter<void>();
-  @Output() guardar = new EventEmitter<{ name: string, active: boolean }>();
+  @Output() guardar = new EventEmitter<{ name: string }>(); 
   @Input() gerenciaSeleccionada!: { id: number; name: string; active: boolean };  
 
   nombreGerencia: string = '';  
-  estadoGerencia: boolean = true;  
 
   cerrarModal() {
     this.cerrar.emit();
@@ -28,17 +27,13 @@ export class NuevaGerenciaComponent {
       alert('Por favor, ingresa un nombre válido para la gerencia.');
       return;
     }
-  
+
     const nuevaGerencia = {
       name: this.nombreGerencia.trim(),
-      active: this.estadoGerencia,
     };
-  
+
     console.log('Guardando nueva gerencia:', nuevaGerencia);
-    this.guardar.emit(nuevaGerencia);
+    this.guardar.emit(nuevaGerencia); 
     this.cerrarModal();
   }
-  
-  
-  
 }

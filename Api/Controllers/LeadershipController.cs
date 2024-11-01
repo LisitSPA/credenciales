@@ -31,7 +31,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("", Name = "CreateLeadership")]
-        public async Task<IActionResult> CreateLeadership([FromQuery] CreateLeadershipCommand command)
+        public async Task<IActionResult> CreateLeadership([FromBody] CreateLeadershipCommand command)
         {
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);

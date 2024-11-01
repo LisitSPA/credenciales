@@ -40,7 +40,7 @@ export class GerenciaService {
         const headers = this.createHeaders();
         return headers.set('Content-Type', 'application/json');
       }
-      crearGerencia(name: string, active: boolean): Promise<any> {
+      crearGerencia(name: string): Promise<any> {
         if (!name || name.trim() === '') {
           return Promise.reject(new Error('El nombre de la gerencia no puede estar vacío.'));
         }
@@ -48,7 +48,6 @@ export class GerenciaService {
         const headers = this.createJsonHeaders();
         const payload = {
           Name: name.trim(),
-          Active: active,
         };
       
         console.log('Payload enviado para crear gerencia:', payload);

@@ -104,7 +104,7 @@ export class GerenciasComponent {
     this.mostrarModalNuevaGerencia = false;
   }
 
-  async guardarNuevaGerencia(gerenciaCreada: { name: string; active: boolean }) {
+  async guardarNuevaGerencia(gerenciaCreada: { name: string }) {
     if (!gerenciaCreada || !gerenciaCreada.name.trim()) {
       console.error('El nombre de la gerencia no puede estar vacío.');
       alert('Por favor, ingresa un nombre válido para la gerencia.');
@@ -113,7 +113,7 @@ export class GerenciasComponent {
   
     try {
       console.log('Guardando nueva gerencia:', gerenciaCreada);
-      await this.gerenciaService.crearGerencia(gerenciaCreada.name, gerenciaCreada.active);
+      await this.gerenciaService.crearGerencia(gerenciaCreada.name);
       console.log('Gerencia creada exitosamente');
       this.cargarListaGerencias();  
       this.cerrarModalNuevaGerencia();
@@ -123,7 +123,6 @@ export class GerenciasComponent {
     }
   }
   
-
   abrirModalModificar(gerencia: Gerencia) {
     if (gerencia.id !== undefined) {
       this.gerenciaSeleccionada = { ...gerencia };
