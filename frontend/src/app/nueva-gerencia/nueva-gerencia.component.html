@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-primary" (click)="guardarNuevaGerencia()">Guardar</button>
+      <button class="btn btn-primary" (click)="guardarNuevaGerencia()" [disabled]="!nombreGerencia.trim()">Guardar</button>
       <button class="btn btn-secondary" (click)="cerrarModal()">Cerrar</button>
     </div>
   </div>

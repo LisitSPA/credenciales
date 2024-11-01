@@ -33,7 +33,20 @@ export class NuevaGerenciaComponent {
   
 
   guardarNuevaGerencia() {
-    console.log('Guardando cambios para la gerencia seleccionada:', this.gerenciaSeleccionada);
-    this.guardar.emit(this.gerenciaSeleccionada); 
+    if (!this.nombreGerencia.trim()) {
+      console.error('El nombre de la gerencia no puede estar vacío.');
+      alert('Por favor, ingresa un nombre válido para la gerencia.');
+      return;
+    }
+    
+    const nuevaGerencia = {
+      name: this.nombreGerencia.trim(),
+      active: this.estadoGerencia
+    };
+  
+    console.log('Guardando nueva gerencia:', nuevaGerencia);
+    this.guardar.emit(nuevaGerencia);
+    this.cerrarModal(); 
   }
+  
 }
