@@ -39,7 +39,7 @@
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-    width: 10%;
+    width: auto;
     font-family: 'Roboto', sans-serif;
     font-size: medium;
   }
@@ -49,9 +49,20 @@
     color: #005bb5;
     border: 2px solid #005bb5; 
     cursor: pointer;
-    width: 17%;
+    width: auto;
     font-family: 'Roboto', sans-serif;
     font-size: medium;
+
+  }
+  .btn-secondary-1_{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    width: auto;
+    font-family: "Titillium Web", sans-serif;
+    font-size: medium;
+    font-weight: 300;
+    text-align: left;
 
   }
   
@@ -76,28 +87,32 @@
   margin: 0 20px; 
 }
 .dropdown-menu {
-  border: 1px solid #005bb5;
+  border: 1px solid grey;
   background-color: white;
   border-radius: 5px;
   padding: 10px;
-  position: absolute; 
-  z-index: 1000; 
+  position: absolute;
+  z-index: 1000;
+  width: 235px; 
+  margin-top: 50px;
 }
 
 .dropdown-option {
   display: block;
   background: transparent;
   border: none;
-  color: #005bb5;
+  color: black;
   padding: 8px;
   cursor: pointer;
   width: 100%;
   text-align: left;
+  box-sizing: border-box; 
 }
 
 .dropdown-option:hover {
-  background-color: #f0f0f0; 
+  background-color: #f0f0f0;
 }
+
 .selected {
   background-color: #87CEEB; 
   color: white; 
