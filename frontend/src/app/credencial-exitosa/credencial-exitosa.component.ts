@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import DomToImage from 'dom-to-image';
+import QRCode from 'qrcode';
 import { CollaboratorService } from '../../services/collaborators.service';
 import { ChangeDetectorRef } from '@angular/core';
-import QRCode from 'qrcode';
 
 @Component({
   selector: 'app-credencial-exitosa',
@@ -19,7 +19,7 @@ export class CredencialExitosaComponent implements OnInit {
   cargo: string = '';
   correo: string = '';
   celular: string = '';
-  qrCodeDataUrl: string = 'https://via.placeholder.com/150';
+  qrCodeDataUrl: string = ''; 
   segmento: string = '';
   area: string = '';
 
@@ -33,7 +33,12 @@ export class CredencialExitosaComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
-      this.cargarDatosColaborador(id);
+      console.log('ID recibido desde la ruta:', id); 
+      if (id) {
+        this.cargarDatosColaborador(id);
+      } else {
+        console.error('No se proporcionó el ID del colaborador.');
+      }
     });
   }
 
@@ -49,6 +54,10 @@ export class CredencialExitosaComponent implements OnInit {
         this.segmento = colaborador.segment || '';
         this.area = colaborador.leadership || '';
 
+        console.log('Datos del colaborador:', colaborador); 
+
+        this.generarQRCode(id);
+
         this.cdr.detectChanges();
       } else {
         console.error('El objeto `response.content` no contiene datos.');
@@ -58,15 +67,16 @@ export class CredencialExitosaComponent implements OnInit {
     });
   }
 
-  async generateQRCode(id: number) {
+  async generarQRCode(id: number) {
     const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
-    console.log('URL para el QR:', url);
+
+    console.log('URL para el QR:', url); 
 
     try {
       this.qrCodeDataUrl = await QRCode.toDataURL(url);
-      console.log('QR Code generado:', this.qrCodeDataUrl);
-    } catch (err) {
-      console.error('Error generando QR Code:', err);
+      console.log('QR Code generado:', this.qrCodeDataUrl); 
+    } catch (error) {
+      console.error('Error generando QR Code:', error);
     }
   }
 
