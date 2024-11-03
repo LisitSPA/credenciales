@@ -111,7 +111,7 @@ export class NuevoColaboradorComponent {
       CompleteName: this.nombre,
       RUT: this.rut,
       Position: this.cargo,
-      Area: this.sede || "Sin Sede", 
+      Area: this.sede, 
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
@@ -134,11 +134,15 @@ export class NuevoColaboradorComponent {
       this.cerrar.emit();
     } catch (error: any) {
       console.error('Error al crear colaborador:', error);
-      alert('Hubo un error al crear el colaborador.');
+      if (error.message) {
+        alert('Hubo un error al crear el colaborador: ' + error.message);
+      } else {
+        alert('Hubo un error al crear el colaborador.');
+      }
     }
   }
   
-    onFileSelected(event: Event) {
+  onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.foto = input.files[0];
