@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -16,16 +15,13 @@ export class CredencialWebComponent implements OnInit {
   sede: string = '';
   segmento: string = '';
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    private route: ActivatedRoute 
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params: any) => {
+    this.route.queryParams.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.inicializarDatos(); 
+        this.inicializarDatos();
       } else {
         console.error('No se proporcionó el ID del colaborador');
       }
