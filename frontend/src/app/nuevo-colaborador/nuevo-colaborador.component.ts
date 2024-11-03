@@ -57,7 +57,7 @@ export class NuevoColaboradorComponent {
   
       if (response && response.content && response.content.data) {
         this.segmentos = response.content.data
-          .filter((item: any) => item.active) // Filtrar solo segmentos activos
+          .filter((item: any) => item.active) 
           .map((item: any) => ({
             id: item.id,
             nombreCompleto: item.name,  
@@ -82,8 +82,10 @@ export class NuevoColaboradorComponent {
     }
   
     const segmentoId = parseInt(this.segmento, 10);
-    if (isNaN(segmentoId)) {
-      console.error('El SegmentId no es un número válido.');
+    const segmentoExiste = this.segmentos.some(segmento => segmento.id === segmentoId);
+
+    if (!segmentoExiste) {
+      console.error('El SegmentId no es un número válido o no existe en la lista de segmentos.');
       alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
       return;
     }
