@@ -111,7 +111,7 @@ export class NuevoColaboradorComponent {
       CompleteName: this.nombre,
       RUT: this.rut,
       Position: this.cargo,
-      Area: this.sede,
+      Area: this.sede || "Sin Sede",
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
