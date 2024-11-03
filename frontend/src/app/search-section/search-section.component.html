@@ -14,7 +14,8 @@
       </button>
       
       <div *ngIf="isDropdownVisible" class="dropdown-menu"> 
-        <h3 style="color: black;">Carga masiva de Documentos</h3>
+        <h3 class="btn-secondary-1_">Carga masiva de Documentos
+        </h3>
         <button (click)="onLoadOption('Colaboradores')" 
                 class="dropdown-option" 
                 [ngClass]="{'selected': selectedOption === 'Colaboradores'}">Colaboradores</button>
