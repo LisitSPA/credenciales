@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-credencialWeb',
@@ -15,10 +16,20 @@ export class CredencialWebComponent implements OnInit {
   sede: string = '';
   segmento: string = '';
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private route: ActivatedRoute 
+  ) {}
 
   ngOnInit() {
-    this.inicializarDatos();
+    this.route.queryParams.subscribe((params: any) => {
+      const id = params['id'];
+      if (id) {
+        this.inicializarDatos(); 
+      } else {
+        console.error('No se proporcionó el ID del colaborador');
+      }
+    });
   }
 
   inicializarDatos() {

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import DomToImage from 'dom-to-image';
 import { CollaboratorService } from '../../services/collaborators.service';
 import { ChangeDetectorRef } from '@angular/core';
+import QRCode from 'qrcode';
 
 @Component({
   selector: 'app-credencial-exitosa',
@@ -55,6 +56,17 @@ export class CredencialExitosaComponent implements OnInit {
     }).catch(error => {
       console.error('Error al cargar los datos del colaborador:', error);
     });
+  }
+
+  async generateQRCode(id: number) {
+    const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
+
+    try {
+      this.qrCodeDataUrl = await QRCode.toDataURL(url);
+      console.log('QR Code generado:', this.qrCodeDataUrl);
+    } catch (err) {
+      console.error('Error generando QR Code:', err);
+    }
   }
 
   descargarImagen() {
