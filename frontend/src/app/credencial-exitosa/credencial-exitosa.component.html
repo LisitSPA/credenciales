@@ -6,7 +6,7 @@
       <div class="card-container">
         <div class="card front-card">
           <div class="logo-section">
-            <img src="/DDC-05.svg" alt="DDC Logo" class="logo">
+            <img src="/Logos DDC-05.svg" alt="DDC Logo" class="logo">
           </div>
           <div class="info-section">
             <div class="text-container">
@@ -22,8 +22,7 @@
             </div>
 
             <div class="qr-container">
-              <img src="/images.png" style="height: 70px; width: 70px;">
-              <!-- <img [src]="qrCodeDataUrl" alt="QR Code" class="qr-code" *ngIf="qrCodeDataUrl"> -->
+              <img [src]="qrCodeDataUrl" alt="QR Code" class="qr-code" *ngIf="qrCodeDataUrl"> 
             </div>
           </div>
           <div class="footer-section">
@@ -33,7 +32,7 @@
 
         <div class="card back-card">
           <div class="logo-section">
-            <img src="/DDC-04.svg" alt="DDC Logo" class="logo">
+            <img src="/Logos DDC-04.svg" alt="DDC Logo" class="logo">
           </div>
           <div class="commitment-section">
             <p class="commitment-text" style="text-align: center; font-weight: 500;">Compromiso DDC</p>
@@ -49,7 +48,7 @@
 
       <div class="button">
         <a class="btn-secondary-1" (click)="descargarImagen()">Descargar credencial</a>
-        <a class="btn-secondary" href="generarfirma">Crear</a>
+        <a class="btn-secondary" (click)="cerrar()">Cerrar</a>
       </div>
     </div>
   </div>
