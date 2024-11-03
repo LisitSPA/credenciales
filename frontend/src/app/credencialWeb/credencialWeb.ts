@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CollaboratorService } from '../../services/collaborators.service';
 
 @Component({
   selector: 'app-credencialWeb',
@@ -15,36 +16,38 @@ export class CredencialWebComponent implements OnInit {
   sede: string = '';
   segmento: string = '';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private collaboratorService: CollaboratorService) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.inicializarDatos();
+        this.cargarDatosColaborador(id);
       } else {
         console.error('No se proporcionó el ID del colaborador');
       }
     });
   }
 
-  inicializarDatos() {
-    if (typeof window !== 'undefined' && localStorage) {
-      const colaborador = localStorage.getItem('colaboradorData');
-      if (colaborador) {
-        const data = JSON.parse(colaborador);
-        this.nombre = data.nombre;
-        this.cargo = data.cargo;
-        this.correo = data.correo;
-        this.celular = data.celular;
-        this.sede = data.sede;
-        this.segmento = data.segmento;
+  cargarDatosColaborador(id: number) {
+    this.collaboratorService.getCollaboratorById(id).then(response => {
+      if (response && response.content) {
+        const colaborador = response.content;
+
+        this.nombre = colaborador.completeName || '';
+        this.cargo = colaborador.position || '';
+        this.correo = colaborador.email || '';
+        this.celular = colaborador.phone || '';
+        this.sede = colaborador.leadership || '';
+        this.segmento = colaborador.segment || '';
+
+        console.log('Datos del colaborador cargados:', colaborador);
       } else {
-        console.error('No se encontraron datos de colaborador en localStorage');
+        console.error('El objeto `response.content` no contiene datos.');
       }
-    } else {
-      console.error('localStorage no está disponible');
-    }
+    }).catch(error => {
+      console.error('Error al cargar los datos del colaborador:', error);
+    });
   }
 
   descargarContacto() {

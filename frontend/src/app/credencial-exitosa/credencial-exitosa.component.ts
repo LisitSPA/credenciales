@@ -71,14 +71,6 @@ export class CredencialExitosaComponent implements OnInit {
     const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
 
     console.log('URL para el QR:', url); 
-    localStorage.setItem('colaboradorData', JSON.stringify({
-      nombre: this.nombre,
-      cargo: this.cargo,
-      correo: this.correo,
-      celular: this.celular,
-      sede: this.area,
-      segmento: this.segmento
-    }));
     try {
       this.qrCodeDataUrl = await QRCode.toDataURL(url);
       console.log('QR Code generado:', this.qrCodeDataUrl); 
