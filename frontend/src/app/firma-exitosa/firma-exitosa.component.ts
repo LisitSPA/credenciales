@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import DomToImage from 'dom-to-image';
+import QRCode from 'qrcode';
 import { CollaboratorService } from '../../services/collaborators.service';
 import { ChangeDetectorRef } from '@angular/core';
 
@@ -18,7 +19,7 @@ export class FirmaExitosaComponent implements OnInit {
   cargo: string = '';
   correo: string = '';
   celular: string = '';
-  qrCodeDataUrl: string = 'https://via.placeholder.com/150';
+  qrCodeDataUrl: string = ''; 
   segmento: string = '';
   area: string = '';
 
@@ -31,7 +32,11 @@ export class FirmaExitosaComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
-      this.cargarDatosColaborador(id);
+      if (id) {
+        this.cargarDatosColaborador(id);
+      } else {
+        console.error('No se proporcionó el ID del colaborador.');
+      }
     });
   }
 
@@ -46,15 +51,28 @@ export class FirmaExitosaComponent implements OnInit {
         this.celular = colaborador.content.phone;
         this.segmento = colaborador.content.segment;
         this.area = colaborador.content.leadership;
-        this.qrCodeDataUrl = colaborador.content.qrCodeUrl || this.qrCodeDataUrl;
+
+        this.generarQRCode(id);
 
         this.cdr.detectChanges();
+      } else {
+        console.error('El objeto `response.content` no contiene datos.');
       }
-
-      console.log('Datos del colaborador obtenidos:', colaborador);
     }).catch(error => {
       console.error('Error al cargar los datos del colaborador:', error);
     });
+  }
+
+  async generarQRCode(id: number) {
+    const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
+
+    console.log('URL para el QR:', url); 
+    try {
+      this.qrCodeDataUrl = await QRCode.toDataURL(url);
+      console.log('QR Code generado:', this.qrCodeDataUrl); 
+    } catch (error) {
+      console.error('Error generando QR Code:', error);
+    }
   }
 
   descargarImagen() {

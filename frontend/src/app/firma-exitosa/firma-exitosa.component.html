@@ -1,7 +1,7 @@
 <body>
   <div class="login-container">
     <div class="login-card">
-      <h2 style="text-align: center;">Generar Firma de Correo</h2>
+      <h2 style="text-align: center;">Copiar Pie de Firma de Correo</h2>
 
       <div class="business-card">
         <div class="download">
@@ -22,7 +22,7 @@
 
         <div class="office-info">
           <div class="qr-section">
-            <img src="/images.png">
+            <img [src]="qrCodeDataUrl" alt="QR Code" *ngIf="qrCodeDataUrl"> 
           </div>
           <div class="office-details">
             <p class="head-office-title">Head Office</p>
@@ -45,8 +45,8 @@
 
       <div class="button">
         <a class="btn-secondary-1">Reingresar datos</a>
-        <a class="btn-secondary-1" (click)="descargarImagen()">Descargar credencial</a>
-        <a class="btn-secondary" href="generarfirma">Crear</a>
+        <a class="btn-secondary-1" (click)="descargarImagen()">Descargar Firma de Correo</a>
+        <a class="btn-secondary" href="generarfirma">Copiar Pie de Firma</a>
       </div>
     </div>
     </div>
