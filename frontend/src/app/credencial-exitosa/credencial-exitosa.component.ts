@@ -60,6 +60,7 @@ export class CredencialExitosaComponent implements OnInit {
 
   async generateQRCode(id: number) {
     const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
+    console.log('URL para el QR:', url);
 
     try {
       this.qrCodeDataUrl = await QRCode.toDataURL(url);
