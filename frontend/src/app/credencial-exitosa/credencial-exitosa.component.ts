@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import DomToImage from 'dom-to-image';
@@ -25,7 +25,8 @@ export class CredencialExitosaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private collaboratorService: CollaboratorService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router 
   ) {}
 
   ngOnInit() {
@@ -40,14 +41,8 @@ export class CredencialExitosaComponent implements OnInit {
       if (response && response.content) {
         const colaborador = response.content;
 
-        console.log('Contenido completo del colaborador:', colaborador);
-
         this.nombre = colaborador.completeName || '';
-        console.log('Nombre asignado:', this.nombre);
-
         this.cargo = colaborador.position || '';
-        console.log('Cargo asignado:', this.cargo);
-
         this.correo = colaborador.email || '';
         this.celular = colaborador.phone || '';
         this.segmento = colaborador.segment || '';
@@ -81,5 +76,9 @@ export class CredencialExitosaComponent implements OnInit {
           console.error('Error al generar la imagen:', error);
         });
     }
+  }
+
+  cerrar() {
+    this.router.navigate(['/colaboradores']);
   }
 }
