@@ -100,19 +100,16 @@ export class NuevoColaboradorComponent {
     console.log('Valor de Sede antes de enviar:', this.sede);
     console.log('Segmento seleccionado:', segmentoId);
   
-    const nuevoColaborador = {
+    const nuevoColaborador: any = {
       CompleteName: this.nombre,
       RUT: this.rut,
-      LeadershipId: Number(this.gerencia),
-      SegmentId: segmentoId,
       Position: this.cargo,
-      Area: this.sede,
+      Area: this.sede || "Sin Sede",
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
-      Photo: this.foto,
+      Photo: this.foto
     };
-  
     try {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);
       await this.collaboratorService.createCollaborator(nuevoColaborador);
