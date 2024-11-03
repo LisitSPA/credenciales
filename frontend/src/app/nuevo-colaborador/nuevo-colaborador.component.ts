@@ -4,8 +4,6 @@ import { GerenciaService } from '../../services/gerencia.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CollaboratorService } from '../../services/collaborators.service';
-import { HttpErrorResponse } from '@angular/common/http';
-
 
 @Component({
   selector: 'app-nuevo-colaborador',
@@ -59,7 +57,7 @@ export class NuevoColaboradorComponent {
   
       if (response && response.content && response.content.data) {
         this.segmentos = response.content.data
-          .filter((item: any) => item.active) 
+          .filter((item: any) => item.active) // Filtrar solo segmentos activos
           .map((item: any) => ({
             id: item.id,
             nombreCompleto: item.name,  
@@ -83,11 +81,17 @@ export class NuevoColaboradorComponent {
       return;
     }
   
-    const segmentoId = parseInt(this.segmento, 10);
-    const segmentoValido = this.segmentos.find(segmento => segmento.id === segmentoId);
+    const segmentoId = Number(this.segmento);
+    if (isNaN(segmentoId)) {
+      console.error('El SegmentId no es un número válido.');
+      alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
+      return;
+    }
 
-    if (!segmentoValido) {
-      console.error('El SegmentId no es válido o no existe en la lista de segmentos.');
+    const segmentoExiste = this.segmentos.some(segmento => segmento.id === segmentoId);
+
+    if (!segmentoExiste) {
+      console.error('El SegmentId no existe en la lista de segmentos.');
       alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
       return;
     }
@@ -99,7 +103,7 @@ export class NuevoColaboradorComponent {
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
-      LeadershipId: this.gerencia,
+      LeadershipId: Number(this.gerencia),
       SegmentId: segmentoId,
       Position: this.cargo,
       Area: this.sede,
@@ -115,7 +119,7 @@ export class NuevoColaboradorComponent {
       console.log('Colaborador creado con éxito.');
       this.colaboradorCreado.emit();
       this.cerrar.emit();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error al crear colaborador:', error);
       alert('Hubo un error al crear el colaborador.');
     }
