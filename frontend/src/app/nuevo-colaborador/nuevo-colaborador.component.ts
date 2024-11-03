@@ -84,30 +84,22 @@ export class NuevoColaboradorComponent {
     }
   
     const segmentoId = parseInt(this.segmento, 10);
-    const segmentoExiste = this.segmentos.some(segmento => segmento.id === segmentoId);
+    const segmentoValido = this.segmentos.find(segmento => segmento.id === segmentoId);
 
-    if (isNaN(segmentoId) || !segmentoExiste) {
-      console.error('El SegmentId no es un número válido o no existe en la lista de segmentos.');
+    if (!segmentoValido) {
+      console.error('El SegmentId no es válido o no existe en la lista de segmentos.');
       alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
       return;
     }
-
-    const leadershipId = parseInt(this.gerencia, 10);
-    if (isNaN(leadershipId)) {
-      console.error('El LeadershipId no es un número válido.');
-      alert('La gerencia seleccionada no es válida. Por favor, selecciona una gerencia válida.');
-      return;
-    }
-
+  
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
     console.log('Valor de Sede antes de enviar:', this.sede);
     console.log('Segmento seleccionado:', segmentoId);
-    console.log('Gerencia seleccionada:', leadershipId);
-
+  
     const nuevoColaborador = {
       CompleteName: this.nombre,
       RUT: this.rut,
-      LeadershipId: leadershipId,
+      LeadershipId: this.gerencia,
       SegmentId: segmentoId,
       Position: this.cargo,
       Area: this.sede,
@@ -116,7 +108,7 @@ export class NuevoColaboradorComponent {
       ECollaboratorStatus: 1,
       Photo: this.foto,
     };
-
+  
     try {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);
       await this.collaboratorService.createCollaborator(nuevoColaborador);
@@ -124,15 +116,11 @@ export class NuevoColaboradorComponent {
       this.colaboradorCreado.emit();
       this.cerrar.emit();
     } catch (error) {
-      if (error instanceof HttpErrorResponse) {
-        console.error('Error al crear colaborador (HttpErrorResponse):', error);
-        alert(`Error al crear colaborador: ${error.error?.message || 'Ocurrió un error inesperado.'}`);
-      } else {
-        console.error('Error al crear colaborador:', error);
-        alert('Hubo un error al crear el colaborador.');
-      }
+      console.error('Error al crear colaborador:', error);
+      alert('Hubo un error al crear el colaborador.');
     }
   }
+  
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
