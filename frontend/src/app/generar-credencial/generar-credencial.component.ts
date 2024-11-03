@@ -5,6 +5,18 @@ import QRCode from 'qrcode';
 import { Router } from '@angular/router';
 import { CollaboratorService } from '../../services/collaborators.service';
 
+interface Colaborador {
+  id: number;
+  nombre: string;
+  rut: string;
+  segmento: string;
+  gerencia: string;
+  cargo: string;
+  celular: string;
+  correo: string;
+  estado: string;
+}
+
 @Component({
   selector: 'app-generar-credencial',
   standalone: true,
@@ -108,4 +120,24 @@ export class GenerarCredencialComponent implements OnInit {
       this.foto = input.files[0];
     }
   }
+  redirigirFirmaExitosa(colaborador: Colaborador | null) {
+    if (colaborador) {
+      this.router.navigate(['/firmaexitosa', colaborador.id]); 
+    } else {
+      alert('Por favor, selecciona un colaborador válido.');
+    }
+  }
+  
+  redirigirCredencialExitosa(colaborador: Colaborador | null) {
+    if (colaborador) {
+      this.router.navigate(['/credencialexitosa', colaborador.id]);
+    } else {
+      alert('Por favor, selecciona un colaborador válido.');
+    }
+  }
+  
+  obtenerColaboradorSeleccionado(): Colaborador | null {
+    return this.colaboradores.find(c => c.id === parseInt(this.selectedColaboradorId, 10)) || null;
+  }
+  
 }

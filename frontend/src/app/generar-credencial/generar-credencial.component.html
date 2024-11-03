@@ -4,7 +4,6 @@
       <div class="login-card">
         <h2>Generador de firmas y credenciales</h2>
 
-        <!-- Dropdown para seleccionar un colaborador existente -->
         <div class="form-group">
           <label for="colaborador-select">Seleccionar Colaborador</label>
           <select id="colaborador-select" [(ngModel)]="selectedColaboradorId" name="colaborador" (change)="onSelectColaborador()">
@@ -67,8 +66,8 @@
         </div>
 
         <div class="button">
-          <button type="button" class="btn-secondary" (click)="guardarDatos()">Crear</button>
-          <button class="btn-secondary-1" (click)="cerrar.emit()">Atrás</button>
+          <button type="button" class="btn-secondary" (click)="redirigirCredencialExitosa(obtenerColaboradorSeleccionado())">Descargar Credencial</button>
+          <button class="btn-secondary-1" (click)="redirigirFirmaExitosa(obtenerColaboradorSeleccionado())">Copiar Pie de Firma</button>
         </div>
       </div>
     </div>
