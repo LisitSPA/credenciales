@@ -81,35 +81,51 @@ export class NuevoColaboradorComponent {
       return;
     }
   
-    const segmentoId = Number(this.segmento);
-    if (isNaN(segmentoId)) {
+    const segmentoId = this.segmento ? Number(this.segmento) : null;
+    if (segmentoId !== null && isNaN(segmentoId)) {
       console.error('El SegmentId no es un número válido.');
       alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
       return;
     }
-
-    const segmentoExiste = this.segmentos.some(segmento => segmento.id === segmentoId);
-
-    if (!segmentoExiste) {
+  
+    const segmentoExiste = segmentoId !== null && this.segmentos.some(segmento => segmento.id === segmentoId);
+    if (segmentoId !== null && !segmentoExiste) {
       console.error('El SegmentId no existe en la lista de segmentos.');
       alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
+      return;
+    }
+  
+    const leadershipId = this.gerencia ? Number(this.gerencia) : null;
+    if (leadershipId !== null && isNaN(leadershipId)) {
+      console.error('El LeadershipId no es un número válido.');
+      alert('La gerencia seleccionada no es válida. Por favor, selecciona una gerencia válida.');
       return;
     }
   
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
     console.log('Valor de Sede antes de enviar:', this.sede);
     console.log('Segmento seleccionado:', segmentoId);
+    console.log('Gerencia seleccionada:', leadershipId);
   
     const nuevoColaborador: any = {
       CompleteName: this.nombre,
       RUT: this.rut,
       Position: this.cargo,
-      Area: this.sede || "Sin Sede",
+      Area: this.sede,
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
       Photo: this.foto
     };
+  
+    if (segmentoId !== null) {
+      nuevoColaborador.SegmentId = segmentoId;
+    }
+  
+    if (leadershipId !== null) {
+      nuevoColaborador.LeadershipId = leadershipId;
+    }
+  
     try {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);
       await this.collaboratorService.createCollaborator(nuevoColaborador);
@@ -121,8 +137,7 @@ export class NuevoColaboradorComponent {
       alert('Hubo un error al crear el colaborador.');
     }
   }
-  
-  onFileSelected(event: Event) {
+    onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.foto = input.files[0];
