@@ -111,7 +111,7 @@ export class NuevoColaboradorComponent {
       CompleteName: this.nombre,
       RUT: this.rut,
       Position: this.cargo,
-      Area: this.sede || "Sin Sede",
+      Area: this.sede || "Sin Sede", 
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
@@ -137,6 +137,7 @@ export class NuevoColaboradorComponent {
       alert('Hubo un error al crear el colaborador.');
     }
   }
+  
     onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
