@@ -24,7 +24,7 @@ public record CreateCollaboratorCommand : IRequest<Response<int>>
     public string CompleteName { get; set; }
     public string RUT { get; set; }
     public int LeadershipId { get; set; }
-    public int SegmentId { get; set; }
+    public int? SegmentId { get; set; }
     public string Position { get; set; }
     public string Sede { get; set; }
     public string Phone { get; set; }
@@ -62,7 +62,7 @@ public class CreateCollaboratorCommandHandler
             {
                 CompleteName = request.CompleteName,
                 RUT = request.RUT,
-                Area = request.Sede ?? "Sin Sede",   
+                Area = request.Sede,
                 LeadershipId = request.LeadershipId,
                 Position = request.Position,
                 Phone = request.Phone,
