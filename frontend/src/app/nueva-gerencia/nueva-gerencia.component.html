@@ -7,12 +7,11 @@
     <div class="modal-body">
       <div class="form-group">
         <label for="nombreGerencia">Nombre de la Gerencia</label>
-        <input id="nombreGerencia" type="text" [(ngModel)]="nombreGerencia" class="form-control" placeholder="Ingresa el nombre de la gerencia">
+        <input id="nombreGerencia" type="text" [(ngModel)]="nombreGerencia" class="input-field" placeholder="Ingresa el nombre de la gerencia">
       </div>
-     
     </div>
     <div class="button-container">
-      <button class="btn-secondary-1" (click)="cerrarModal()">Cerrar</button>
+      <button class="btn-secondary-1" (click)="cerrarModal()">Cancelar</button>
       <button class="btn-secondary" (click)="crearGerencia()" [disabled]="!nombreGerencia.trim()">Guardar</button>
     </div>
   </div>

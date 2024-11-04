@@ -5,22 +5,22 @@
     <form (ngSubmit)="guardarDatos()">
       <div class="form-row">
         <div class="form-group">
-          <h3>Nombre completo</h3>
-          <input type="text" [(ngModel)]="nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" />
+          <h3 style="font-weight: 400;">Nombre completo</h3>
+          <input type="text" [(ngModel)]="nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" class="input-field" />
         </div>
       </div>
         
       <div class="form-row">
         <div class="form-group">
-          <h3>RUT</h3>
-          <input type="text" [(ngModel)]="rut" name="rut" required placeholder="Ingresa tu RUT"/>
+          <h3 style="font-weight: 400;">RUT</h3>
+          <input type="text" [(ngModel)]="rut" name="rut" required placeholder="Ingresa tu RUT" class="input-field" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Gerencia</h3>
-          <select [(ngModel)]="gerencia" name="gerencia" required>
+          <h3 style="font-weight: 400;">Gerencia</h3>
+          <select [(ngModel)]="gerencia" name="gerencia" required class="select-field">
             <option value="">Selecciona una opción</option>
             <option *ngFor="let gerencia of gerencias" [value]="gerencia.id">{{ gerencia.name }}</option>
           </select>
@@ -29,62 +29,73 @@
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Cargo</h3>
-          <input type="text" [(ngModel)]="cargo" name="cargo" required placeholder="Ingresa un cargo"/>
+          <h3 style="font-weight: 400;">Cargo</h3>
+          <input type="text" [(ngModel)]="cargo" name="cargo" required placeholder="Ingresa un cargo" class="input-field" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Segmento</h3>
-          <select [(ngModel)]="segmento" name="segmento" required>
+          <h3 style="font-weight: 400;">Segmento</h3>
+          <select [(ngModel)]="segmento" name="segmento" required class="select-field">
             <option value="">Seleccione un segmento</option>
             <option *ngFor="let segmento of segmentos" [value]="segmento.id">{{ segmento.nombreCompleto }}</option>
           </select>
         </div>   
-        </div>
+      </div>
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Celular</h3>
-          <input type="text" [(ngModel)]="celular" name="celular" required placeholder="Ingrese su celular" />
+          <h3 style="font-weight: 400;">Celular</h3>
+          <input type="text" [(ngModel)]="celular" name="celular" required placeholder="Ingrese su celular" class="input-field" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Correo electrónico</h3>
-          <input type="email" [(ngModel)]="correo" name="correo" required placeholder="Ingresar e-mail" />
+          <h3 style="font-weight: 400;">Correo electrónico</h3>
+          <input type="email" [(ngModel)]="correo" name="correo" required placeholder="Ingresar e-mail" class="input-field" />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Sede</h3>
-          <input type="text" [(ngModel)]="sede" name="sede" required placeholder="Ingresar una sede" />
+          <h3 style="font-weight: 400;">Sede</h3>
+          <input type="text" [(ngModel)]="sede" name="sede" required placeholder="Ingresar una sede" class="input-field" />
         </div>
-        
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Foto</h3>
+          <h3 style="font-weight: 400;">Foto</h3>
           <div class="foto-container">
             <div class="foto-placeholder"></div>
-            <input type="file" (change)="onFileSelected($event)" />
+            <input type="file" (change)="onFileSelected($event)" class="input-field" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <h3 style="font-weight: 400;">Adjuntar</h3>
+          <div class="checkbox-container">
+            <label>
+              <input type="checkbox" [(ngModel)]="adjuntarFirma" name="adjuntarFirma" (change)="onCheckboxChange()"> Firma
+            </label>
+            <label>
+              <input type="checkbox" [(ngModel)]="adjuntarCredencial" name="adjuntarCredencial" (change)="onCheckboxChange()"> Credencial
+            </label>
+          </div>
+          <div *ngIf="adjuntarFirma || adjuntarCredencial" class="file-input">
+            <input type="file" (change)="onFileSelected($event)" accept="image/*,.pdf" class="input-field" />
           </div>
         </div>
       </div>
 
       <div class="button">
-        <button class="btn-secondary-1" (click)="cerrar.emit()">Atrás</button>
+        <button class="btn-secondary-1" (click)="cerrar.emit()">Cancelar</button>
         <button type="submit" class="btn-secondary">Crear</button>
-
       </div>
     </form>
-
-    
-    
   </div>
 </div>
-  

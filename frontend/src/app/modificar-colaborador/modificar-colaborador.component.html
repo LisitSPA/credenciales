@@ -7,15 +7,14 @@
       <div class="form-row">
         <div class="form-group">
           <h3>Nombre completo</h3>
-          <input type="text" [(ngModel)]="colaborador.nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" />
+          <input type="text" [(ngModel)]="colaborador.nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" class="input-field"/>
         </div>
       </div>
 
-
-        <div class="form-row">
+      <div class="form-row">
         <div class="form-group">
           <h3>Gerencia</h3>
-          <select [(ngModel)]="colaborador.gerencia" name="gerencia" required>
+          <select [(ngModel)]="colaborador.gerencia" name="gerencia" required class="select-field">
             <option value="">Selecciona una opción</option>
             <option *ngFor="let gerencia of gerencias" [value]="gerencia.id">{{ gerencia.name }}</option>
           </select>
@@ -25,14 +24,14 @@
       <div class="form-row">
         <div class="form-group">
           <h3>Cargo</h3>
-          <input type="text" [(ngModel)]="colaborador.cargo" name="cargo" required placeholder="Ingresa un cargo"/>
+          <input type="text" [(ngModel)]="colaborador.cargo" name="cargo" required placeholder="Ingresa un cargo" class="input-field"/>
         </div>
       </div>
 
-        <div class="form-row">
+      <div class="form-row">
         <div class="form-group">
           <h3>Segmento</h3>
-          <select [(ngModel)]="colaborador.segmento" name="segmento" required>
+          <select [(ngModel)]="colaborador.segmento" name="segmento" required class="select-field">
             <option value="">Seleccione un segmento</option>
             <option *ngFor="let seg of segmentos" [value]="seg.id">{{ seg.description }}</option>
           </select>
@@ -40,23 +39,23 @@
       </div>
 
       <div class="form-row">
-      <div class="form-group">
-        <h3>Celular</h3>
-        <input type="text" [(ngModel)]="colaborador.celular" name="celular" required placeholder="Ingrese su celular" />
+        <div class="form-group">
+          <h3>Celular</h3>
+          <input type="text" [(ngModel)]="colaborador.celular" name="celular" required placeholder="Ingrese su celular" class="input-field"/>
+        </div>
       </div>
-    </div>
 
       <div class="form-row">
         <div class="form-group">
           <h3>Correo electrónico</h3>
-          <input type="email" [(ngModel)]="colaborador.correo" name="correo" required placeholder="Ingresar e-mail" />
+          <input type="email" [(ngModel)]="colaborador.correo" name="correo" required placeholder="Ingresar e-mail" class="input-field"/>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <h3>Sede</h3>
-          <input type="text" [(ngModel)]="colaborador.sede" name="sede" required placeholder="Ingresar una sede"/>
+          <input type="text" [(ngModel)]="colaborador.sede" name="sede" required placeholder="Ingresar una sede" class="input-field"/>
         </div>
       </div>
 
@@ -65,13 +64,13 @@
           <h3>Foto</h3>
           <div class="foto-container">
             <div class="foto-placeholder"></div>
-            <input type="file" (change)="onFileSelected($event)" />
+            <input type="file" (change)="onFileSelected($event)" class="input-field"/>
           </div>
         </div>
       </div>
 
       <div class="button">
-        <button class="btn-secondary-1" (click)="cerrar.emit()">Atrás</button>
+        <button class="btn-secondary-1" (click)="cerrar.emit()">Cancelar</button>
         <button type="submit" class="btn-secondary">Editar</button>
       </div>
     </form>

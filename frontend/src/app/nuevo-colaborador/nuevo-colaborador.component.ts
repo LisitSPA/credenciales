@@ -26,6 +26,10 @@ export class NuevoColaboradorComponent {
   gerencias: any[] = [];  
   segmentos: any[] = [];  
 
+  adjuntarFirma: boolean = false;
+  adjuntarCredencial: boolean = false;
+  archivoAdjunto: File | null = null;
+
   @Output() cerrar = new EventEmitter<void>();
   @Output() colaboradorCreado = new EventEmitter<void>();
 
@@ -125,6 +129,10 @@ export class NuevoColaboradorComponent {
     if (leadershipId !== null) {
       nuevoColaborador.LeadershipId = leadershipId;
     }
+
+    if (this.archivoAdjunto) {
+      nuevoColaborador.Attachment = this.archivoAdjunto;
+    }
   
     try {
       console.log('Enviando colaborador al servidor:', nuevoColaborador);
@@ -141,7 +149,14 @@ export class NuevoColaboradorComponent {
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.foto = input.files[0];
+      this.archivoAdjunto = input.files[0];
+      console.log('Archivo seleccionado:', this.archivoAdjunto);
+    }
+  }
+
+  onCheckboxChange() {
+    if (!this.adjuntarFirma && !this.adjuntarCredencial) {
+      this.archivoAdjunto = null;
     }
   }
 }

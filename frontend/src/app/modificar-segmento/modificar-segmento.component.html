@@ -1,28 +1,26 @@
 <div class="modal">
-    <div class="modal-content">
-      <button class="close-btn" (click)="cerrar.emit()">✖</button>
-      <h2>Editar Segmento</h2>
-      <form (ngSubmit)="guardarDatos()">
-        <div class="form-row">
-          <div class="form-group">
-            <h3>Nombre del Segmento</h3>
-            <input type="text" [(ngModel)]="nombreSegmento" name="nombre" required placeholder="Ingresa el nuevo nombre del Segmento" />
-          </div>
+  <div class="modal-content">
+    <button class="close-btn" (click)="cerrar.emit()">✖</button>
+    <h2>Editar Segmento</h2>
+    <form (ngSubmit)="guardarDatos()">
+      <div class="form-row">
+        <div class="form-group">
+          <h3>Nombre del Segmento</h3>
+          <input type="text" [(ngModel)]="nombreSegmento" name="nombre" required placeholder="Ingresa el nuevo nombre del Segmento" class="input-field"/>
         </div>
+      </div>
 
-          <div class="form-row">
-          <div class="form-group">
-            <h3 for="colorSegmento">Color del Segmento</h3>
-            <input id="colorSegmento" type="color" [(ngModel)]="colorSegmento" name="colorSegmento" required />
-          </div>
+      <div class="form-row">
+        <div class="form-group">
+          <h3 for="colorSegmento">Color del Segmento</h3>
+          <input id="colorSegmento" type="color" [(ngModel)]="colorSegmento" name="colorSegmento" required class="input-field"/>
         </div>
-  
-        <div class="button">
-          <button class="btn-secondary-1" (click)="cerrar.emit()">Atrás</button>
-          <button type="submit" class="btn-secondary">Editar</button>
+      </div>
 
-        </div>
-      </form>
-    </div>
+      <div class="button">
+        <button class="btn-secondary-1" (click)="cerrar.emit()">Cancelar</button>
+        <button type="submit" class="btn-secondary">Editar</button>
+      </div>
+    </form>
   </div>
-  
+</div>

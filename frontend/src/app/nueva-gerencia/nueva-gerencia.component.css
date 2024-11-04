@@ -89,3 +89,18 @@
     justify-content: center; 
     gap: 20px; 
 }
+
+.input-field, .select-field {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.input-field:focus, .select-field:focus {
+    border-color: #005bb5;
+    outline: none;
+}
