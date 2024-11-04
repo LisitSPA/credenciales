@@ -20,7 +20,7 @@ export class NuevoColaboradorComponent {
   segmento: string = '';
   celular: string = '';
   correo: string = '';
-  sede: string = '';
+  sede: string = 'Sin Sede';  
   foto: File | null = null;
 
   gerencias: any[] = [];  
@@ -77,75 +77,66 @@ export class NuevoColaboradorComponent {
 
   async guardarDatos() {
     if (!this.nombre || !this.celular || !this.correo) {
-        alert('Por favor, rellena los campos obligatorios.');
-        return;
+      alert('Por favor, rellena los campos obligatorios.');
+      return;
     }
-
+  
     const segmentoId = this.segmento ? Number(this.segmento) : null;
     if (segmentoId !== null && isNaN(segmentoId)) {
-        console.error('El SegmentId no es un número válido.');
-        alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
-        return;
+      console.error('El SegmentId no es un número válido.');
+      alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
+      return;
     }
-
+  
     const segmentoExiste = segmentoId !== null && this.segmentos.some(segmento => segmento.id === segmentoId);
     if (segmentoId !== null && !segmentoExiste) {
-        console.error('El SegmentId no existe en la lista de segmentos.');
-        alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
-        return;
+      console.error('El SegmentId no existe en la lista de segmentos.');
+      alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
+      return;
     }
-
+  
     const leadershipId = this.gerencia ? Number(this.gerencia) : null;
     if (leadershipId !== null && isNaN(leadershipId)) {
-        console.error('El LeadershipId no es un número válido.');
-        alert('La gerencia seleccionada no es válida. Por favor, selecciona una gerencia válida.');
-        return;
+      console.error('El LeadershipId no es un número válido.');
+      alert('La gerencia seleccionada no es válida. Por favor, selecciona una gerencia válida.');
+      return;
     }
-
-    this.sede = this.sede?.trim() ? this.sede.trim() : 'Sin Sede';
-
+  
+    this.sede = this.sede.trim() ? this.sede : 'Sin Sede'; 
     console.log('Valor de Sede antes de enviar:', this.sede);
     console.log('Segmento seleccionado:', segmentoId);
     console.log('Gerencia seleccionada:', leadershipId);
-
+  
     const nuevoColaborador: any = {
-        CompleteName: this.nombre.trim(),
-        RUT: this.rut ? this.rut.trim() : null,
-        Position: this.cargo ? this.cargo.trim() : null,
-        Area: this.sede,
-        Phone: this.celular.trim(),
-        Email: this.correo.trim(),
-        ECollaboratorStatus: 1,
+      CompleteName: this.nombre,
+      RUT: this.rut,
+      Position: this.cargo,
+      Area: this.sede,
+      Phone: this.celular,
+      Email: this.correo,
+      ECollaboratorStatus: 1,
+      Photo: this.foto
     };
-
-    if (this.foto) {
-        nuevoColaborador.Photo = this.foto;
-    }
-
+  
     if (segmentoId !== null) {
-        nuevoColaborador.SegmentId = segmentoId;
+      nuevoColaborador.SegmentId = segmentoId;
     }
-
+  
     if (leadershipId !== null) {
-        nuevoColaborador.LeadershipId = leadershipId;
+      nuevoColaborador.LeadershipId = leadershipId;
     }
-
+  
     try {
-        console.log('Enviando colaborador al servidor:', nuevoColaborador);
-        await this.collaboratorService.createCollaborator(nuevoColaborador);
-        console.log('Colaborador creado con éxito.');
-        this.colaboradorCreado.emit();
-        this.cerrar.emit();
+      console.log('Enviando colaborador al servidor:', nuevoColaborador);
+      await this.collaboratorService.createCollaborator(nuevoColaborador);
+      console.log('Colaborador creado con éxito.');
+      this.colaboradorCreado.emit();
+      this.cerrar.emit();
     } catch (error: any) {
-        console.error('Error al crear colaborador:', error);
-        if (error.message) {
-            alert('Hubo un error al crear el colaborador: ' + error.message);
-        } else {
-            alert('Hubo un error al crear el colaborador.');
-        }
+      console.error('Error al crear colaborador:', error);
+      alert('Hubo un error al crear el colaborador.');
     }
-}
-
+  }
   
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
