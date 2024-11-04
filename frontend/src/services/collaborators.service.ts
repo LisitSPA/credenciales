@@ -90,26 +90,26 @@ export class CollaboratorService {
 }
 
   
-  updateCollaborator(id: number, colaborador: any): Promise<any> {
-    let headers = this.headers;
-    const payload = {
-      Id: id,  
+updateCollaborator(id: number, colaborador: any): Promise<any> {
+  let headers = this.headers;
+  const payload = {
+      Id: id, 
       CompleteName: colaborador.CompleteName,
       LeadershipId: colaborador.LeadershipId,
       SegmentId: colaborador.SegmentId,
       Position: colaborador.Position,
-      Sede: colaborador.Sede || "Sin Sede", 
+      Area: colaborador.Area || "Sin Sede",
       Phone: colaborador.Phone,
       Email: colaborador.Email,
       ECollaboratorStatus: colaborador.ECollaboratorStatus,
-    };
-  
-    return lastValueFrom(
-      this._httpClient.put(`${this.apiUrl}/${id}`, payload, {headers}).pipe(
-        catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
+  };
+
+  return lastValueFrom(
+      this._httpClient.put(`${this.apiUrl}`, payload, { headers }).pipe(
+          catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
       )
-    );
-  }
+  );
+}
 
   getCollaboratorById(id: number): Promise<any> {
     let headers = this.headers;
