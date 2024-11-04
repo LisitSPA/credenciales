@@ -102,30 +102,18 @@ export class NuevoColaboradorComponent {
       SegmentId: segmentoId,
     };
 
+    console.log('Datos a enviar:', nuevoColaborador); 
+
     try {
       const response = await this.collaboratorService.createCollaborator(nuevoColaborador);
       const colaboradorId = response.id;
       console.log('Colaborador creado con éxito, ID:', colaboradorId);
-
-      if (this.foto) {
-        await this.subirArchivo(colaboradorId, this.foto, 'Photo');
-      }
-
-      if (this.adjuntarFirma && this.firma) {
-        await this.subirArchivo(colaboradorId, this.firma, 'Signature');
-      }
-
-      if (this.adjuntarCredencial && this.credencial) {
-        await this.subirArchivo(colaboradorId, this.credencial, 'Credential');
-      }
-
-      this.colaboradorCreado.emit();
-      this.cerrar.emit();
     } catch (error: any) {
       console.error('Error al crear colaborador:', error);
       alert('Hubo un error al crear el colaborador.');
     }
-  }
+}
+
 
   async subirArchivo(colaboradorId: number, archivo: File, tipo: string) {
     try {
