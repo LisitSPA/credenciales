@@ -60,21 +60,29 @@ export class ModificarColaboradorComponent implements OnInit {
       console.error('No hay colaborador para modificar.');
       return;
     }
-
+  
+    const leadershipId = this.colaborador.gerencia ? Number(this.colaborador.gerencia) : null;
+    const segmentId = this.colaborador.segmento ? Number(this.colaborador.segmento) : null;
+  
+    if (leadershipId === null || segmentId === null) {
+      alert('Por favor, selecciona una gerencia y un segmento válidos.');
+      return;
+    }
+  
     const colaboradorModificado = {
       Id: this.colaborador.id,
       CompleteName: this.colaborador.nombre,
-      LeadershipId: this.colaborador.gerencia ? Number(this.colaborador.gerencia) : null,
-      SegmentId: this.colaborador.segmento ? Number(this.colaborador.segmento) : null,
+      LeadershipId: leadershipId,
+      SegmentId: segmentId,
       Position: this.colaborador.cargo,
       Sede: this.colaborador.sede || 'Sin Sede',
       Phone: this.colaborador.celular,
       Email: this.colaborador.correo,
       ECollaboratorStatus: 1,
     };
-
+  
     console.log('Datos del colaborador modificados:', colaboradorModificado);
-
+  
     this.collaboratorService.updateCollaborator(colaboradorModificado.Id, colaboradorModificado)
       .then(response => {
         console.log('Colaborador actualizado con éxito:', response);
@@ -85,7 +93,7 @@ export class ModificarColaboradorComponent implements OnInit {
         alert('Hubo un error al actualizar el colaborador.');
       });
   }
-
+  
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
