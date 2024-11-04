@@ -146,4 +146,31 @@ updateCollaborator(id: number, colaborador: any): Promise<any> {
   clearColaborador() {
     this.colaborador = null;
   }
+
+  uploadAttachment(collaboratorId: number, file: File, attachmentType: string): Promise<any> {
+    const headers = this.headers;
+    const formData = new FormData();
+    formData.append('Attachment', file);
+    formData.append('AttachmentType', attachmentType);
+    formData.append('CollaboratorId', collaboratorId.toString());
+  
+    return lastValueFrom(
+      this._httpClient.post(`${this.apiUrl}/attachments`, formData, { headers }).pipe(
+        catchError(error => this.handleError(error, 'No se pudo subir el archivo adjunto. Verifique la conexión.'))
+      )
+    );
+  }
+  getAttachment(colaboradorId: number, tipoArchivo: string): Promise<any> {
+    let headers = this.headers;
+    return lastValueFrom(
+      this._httpClient.get(`${this.apiUrl}/${colaboradorId}/attachments/${tipoArchivo}`, {
+        headers,
+        responseType: 'blob' 
+      }).pipe(
+        catchError(error => this.handleError(error, 'No se pudo obtener el archivo adjunto. Verifique la conexión.'))
+      )
+    );
+  }
+  
+  
 }

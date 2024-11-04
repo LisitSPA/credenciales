@@ -46,23 +46,21 @@
               <td>{{ colaborador.correo }}</td>
               <td>
                 <div class="icon-container">
-                  <div class="icon-item">
+                  <div *ngIf="colaborador.foto" class="icon-item" (click)="descargarArchivo(colaborador.id, 'Photo')">
                     <img src="/image-regular.svg" alt="Foto" />
                     <span>Foto</span>
                   </div>
-                  <div class="icon-item" (click)="redirigirFirmaExitosa(colaborador)">
+                  <div *ngIf="colaborador.firma" class="icon-item" (click)="descargarArchivo(colaborador.id, 'Signature')">
                     <img src="/signature-solid.svg" alt="Firma" />
                     <span>Firma</span>
                   </div>
-                  
-                  
-                  <div class="icon-item " (click)="redirigirCredencialExitosa(colaborador)">
+                  <div *ngIf="colaborador.credencial" class="icon-item" (click)="descargarArchivo(colaborador.id, 'Credential')">
                     <img src="/id-card-solid.svg" alt="Credencial" />
                     <span>Credencial</span>
                   </div>
                 </div>
               </td>
-              <td>
+              
                 <button class="btn-edit" (click)="editar(colaborador)">
                   <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;" /> 
                 </button>

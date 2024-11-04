@@ -5,6 +5,7 @@ import { EliminarComponent } from '../eliminar/eliminar.component';
 import { ModificarColaboradorComponent } from '../modificar-colaborador/modificar-colaborador.component';
 import { Router } from '@angular/router';
 import { CollaboratorService } from '../../services/collaborators.service';
+import { saveAs } from 'file-saver';
 
 interface Colaborador {
   id: number;
@@ -201,4 +202,28 @@ export class ColaboradoresComponent {
   redirigirCredencialExitosa(colaborador: Colaborador) {
     this.router.navigate(['/credencialexitosa', colaborador.id]);
   }
+
+  descargarArchivo(colaboradorId: number, tipoArchivo: string) {
+    this.collaboratorService.getAttachment(colaboradorId, tipoArchivo)
+      .then(response => {
+        const blob = new Blob([response], { type: response.type });
+        const url = window.URL.createObjectURL(blob);
+
+        const newWindow = window.open(url);
+        if (newWindow) {
+          newWindow.onload = () => {
+            newWindow.location.href = url;
+          };
+        } else {
+          console.error('No se pudo abrir una nueva ventana. Probablemente esté bloqueada por el navegador.');
+        }
+
+        saveAs(blob, `${tipoArchivo}_${colaboradorId}.pdf`); 
+      })
+      .catch(error => {
+        console.error(`Error al descargar el archivo ${tipoArchivo} para el colaborador con ID ${colaboradorId}:`, error);
+        alert(`Hubo un error al descargar el archivo de ${tipoArchivo}.`);
+      });
+  }
+
 }

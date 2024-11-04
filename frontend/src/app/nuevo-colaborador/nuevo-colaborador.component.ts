@@ -22,13 +22,14 @@ export class NuevoColaboradorComponent {
   correo: string = '';
   sede: string = 'Sin Sede';  
   foto: File | null = null;
+  firma: File | null = null;
+  credencial: File | null = null;
 
   gerencias: any[] = [];  
   segmentos: any[] = [];  
 
   adjuntarFirma: boolean = false;
   adjuntarCredencial: boolean = false;
-  archivoAdjunto: File | null = null;
 
   @Output() cerrar = new EventEmitter<void>();
   @Output() colaboradorCreado = new EventEmitter<void>();
@@ -77,40 +78,18 @@ export class NuevoColaboradorComponent {
       console.error('Error al cargar segmentos:', error);
     }
   }
-  
 
   async guardarDatos() {
     if (!this.nombre || !this.celular || !this.correo) {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
-  
+
     const segmentoId = this.segmento ? Number(this.segmento) : null;
-    if (segmentoId !== null && isNaN(segmentoId)) {
-      console.error('El SegmentId no es un número válido.');
-      alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
-      return;
-    }
-  
-    const segmentoExiste = segmentoId !== null && this.segmentos.some(segmento => segmento.id === segmentoId);
-    if (segmentoId !== null && !segmentoExiste) {
-      console.error('El SegmentId no existe en la lista de segmentos.');
-      alert('El segmento seleccionado no es válido. Por favor, selecciona un segmento válido.');
-      return;
-    }
-  
     const leadershipId = this.gerencia ? Number(this.gerencia) : null;
-    if (leadershipId !== null && isNaN(leadershipId)) {
-      console.error('El LeadershipId no es un número válido.');
-      alert('La gerencia seleccionada no es válida. Por favor, selecciona una gerencia válida.');
-      return;
-    }
-  
+
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede'; 
-    console.log('Valor de Sede antes de enviar:', this.sede);
-    console.log('Segmento seleccionado:', segmentoId);
-    console.log('Gerencia seleccionada:', leadershipId);
-  
+
     const nuevoColaborador: any = {
       CompleteName: this.nombre,
       RUT: this.rut,
@@ -119,25 +98,27 @@ export class NuevoColaboradorComponent {
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
-      Photo: this.foto
+      LeadershipId: leadershipId,
+      SegmentId: segmentoId,
     };
-  
-    if (segmentoId !== null) {
-      nuevoColaborador.SegmentId = segmentoId;
-    }
-  
-    if (leadershipId !== null) {
-      nuevoColaborador.LeadershipId = leadershipId;
-    }
 
-    if (this.archivoAdjunto) {
-      nuevoColaborador.Attachment = this.archivoAdjunto;
-    }
-  
     try {
-      console.log('Enviando colaborador al servidor:', nuevoColaborador);
-      await this.collaboratorService.createCollaborator(nuevoColaborador);
-      console.log('Colaborador creado con éxito.');
+      const response = await this.collaboratorService.createCollaborator(nuevoColaborador);
+      const colaboradorId = response.id;
+      console.log('Colaborador creado con éxito, ID:', colaboradorId);
+
+      if (this.foto) {
+        await this.subirArchivo(colaboradorId, this.foto, 'Photo');
+      }
+
+      if (this.adjuntarFirma && this.firma) {
+        await this.subirArchivo(colaboradorId, this.firma, 'Signature');
+      }
+
+      if (this.adjuntarCredencial && this.credencial) {
+        await this.subirArchivo(colaboradorId, this.credencial, 'Credential');
+      }
+
       this.colaboradorCreado.emit();
       this.cerrar.emit();
     } catch (error: any) {
@@ -145,18 +126,37 @@ export class NuevoColaboradorComponent {
       alert('Hubo un error al crear el colaborador.');
     }
   }
-  
+
+  async subirArchivo(colaboradorId: number, archivo: File, tipo: string) {
+    try {
+      await this.collaboratorService.uploadAttachment(colaboradorId, archivo, tipo);
+      console.log(`${tipo} subido con éxito`);
+    } catch (error: any) {
+      console.error(`Error al subir ${tipo}:`, error);
+      alert(`Hubo un error al subir el archivo de ${tipo}.`);
+    }
+  }
+
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.archivoAdjunto = input.files[0];
-      console.log('Archivo seleccionado:', this.archivoAdjunto);
+      if (this.adjuntarFirma) {
+        this.firma = input.files[0];
+      } else if (this.adjuntarCredencial) {
+        this.credencial = input.files[0];
+      } else {
+        this.foto = input.files[0];
+      }
+      console.log('Archivo seleccionado:', input.files[0]);
     }
   }
 
   onCheckboxChange() {
-    if (!this.adjuntarFirma && !this.adjuntarCredencial) {
-      this.archivoAdjunto = null;
+    if (!this.adjuntarFirma) {
+      this.firma = null;
+    }
+    if (!this.adjuntarCredencial) {
+      this.credencial = null;
     }
   }
 }
