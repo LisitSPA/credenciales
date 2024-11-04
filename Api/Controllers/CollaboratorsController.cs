@@ -32,7 +32,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("", Name = "CreateCollaborator")]
-        public async Task<IActionResult> CreateCollaborator([FromQuery] CreateCollaboratorCommand command)
+        public async Task<IActionResult> CreateCollaborator([FromForm] CreateCollaboratorCommand command)
         {
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);
