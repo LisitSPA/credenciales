@@ -53,33 +53,33 @@ export class CollaboratorService {
     const formData: any = new FormData();
 
     if (colaborador.CompleteName) {
-      formData.append('CompleteName', colaborador.CompleteName);
+        formData.append('CompleteName', colaborador.CompleteName);
     }
     if (colaborador.RUT) {
-      formData.append('RUT', colaborador.RUT);
+        formData.append('RUT', colaborador.RUT);
     }
     if (colaborador.LeadershipId) {
-      formData.append('LeadershipId', colaborador.LeadershipId.toString());
+        formData.append('LeadershipId', colaborador.LeadershipId.toString());
     }
     if (colaborador.SegmentId) {
-      formData.append('SegmentId', colaborador.SegmentId.toString());
+        formData.append('SegmentId', colaborador.SegmentId.toString());
     }
     if (colaborador.Position) {
-      formData.append('Position', colaborador.Position);
+        formData.append('Position', colaborador.Position);
     }
     if (colaborador.Area) {
-      formData.append('Area', colaborador.Area);
+        formData.append('Area', colaborador.Area);
     }
     if (colaborador.Phone) {
-      formData.append('Phone', colaborador.Phone);
+        formData.append('Phone', colaborador.Phone);
     }
     if (colaborador.Email) {
-      formData.append('Email', colaborador.Email);
+        formData.append('Email', colaborador.Email);
     }
     formData.append('ECollaboratorStatus', colaborador.ECollaboratorStatus.toString());
 
     if (colaborador.Photo) {
-      formData.append('Photo', colaborador.Photo);
+        formData.append('Photo', colaborador.Photo);
     }
 
     console.log('Datos a enviar (formData):');
@@ -90,22 +90,24 @@ export class CollaboratorService {
     return lastValueFrom(
       this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(
         catchError(error => {
-          console.error('Error al crear colaborador:', error);
-          return this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.');
-        })
-      )
+                console.error('Error al crear colaborador:', error);
+                return this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.');
+            })
+        )
     ).then(response => {
-      console.log('Respuesta del servidor:', response);
-      return response; 
+        console.log('Respuesta del servidor:', response);
+        return response;
     }).catch(error => {
-      console.error('Error capturado en catch:', error);
-      throw error;
+        console.error('Error capturado en catch:', error);
+        throw error;
     });
-  }
+}
 
-  updateCollaborator(id: number, colaborador: any): Promise<any> {
-    let headers = this.headers;
-    const payload = {
+
+  
+updateCollaborator(id: number, colaborador: any): Promise<any> {
+  let headers = this.headers;
+  const payload = {
       Id: id, 
       CompleteName: colaborador.CompleteName,
       LeadershipId: colaborador.LeadershipId,
@@ -115,16 +117,14 @@ export class CollaboratorService {
       Phone: colaborador.Phone,
       Email: colaborador.Email,
       ECollaboratorStatus: colaborador.ECollaboratorStatus,
-    };
+  };
 
-    return lastValueFrom(
-      this._httpClient.put(`${this.apiUrl}`, payload, { headers }).pipe(
-        catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
+  return lastValueFrom(
+    this._httpClient.put(`${this.apiUrl}`, payload, { headers }).pipe(
+      catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
       )
-    );
-  }
-
-
+  );
+}
 
   getCollaboratorById(id: number): Promise<any> {
     let headers = this.headers;
