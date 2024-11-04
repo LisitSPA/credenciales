@@ -50,7 +50,7 @@ export class CollaboratorService {
 
   createCollaborator(colaborador: any): Promise<any> {
     let headers = this.headers;
-    const formData = new FormData();
+    const formData: any = new FormData();
 
     if (colaborador.CompleteName) {
         formData.append('CompleteName', colaborador.CompleteName);
@@ -82,12 +82,17 @@ export class CollaboratorService {
         formData.append('Photo', colaborador.Photo);
     }
 
+    formData.forEach((value: any, key: string) => {
+        console.log(key + ': ' + value);
+    });
+
     return lastValueFrom(
         this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(
             catchError(error => this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.'))
         )
     );
 }
+
 
   
 updateCollaborator(id: number, colaborador: any): Promise<any> {
