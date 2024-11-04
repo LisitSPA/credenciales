@@ -45,12 +45,14 @@ namespace Api.Controllers
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
-        [HttpPut("", Name = "UpdateCollaborator")]
-        public async Task<IActionResult> UpdateCollaborator(UpdateCollaboratorCommand command)
+        [HttpPut("{id}", Name = "UpdateCollaborator")]
+        public async Task<IActionResult> UpdateCollaborator(int id, [FromBody] UpdateCollaboratorCommand command)
         {
+            command.Id = id; 
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);
         }
+
 
         [HttpDelete("{id}", Name = "DeleteCollaborator")]
         public async Task<IActionResult> DeleteCollaborator(int id)
