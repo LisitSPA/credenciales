@@ -102,7 +102,8 @@ export class NuevoColaboradorComponent {
       return;
     }
   
-    this.sede = this.sede.trim() ? this.sede : 'Sin Sede';
+    this.sede = this.sede?.trim() ? this.sede : 'Sin Sede';
+  
     console.log('Valor de Sede antes de enviar:', this.sede);
     console.log('Segmento seleccionado:', segmentoId);
     console.log('Gerencia seleccionada:', leadershipId);

@@ -53,10 +53,14 @@ export class CollaboratorService {
     const formData = new FormData();
     formData.append('CompleteName', colaborador.CompleteName);
     formData.append('RUT', colaborador.RUT);
-    formData.append('LeadershipId', colaborador.LeadershipId.toString());
-    formData.append('SegmentId', colaborador.SegmentId.toString());
+    if (colaborador.LeadershipId) {
+      formData.append('LeadershipId', colaborador.LeadershipId.toString());
+    }
+    if (colaborador.SegmentId) {
+      formData.append('SegmentId', colaborador.SegmentId.toString());
+    }
     formData.append('Position', colaborador.Position);
-    formData.append('Area', colaborador.Sede);
+    formData.append('Area', colaborador.Area); 
     formData.append('Phone', colaborador.Phone);
     formData.append('Email', colaborador.Email);
     formData.append('ECollaboratorStatus', colaborador.ECollaboratorStatus.toString());
@@ -71,6 +75,7 @@ export class CollaboratorService {
       )
     );
   }
+  
   updateCollaborator(id: number, colaborador: any): Promise<any> {
     let headers = this.headers;
     const payload = {
