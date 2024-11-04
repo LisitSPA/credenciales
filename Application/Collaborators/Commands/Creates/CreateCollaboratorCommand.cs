@@ -62,7 +62,7 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
         {
             CompleteName = request.CompleteName,
             RUT = request.RUT,
-            Area = request.Sede,
+            Area = request.Sede ?? "Sin Sede",
             LeadershipId = request.LeadershipId,
             Position = request.Position,
             Phone = request.Phone,

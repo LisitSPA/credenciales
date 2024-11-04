@@ -113,7 +113,7 @@ updateCollaborator(id: number, colaborador: any): Promise<any> {
       LeadershipId: colaborador.LeadershipId,
       SegmentId: colaborador.SegmentId,
       Position: colaborador.Position,
-      Area: colaborador.Area,
+      Area: colaborador.Area || "Sin Sede",
       Phone: colaborador.Phone,
       Email: colaborador.Email,
       ECollaboratorStatus: colaborador.ECollaboratorStatus,

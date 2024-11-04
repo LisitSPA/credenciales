@@ -67,7 +67,7 @@ export class ModificarColaboradorComponent implements OnInit {
       LeadershipId: this.colaborador.gerencia ? Number(this.colaborador.gerencia) : null,
       SegmentId: this.colaborador.segmento ? Number(this.colaborador.segmento) : null,
       Position: this.colaborador.cargo,
-      Sede: this.colaborador.sede ,
+      Sede: this.colaborador.sede || 'Sin Sede',
       Phone: this.colaborador.celular,
       Email: this.colaborador.correo,
       ECollaboratorStatus: 1,

@@ -20,7 +20,7 @@ export class NuevoColaboradorComponent {
   segmento: string = '';
   celular: string = '';
   correo: string = '';
-  sede: string = '';  
+  sede: string = 'Sin Sede';  
   foto: File | null = null;
   firma: File | null = null;
   credencial: File | null = null;
@@ -88,7 +88,7 @@ export class NuevoColaboradorComponent {
     const segmentoId = this.segmento ? Number(this.segmento) : null;
     const leadershipId = this.gerencia ? Number(this.gerencia) : null;
   
-    this.sede = this.sede.trim() ? this.sede : ''; 
+    this.sede = this.sede.trim() ? this.sede : 'Sin Sede'; 
   
     const nuevoColaborador: any = {
       CompleteName: this.nombre,
