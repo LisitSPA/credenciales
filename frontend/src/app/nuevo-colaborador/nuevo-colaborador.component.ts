@@ -20,7 +20,7 @@ export class NuevoColaboradorComponent {
   segmento: string = '';
   celular: string = '';
   correo: string = '';
-  sede: string = 'Sin Sede';  
+  sede: string = '';  
   foto: File | null = null;
   firma: File | null = null;
   credencial: File | null = null;
@@ -88,7 +88,7 @@ export class NuevoColaboradorComponent {
     const segmentoId = this.segmento ? Number(this.segmento) : null;
     const leadershipId = this.gerencia ? Number(this.gerencia) : null;
   
-    this.sede = this.sede.trim() ? this.sede : 'Sin Sede'; 
+    this.sede = this.sede.trim() ? this.sede : ''; 
   
     const nuevoColaborador: any = {
       CompleteName: this.nombre,
@@ -104,36 +104,35 @@ export class NuevoColaboradorComponent {
   
     try {
       const response = await this.collaboratorService.createCollaborator(nuevoColaborador);
-      
+      const colaboradorId = response.content;            
       console.log('Respuesta completa del servidor:', response);
   
-      if (response && response.id) {
-        const colaboradorId = response.id;
-        console.log('Colaborador creado con éxito, ID:', colaboradorId);
+      if (colaboradorId) {
+          console.log('Colaborador creado con éxito, ID:', colaboradorId);
   
-        if (this.foto) {
-          await this.subirArchivo(colaboradorId, this.foto, 'Photo');
-        }
+          if (this.foto) {
+              await this.subirArchivo(colaboradorId, this.foto, 'Photo');
+          }
   
-        if (this.adjuntarFirma && this.firma) {
-          await this.subirArchivo(colaboradorId, this.firma, 'Signature');
-        }
+          if (this.adjuntarFirma && this.firma) {
+              await this.subirArchivo(colaboradorId, this.firma, 'Signature');
+          }
   
-        if (this.adjuntarCredencial && this.credencial) {
-          await this.subirArchivo(colaboradorId, this.credencial, 'Credential');
-        }
+          if (this.adjuntarCredencial && this.credencial) {
+              await this.subirArchivo(colaboradorId, this.credencial, 'Credential');
+          }
   
-        this.colaboradorCreado.emit();
-        this.cerrar.emit();
+          this.colaboradorCreado.emit();
+          this.cerrar.emit();
       } else {
-        console.error('El ID del colaborador no se encontró en la respuesta:', response);
-        alert('Hubo un error al crear el colaborador. No se pudo obtener el ID.');
+          console.error('El ID del colaborador no se encontró en la respuesta:', response);
+          alert('Hubo un error al crear el colaborador. No se pudo obtener el ID.');
       }
-  
-    } catch (error: any) {
+  } catch (error: any) {
       console.error('Error al crear colaborador:', error);
       alert('Hubo un error al crear el colaborador.');
-    }
+  }
+  
   }
   
 
