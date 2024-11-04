@@ -6,10 +6,14 @@
     </div>
     <div class="modal-body">
       <div *ngIf="gerenciaSeleccionada"> 
+        <div class="form-row">
         <div class="form-group">
           <label for="nombreGerencia">Nombre de la Gerencia</label>
           <input id="nombreGerencia" type="text" [(ngModel)]="gerenciaSeleccionada.name" class="input-field">
         </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
           <label for="estadoGerencia">Activo</label>
           <input id="estadoGerencia" type="checkbox" [(ngModel)]="gerenciaSeleccionada.active" class="input-field">

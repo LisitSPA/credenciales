@@ -66,9 +66,12 @@
     margin-bottom: 15px;
 }
 
-.form-group:last-child {
-    margin-right: 0;
-}
+.form-row {
+    display: flex;
+    margin-left: 20px;
+    }
+
+
 .input-field, .select-field {
     width: 100%;
     padding: 10px;
