@@ -44,65 +44,73 @@ public class CreateCollaboratorCommandHandler
     )
     : IRequestHandler<CreateCollaboratorCommand, Response<int>>
 {
-    public async Task<Response<int>> Handle(CreateCollaboratorCommand request, CancellationToken cancellationToken)
+public async Task<Response<int>> Handle(CreateCollaboratorCommand request, CancellationToken cancellationToken)
+{
+    Response<int> result = new();
+    try
     {
-        Response<int> result = new();
+        if (request.RUT != null)
+        {
+            var exists = _repository.GetAll().Any(x => x.RUT == request.RUT);
+            if (exists)
+            {
+                throw new Exception($"El colaborador {request.RUT} ya existe");
+            }
+        }           
+
+        var collaborator = new Collaborator()
+        {
+            CompleteName = request.CompleteName,
+            RUT = request.RUT,
+            Area = request.Sede ?? "Sin Sede",
+            LeadershipId = request.LeadershipId,
+            Position = request.Position,
+            Phone = request.Phone,
+            ECollaboratorStatus = request.ECollaboratorStatus,
+            Email = request.Email,
+            SegmentId = request.SegmentId,
+            Active = true
+        };
+
+        _repository.Add(collaborator);
+        _repository.Save();
+
+        if (request.Photo != null)
+            _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
+
         try
         {
-            if(request.RUT != null)
-            {
-                var exists = _repository.GetAll().Any(x => x.RUT == request.RUT);
-                if (exists)
-                {
-                    throw new Exception($"El colaborador {request.RUT} ya existe");
-                }
-            }           
-
-            var collaborator = new Collaborator()
-            {
-                CompleteName = request.CompleteName,
-                RUT = request.RUT,
-                Area = request.Sede ?? "Sin Sede",
-                LeadershipId = request.LeadershipId,
-                Position = request.Position,
-                Phone = request.Phone,
-                ECollaboratorStatus = request.ECollaboratorStatus,
-                Email = request.Email,
-                SegmentId = request.SegmentId,
-                Active = true
-            };
-
-            _repository.Add(collaborator);
-            _repository.Save();
-
-            if (request.Photo != null)
-                _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
-
             SendEmail(collaborator);
-
-            if(request.Password != null)
-            {
-                _userRepository.Add(new User
-                {
-                    CollaboratorId = collaborator.Id,
-                    Email = request.Email,
-                    ERoleUser = ERoleUser.Jefatura,
-                    Password = _passwordHasherService.HashPassword(request.Password),
-                    ChangePassword = true,
-                    Active = true
-                });
-                _userRepository.Save();
-            }
-
-            result.Result = collaborator.Id;
-
         }
-        catch (Exception ex)
+        catch (Exception emailEx)
         {
-            result.ErrorProvider.AddError(ex.Source, ex.GetBaseException().Message);
+            Console.WriteLine($"Error al enviar el correo: {emailEx.Message}");
         }
-        return result;
+
+        if (request.Password != null)
+        {
+            _userRepository.Add(new User
+            {
+                CollaboratorId = collaborator.Id,
+                Email = request.Email,
+                ERoleUser = ERoleUser.Jefatura,
+                Password = _passwordHasherService.HashPassword(request.Password),
+                ChangePassword = true,
+                Active = true
+            });
+            _userRepository.Save();
+        }
+
+        result.Result = collaborator.Id;
+
     }
+    catch (Exception ex)
+    {
+        result.ErrorProvider.AddError(ex.Source, ex.GetBaseException().Message);
+    }
+    return result;
+}
+
 
     private void SendEmail(Collaborator collaborator)
     {
