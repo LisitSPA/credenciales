@@ -56,25 +56,31 @@ export class ColaboradoresComponent {
   
     this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage)
       .then(response => {
+        console.log('Respuesta completa de la API al obtener colaboradores:', response);
         if (response && response.content && response.content.data) {
-          this.colaboradores = response.content.data.map((item: any) => ({
-            id: item.id,
-            nombre: item.completeName,
-            rut: item.rut,
-            segmento: item.segment,
-            gerencia: item.leadership,
-            cargo: item.position,
-            celular: item.phone,
-            correo: item.email,
-            estado: item.status,
-            tieneFoto: item.hasPhoto,
-            tieneFirma: item.hasSignature,
-            tieneCredencial: item.hasCredential
-          }));
+          this.colaboradores = response.content.data.map((item: any) => {
+            console.log('Colaborador antes de ser mapeado:', item);
+            return {
+              id: item.id,
+              nombre: item.completeName,
+              rut: item.rut,
+              segmento: item.segment,
+              gerencia: item.leadership,
+              cargo: item.position,
+              celular: item.phone,
+              correo: item.email,
+              estado: item.status,
+              tieneFoto: item.hasPhoto,
+              tieneFirma: item.hasSignature,
+              tieneCredencial: item.hasCredential
+            };
+          });
   
+          console.log('Colaboradores después de actualizar:', this.colaboradores);
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
         } else {
           this.colaboradores = [];
+          console.warn('No se encontraron colaboradores en la respuesta:', response);
         }
       })
       .catch(error => {
@@ -200,6 +206,8 @@ export class ColaboradoresComponent {
   onColaboradorCreado() {
     this.updateColaboradores(); 
     this.cerrarFormulario();  
+    console.log('Evento colaboradorCreado recibido. Actualizando colaboradores...');
+
   } 
 
   redirigirFirmaExitosa(colaborador: Colaborador) {
