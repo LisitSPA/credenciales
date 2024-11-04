@@ -53,3 +53,19 @@
     justify-content: center; 
     gap: 20px; 
 }
+.close {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333;
+}
+.form-group {
+    flex-basis: calc(50% - 10px);
+    margin-right: 5px;
+    margin-bottom: 15px;
+}
+
+.form-group:last-child {
+    margin-right: 0;
+}
