@@ -3,12 +3,16 @@
     <button class="close-btn" (click)="cerrar.emit()">✖</button>
     <h2>Modificar Colaborador</h2>
     <form (ngSubmit)="guardarDatos()">
+
       <div class="form-row">
         <div class="form-group">
           <h3>Nombre completo</h3>
           <input type="text" [(ngModel)]="colaborador.nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" />
         </div>
+      </div>
 
+
+        <div class="form-row">
         <div class="form-group">
           <h3>Gerencia</h3>
           <select [(ngModel)]="colaborador.gerencia" name="gerencia" required>
@@ -23,6 +27,9 @@
           <h3>Cargo</h3>
           <input type="text" [(ngModel)]="colaborador.cargo" name="cargo" required placeholder="Ingresa un cargo"/>
         </div>
+      </div>
+
+        <div class="form-row">
         <div class="form-group">
           <h3>Segmento</h3>
           <select [(ngModel)]="colaborador.segmento" name="segmento" required>
@@ -44,6 +51,9 @@
           <h3>Correo electrónico</h3>
           <input type="email" [(ngModel)]="colaborador.correo" name="correo" required placeholder="Ingresar e-mail" />
         </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
           <h3>Sede</h3>
           <input type="text" [(ngModel)]="colaborador.sede" name="sede" required placeholder="Ingresar una sede"/>
