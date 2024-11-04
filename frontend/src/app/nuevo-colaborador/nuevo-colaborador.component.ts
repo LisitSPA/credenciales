@@ -84,12 +84,12 @@ export class NuevoColaboradorComponent {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
-
+  
     const segmentoId = this.segmento ? Number(this.segmento) : null;
     const leadershipId = this.gerencia ? Number(this.gerencia) : null;
-
+  
     this.sede = this.sede.trim() ? this.sede : 'Sin Sede'; 
-
+  
     const nuevoColaborador: any = {
       CompleteName: this.nombre,
       RUT: this.rut,
@@ -101,18 +101,41 @@ export class NuevoColaboradorComponent {
       LeadershipId: leadershipId,
       SegmentId: segmentoId,
     };
-
-    console.log('Datos a enviar:', nuevoColaborador); 
-
+  
     try {
       const response = await this.collaboratorService.createCollaborator(nuevoColaborador);
-      const colaboradorId = response.id;
-      console.log('Colaborador creado con éxito, ID:', colaboradorId);
+      
+      console.log('Respuesta completa del servidor:', response);
+  
+      if (response && response.id) {
+        const colaboradorId = response.id;
+        console.log('Colaborador creado con éxito, ID:', colaboradorId);
+  
+        if (this.foto) {
+          await this.subirArchivo(colaboradorId, this.foto, 'Photo');
+        }
+  
+        if (this.adjuntarFirma && this.firma) {
+          await this.subirArchivo(colaboradorId, this.firma, 'Signature');
+        }
+  
+        if (this.adjuntarCredencial && this.credencial) {
+          await this.subirArchivo(colaboradorId, this.credencial, 'Credential');
+        }
+  
+        this.colaboradorCreado.emit();
+        this.cerrar.emit();
+      } else {
+        console.error('El ID del colaborador no se encontró en la respuesta:', response);
+        alert('Hubo un error al crear el colaborador. No se pudo obtener el ID.');
+      }
+  
     } catch (error: any) {
       console.error('Error al crear colaborador:', error);
       alert('Hubo un error al crear el colaborador.');
     }
-}
+  }
+  
 
 
   async subirArchivo(colaboradorId: number, archivo: File, tipo: string) {

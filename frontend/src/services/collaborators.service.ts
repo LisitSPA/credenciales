@@ -82,15 +82,25 @@ export class CollaboratorService {
         formData.append('Photo', colaborador.Photo);
     }
 
+    console.log('Datos a enviar (formData):');
     formData.forEach((value: any, key: string) => {
         console.log(key + ': ' + value);
     });
 
     return lastValueFrom(
         this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(
-            catchError(error => this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.'))
+            catchError(error => {
+                console.error('Error al crear colaborador:', error);
+                return this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.');
+            })
         )
-    );
+    ).then(response => {
+        console.log('Respuesta del servidor:', response);
+        return response;
+    }).catch(error => {
+        console.error('Error capturado en catch:', error);
+        throw error;
+    });
 }
 
 
