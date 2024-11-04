@@ -102,7 +102,7 @@ export class NuevoColaboradorComponent {
         return;
     }
 
-    this.sede = this.sede?.trim() ? this.sede : 'Sin Sede';
+    this.sede = this.sede?.trim() ? this.sede.trim() : 'Sin Sede';
 
     console.log('Valor de Sede antes de enviar:', this.sede);
     console.log('Segmento seleccionado:', segmentoId);
@@ -115,7 +115,7 @@ export class NuevoColaboradorComponent {
         Area: this.sede,
         Phone: this.celular.trim(),
         Email: this.correo.trim(),
-        ECollaboratorStatus: 1
+        ECollaboratorStatus: 1,
     };
 
     if (this.foto) {
