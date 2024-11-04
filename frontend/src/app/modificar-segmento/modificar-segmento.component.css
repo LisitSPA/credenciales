@@ -23,13 +23,10 @@
     overflow-y: auto; 
   }
   
-   .form-row {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 5px;
+  .form-row {
+    display: inline-block;
+    margin-left: 20px;
     }
-    
     .form-group {
       flex-basis: calc(33.33% - 10px); 
       margin-right: 5px; 
