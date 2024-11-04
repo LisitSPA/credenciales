@@ -36,7 +36,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let colaborador of colaboradores">
-              <input type="checkbox" (change)="toggleSelection(colaborador, $event)" />
+              <td><input type="checkbox" (change)="toggleSelection(colaborador, $event)" /></td>
               <td>{{ colaborador.nombre }}</td>
               <td>{{ colaborador.rut }}</td>
               <td>{{ colaborador.segmento }}</td>
