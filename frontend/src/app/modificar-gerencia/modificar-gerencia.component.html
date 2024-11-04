@@ -1,4 +1,6 @@
 <div class="modal">
+  <div class="modal-content">
+
   <div class="modal-header">
     <h3>Modificar Gerencia</h3>
     <button (click)="cerrarModalModificar()">&times;</button>
@@ -19,8 +21,9 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn-secondary-1" (click)="guardarModificacionGerencia()" [disabled]="!gerenciaSeleccionada">Guardar</button>
-    <button class="btn-secondary" (click)="cerrarModalModificar()">Cancelar</button>
+    <button class="btn btn-secondary" (click)="cerrarModalModificar()">Cancelar</button>
+    <button class="btn btn-primary" (click)="guardarModificacionGerencia()" [disabled]="!gerenciaSeleccionada">Guardar</button>
   </div>
+</div>
 </div>
 

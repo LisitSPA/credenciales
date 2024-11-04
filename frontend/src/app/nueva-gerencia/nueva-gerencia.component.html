@@ -1,5 +1,7 @@
-<div class="modal-backdrop" *ngIf="mostrarModal">
+<div *ngIf="mostrarModal">
   <div class="modal">
+    <div class="modal-content">
+
     <div class="modal-header">
       <h3>Crear nueva gerencia</h3>
       <button class="close" (click)="cerrarModal()">&times;</button>
@@ -9,11 +11,12 @@
         <label for="nombreGerencia">Nombre de la Gerencia</label>
         <input id="nombreGerencia" type="text" [(ngModel)]="nombreGerencia" class="form-control" placeholder="Ingresa el nombre de la gerencia">
       </div>
-     
-    </div>
+         </div>
     <div class="modal-footer">
-      <button class=".btn-secondary" (click)="crearGerencia()" [disabled]="!nombreGerencia.trim()">Guardar</button>
       <button class="btn-secondary-1" (click)="cerrarModal()">Cerrar</button>
+      <button class="btn-secondary" (click)="crearGerencia()" [disabled]="!nombreGerencia.trim()">Guardar</button>
     </div>
   </div>
 </div>
+</div>
+
