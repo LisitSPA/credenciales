@@ -84,3 +84,8 @@
     font-family: 'Roboto', sans-serif;
     font-size: medium;
 }
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+}
