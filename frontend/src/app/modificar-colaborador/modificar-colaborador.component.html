@@ -32,10 +32,12 @@
         </div>
       </div>
 
+      <div class="form-row">
       <div class="form-group">
         <h3>Celular</h3>
         <input type="text" [(ngModel)]="colaborador.celular" name="celular" required placeholder="Ingrese su celular" />
       </div>
+    </div>
 
       <div class="form-row">
         <div class="form-group">
@@ -59,8 +61,8 @@
       </div>
 
       <div class="button">
-        <button type="submit" class="btn-secondary">Editar</button>
         <button class="btn-secondary-1" (click)="cerrar.emit()">Atrás</button>
+        <button type="submit" class="btn-secondary">Editar</button>
       </div>
     </form>
   </div>

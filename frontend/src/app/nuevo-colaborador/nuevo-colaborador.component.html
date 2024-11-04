@@ -8,10 +8,16 @@
           <h3>Nombre completo</h3>
           <input type="text" [(ngModel)]="nombre" name="nombre" required placeholder="Ingresa tu nombre y apellido" />
         </div>
+      </div>
+        
+      <div class="form-row">
         <div class="form-group">
           <h3>RUT</h3>
           <input type="text" [(ngModel)]="rut" name="rut" required placeholder="Ingresa tu RUT"/>
         </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
           <h3>Gerencia</h3>
           <select [(ngModel)]="gerencia" name="gerencia" required>
@@ -19,11 +25,16 @@
             <option *ngFor="let gerencia of gerencias" [value]="gerencia.id">{{ gerencia.name }}</option>
           </select>
         </div>
+      </div>
+
       <div class="form-row">
         <div class="form-group">
           <h3>Cargo</h3>
           <input type="text" [(ngModel)]="cargo" name="cargo" required placeholder="Ingresa un cargo"/>
         </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
           <h3>Segmento</h3>
           <select [(ngModel)]="segmento" name="segmento" required>
@@ -32,6 +43,8 @@
           </select>
         </div>   
         </div>
+
+      <div class="form-row">
         <div class="form-group">
           <h3>Celular</h3>
           <input type="text" [(ngModel)]="celular" name="celular" required placeholder="Ingrese su celular" />
@@ -43,6 +56,9 @@
           <h3>Correo electrónico</h3>
           <input type="email" [(ngModel)]="correo" name="correo" required placeholder="Ingresar e-mail" />
         </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
           <h3>Sede</h3>
           <input type="text" [(ngModel)]="sede" name="sede" required placeholder="Ingresar una sede" />
