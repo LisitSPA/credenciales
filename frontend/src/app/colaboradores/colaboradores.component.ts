@@ -17,6 +17,9 @@ interface Colaborador {
   celular: string;
   correo: string;
   estado: string;
+  tieneFoto?: boolean;
+  tieneFirma?: boolean;
+  tieneCredencial?: boolean;
 }
 
 @Component({
@@ -63,7 +66,10 @@ export class ColaboradoresComponent {
             cargo: item.position,
             celular: item.phone,
             correo: item.email,
-            estado: item.status
+            estado: item.status,
+            tieneFoto: item.hasPhoto,
+            tieneFirma: item.hasSignature,
+            tieneCredencial: item.hasCredential
           }));
   
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
@@ -73,7 +79,7 @@ export class ColaboradoresComponent {
       })
       .catch(error => {
         console.error('Error al obtener colaboradores:', error);
-        
+  
         if (error.name === 'HttpErrorResponse' && error.status === 0) {
           alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
         } else {
@@ -81,6 +87,7 @@ export class ColaboradoresComponent {
         }
       });
   }
+  
   
   toggleSelection(colaborador: Colaborador, event: any) {
     if (event.target.checked) {
