@@ -1,6 +1,4 @@
 <div class="modal">
-  <div class="modal-content">
-
   <div class="modal-header">
     <h3>Modificar Gerencia</h3>
     <button (click)="cerrarModalModificar()">&times;</button>
@@ -13,7 +11,7 @@
       </div>
       <div class="form-group">
         <label for="estadoGerenciaModificar">Activo</label>
-        <input id="estadoGerencia" type="checkbox" [(ngModel)]="gerenciaSeleccionada.active">
+        <input id="estadoGerenciaModificar" type="checkbox" [(ngModel)]="gerenciaSeleccionada.active">
       </div>
     </div>
     <div *ngIf="!gerenciaSeleccionada">
@@ -24,6 +22,5 @@
     <button class="btn-secondary-1" (click)="cerrarModalModificar()">Cancelar</button>
     <button class="btn-secondary" (click)="guardarModificacionGerencia()" [disabled]="!gerenciaSeleccionada">Guardar</button>
   </div>
-</div>
 </div>
 

@@ -1,7 +1,5 @@
 <div *ngIf="mostrarModal">
   <div class="modal">
-    <div class="modal-content">
-
     <div class="modal-header">
       <h3>Crear nueva gerencia</h3>
       <button class="close" (click)="cerrarModal()">&times;</button>
@@ -17,6 +15,5 @@
       <button class="btn-secondary" (click)="crearGerencia()" [disabled]="!nombreGerencia.trim()">Guardar</button>
     </div>
   </div>
-</div>
 </div>
 
