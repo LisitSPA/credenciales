@@ -51,30 +51,44 @@ export class CollaboratorService {
   createCollaborator(colaborador: any): Promise<any> {
     let headers = this.headers;
     const formData = new FormData();
-    formData.append('CompleteName', colaborador.CompleteName);
-    formData.append('RUT', colaborador.RUT);
+
+    if (colaborador.CompleteName) {
+        formData.append('CompleteName', colaborador.CompleteName);
+    }
+    if (colaborador.RUT) {
+        formData.append('RUT', colaborador.RUT);
+    }
     if (colaborador.LeadershipId) {
-      formData.append('LeadershipId', colaborador.LeadershipId.toString());
+        formData.append('LeadershipId', colaborador.LeadershipId.toString());
     }
     if (colaborador.SegmentId) {
-      formData.append('SegmentId', colaborador.SegmentId.toString());
+        formData.append('SegmentId', colaborador.SegmentId.toString());
     }
-    formData.append('Position', colaborador.Position);
-    formData.append('Area', colaborador.Area); 
-    formData.append('Phone', colaborador.Phone);
-    formData.append('Email', colaborador.Email);
+    if (colaborador.Position) {
+        formData.append('Position', colaborador.Position);
+    }
+    if (colaborador.Area) {
+        formData.append('Area', colaborador.Area);
+    }
+    if (colaborador.Phone) {
+        formData.append('Phone', colaborador.Phone);
+    }
+    if (colaborador.Email) {
+        formData.append('Email', colaborador.Email);
+    }
     formData.append('ECollaboratorStatus', colaborador.ECollaboratorStatus.toString());
-  
+
     if (colaborador.Photo) {
-      formData.append('Photo', colaborador.Photo);
+        formData.append('Photo', colaborador.Photo);
     }
-  
+
     return lastValueFrom(
-      this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(
-        catchError(error => this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.'))
-      )
+        this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(
+            catchError(error => this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.'))
+        )
     );
-  }
+}
+
   
   updateCollaborator(id: number, colaborador: any): Promise<any> {
     let headers = this.headers;
