@@ -1,6 +1,6 @@
-<router-outlet></router-outlet> 
+<router-outlet></router-outlet>
 
-<div class="main-content" *ngIf="!isLoginRoute()">
+<div class="main-content" *ngIf="!isLoginRoute() && !isCredencialWebRoute()">
   <app-header></app-header>
   <app-footer></app-footer>
 </div>

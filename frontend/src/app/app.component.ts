@@ -39,4 +39,8 @@ export class AppComponent {
   isLoginRoute(): boolean {
     return this.router.url === '/';
   }
+
+  isCredencialWebRoute(): boolean {
+    return this.router.url === '/credencialweb';
+  }
 }
