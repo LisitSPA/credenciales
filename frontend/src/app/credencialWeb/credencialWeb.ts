@@ -60,15 +60,14 @@ export class CredencialWebComponent implements OnInit {
     ORG:David del Curto
     TITLE:${this.cargo}
     END:VCARD`;
-
-    const blob = new Blob([vCardData], { type: 'text/vcard' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${this.nombre}.vcf`;
-    a.click();
-    window.URL.revokeObjectURL(url);
+    
+      const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vCardData);
+      const a = document.createElement('a');
+      a.href = dataUri;
+      a.download = `${this.nombre}.vcf`;
+      a.click();
   }
+  
 
   enviarCorreo() {
     window.location.href = `mailto:${this.correo}`;
