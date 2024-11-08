@@ -52,21 +52,20 @@ export class CredencialWebComponent implements OnInit {
 
   descargarContacto() {
     const vCardData = `BEGIN:VCARD
-    VERSION:3.0
-    FN:${this.nombre}
-    TEL:${this.celular}
-    EMAIL:${this.correo}
-    ADR:${this.sede}
-    ORG:David del Curto
-    TITLE:${this.cargo}
-    END:VCARD`;
-    
-      const dataUri = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vCardData);
-      const a = document.createElement('a');
-      a.href = dataUri;
-      a.download = `${this.nombre}.vcf`;
-      a.click();
+  VERSION:3.0
+  FN:${this.nombre}
+  TEL:${this.celular}
+  EMAIL:${this.correo}
+  ADR:${this.sede}
+  ORG:David del Curto
+  TITLE:${this.cargo}
+  END:VCARD`;
+  
+    const blob = new Blob([vCardData], { type: 'text/vcard' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
   }
+  
   
 
   enviarCorreo() {
