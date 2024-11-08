@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CollaboratorService } from '../../services/collaborators.service';
-import { Browser } from '@capacitor/browser';
-import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-credencialWeb',
@@ -52,27 +50,38 @@ export class CredencialWebComponent implements OnInit {
     });
   }
 
-  async abrirContacto() {
-    if (Capacitor.isNativePlatform()) {
-      if (Capacitor.getPlatform() === 'android') {
-        const androidIntentUrl = `intent://contacts?action=android.intent.action.INSERT&name=${encodeURIComponent(this.nombre)}&phone=${encodeURIComponent(this.celular)}&email=${encodeURIComponent(this.correo)}#Intent;scheme=content;package=com.android.contacts;end`;
-        try {
-          await Browser.open({ url: androidIntentUrl });
-        } catch (err) {
-          console.error('Error al abrir contacto en Android:', err);
-        }
-      }
-      else if (Capacitor.getPlatform() === 'ios') {
-        const iosUrl = `contact://add?name=${encodeURIComponent(this.nombre)}&phone=${encodeURIComponent(this.celular)}&email=${encodeURIComponent(this.correo)}`;
-        try {
-          await Browser.open({ url: iosUrl });
-        } catch (err) {
-          console.error('Error al abrir contacto en iOS:', err);
-        }
-      }
-    } else {
-      console.error('Abrir contactos solo es compatible en plataformas nativas.');
-    }
+  agendarContacto() {
+    const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:${this.nombre}
+TEL:${this.celular}
+EMAIL:${this.correo}
+ADR:${this.sede}
+ORG:David del Curto
+TITLE:${this.cargo}
+END:VCARD`;
+
+    const blob = new Blob([vCardData], { type: 'text/vcard' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${this.nombre}.vcf`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  generarVCardURL(): string {
+    const vCardData = `BEGIN:VCARD
+    VERSION:3.0
+    FN:${this.nombre}
+    TEL:${this.celular}
+    EMAIL:${this.correo}
+    ADR:${this.sede}
+    ORG:David del Curto
+    TITLE:${this.cargo}
+    END:VCARD`;
+
+    return 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vCardData);
   }
 
   enviarCorreo() {

@@ -127,7 +127,6 @@ img {
     height: 100px;
 }
 
-
 .qr-code {
     width: 100px;
     height: 100px;
@@ -177,11 +176,17 @@ h2{
     background-color: #0056b3;
 }
 
-.btn-action .icon {
+.btn-action {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+.icon {
     width: 16px;
     height: 16px;
-    margin-right: 8px; 
+    margin-right: 8px;  
 }
+
 
 
 .contact-section, .email-section {
