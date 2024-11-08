@@ -66,6 +66,19 @@ export class CredencialWebComponent implements OnInit {
     window.open(url);
   }
   
+  generarVCardURL(): string {
+    const vCardData = `BEGIN:VCARD
+  VERSION:3.0
+  FN:${this.nombre}
+  TEL:${this.celular}
+  EMAIL:${this.correo}
+  ADR:${this.sede}
+  ORG:David del Curto
+  TITLE:${this.cargo}
+  END:VCARD`;
+  
+    return 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vCardData);
+  }
   
 
   enviarCorreo() {

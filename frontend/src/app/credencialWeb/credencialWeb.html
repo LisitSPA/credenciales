@@ -30,7 +30,9 @@
       <div class="contact-section">
         <div class="contact-row">
           <span class="label">Contacto Telefónico:</span>
-          <a href="tel:+{{ celular }}" class="contact-link">{{ celular }}</a>
+        <a [href]="generarVCardURL()" download="{{nombre}}.vcf" class="contact-link">
+          {{ celular }}
+        </a>
         </div>
         
           <button (click)="descargarContacto()" class="btn-action">
