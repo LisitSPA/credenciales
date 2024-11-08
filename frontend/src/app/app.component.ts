@@ -20,15 +20,8 @@ import { SearchSectionComponent } from './search-section/search-section.componen
     RouterOutlet,
     HeaderComponent,
     FooterComponent,
-    ColaboradoresComponent,
-    SegmentosComponent,
-    GerenciasComponent,
     FormsModule,
     ReactiveFormsModule,
-    GenerarCredencialComponent,
-    GenerarFirmaComponent,
-    SearchSectionComponent
-
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
