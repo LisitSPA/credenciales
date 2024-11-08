@@ -30,14 +30,14 @@
       <div class="contact-section">
         <div class="contact-row">
           <span class="label">Contacto Telefónico:</span>
-        <a [href]="generarVCardURL()" download="{{nombre}}.vcf" class="contact-link">
-          {{ celular }}
-        </a>
+          <a (click)="abrirContacto()" class="contact-link">
+            {{ celular }}
+          </a>
         </div>
         
-          <button (click)="descargarContacto()" class="btn-action">
-            <img src="/icons/contact-icon.svg" alt="Agendar Contacto" class="icon">
-          </button>
+        <button (click)="abrirContacto()" class="btn-action">
+          <img src="/agenda.png" alt="Agendar Contacto" class="icon">
+        </button>
       </div>
       <hr class="divider">
       
@@ -46,7 +46,7 @@
           <span class="label">Correo electrónico:</span>
           <a href="mailto:{{ correo }}" class="contact-link">{{ correo }}</a>
           <button (click)="enviarCorreo()" class="btn-action">
-            <img src="/icons/email-icon.svg" alt="Enviar Mail" class="icon">
+            <img src="/correo.png" alt="Enviar Mail" class="icon">
           </button>
         </div>
       </div>
