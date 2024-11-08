@@ -34,6 +34,7 @@ export class AppComponent {
   }
 
   isCredencialWebRoute(): boolean {
-    return this.router.url === '/credencialweb';
+    const url = this.router.url.split('?')[0];
+    return url === '/credencialweb';
   }
 }
