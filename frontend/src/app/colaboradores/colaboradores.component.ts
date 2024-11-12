@@ -160,10 +160,10 @@ export class ColaboradoresComponent {
   eliminarColaborador() {
     if (this.selectedColaborador) {
       this.collaboratorService.deleteCollaborator(this.selectedColaborador.id).then(response => {
-        if (response && response.success) {
+        if (response && response.statusCode === 200) {
           console.log(`Colaborador con ID ${this.selectedColaborador?.id} eliminado.`);
-          this.updateColaboradores(); 
-          this.cerrarModalEliminar() 
+          this.colaboradores = this.colaboradores.filter(c => c.id !== this.selectedColaborador?.id);
+          this.cerrarModalEliminar(); 
         } else {
           console.error('Error al eliminar colaborador:', response);
         }
@@ -173,6 +173,7 @@ export class ColaboradoresComponent {
       });
     }
   }
+  
 
   editar(colaborador: Colaborador) {
     this.selectedColaborador = colaborador;
