@@ -19,12 +19,7 @@ export class LoginComponent {
   };
   mensajeError = '';
 
-  constructor(private router: Router, private http: HttpClient) {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.router.navigate(['/home']);
-    }
-  }
+  constructor(private router: Router, private http: HttpClient) {}
 
   gotoHome() {
     const loginCommand = {
@@ -32,9 +27,8 @@ export class LoginComponent {
       password: this.usuario.password
     };
 
-    this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, loginCommand)
+    this.http.post<{ message: string }>(`${environment.apiUrl}/auth/login`, loginCommand, { withCredentials: true })
       .subscribe(response => {
-        localStorage.setItem('token', response.token); 
         console.log('Inicio de sesión exitoso');
         this.router.navigate(['/home']);
       }, error => {
