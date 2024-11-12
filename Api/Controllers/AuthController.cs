@@ -28,22 +28,11 @@ namespace Api.Controllers
             if (user != null)
             {
                 var token = JwtConfiguration.GenerateToken(user, _config);
-
-                var cookieOptions = new CookieOptions
-                {
-                    HttpOnly = true,  
-                    Secure = true,    
-                    SameSite = SameSiteMode.Strict, 
-                    Expires = DateTime.UtcNow.AddHours(1) 
-                };
-
-                Response.Cookies.Append("authToken", token, cookieOptions);
-                return Ok(new { message = "Inicio de sesión exitoso" });
+                return Ok(new { token });
             }
 
             return Unauthorized();
         }
-
 
         [AllowAnonymous]
         [HttpPost("passwordRecovery")]
