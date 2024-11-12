@@ -41,7 +41,6 @@ export class CredencialWebComponent implements OnInit {
         this.sede = colaborador.leadership || '';
         this.segmento = colaborador.segment || '';
 
-        console.log('Datos del colaborador cargados:', colaborador);
       } else {
         console.error('El objeto `response.content` no contiene datos.');
       }

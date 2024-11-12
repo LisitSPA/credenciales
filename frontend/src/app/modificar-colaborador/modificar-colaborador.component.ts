@@ -35,7 +35,6 @@ export class ModificarColaboradorComponent implements OnInit {
     try {
       const response = await this.gerenciaService.getPaginatedGerencias(1, 100);
       this.gerencias = response.content.data.filter((gerencia: any) => gerencia.active);
-      console.log('Gerencias cargadas:', this.gerencias);
     } catch (error) {
       console.error('Error al cargar gerencias:', error);
     }
@@ -46,7 +45,6 @@ export class ModificarColaboradorComponent implements OnInit {
       const response = await this.segmentoService.getPaginatedSegments(1, 100);
       if (response && response.content && response.content.data) {
         this.segmentos = response.content.data.filter((segment: any) => segment.active);
-        console.log('Segmentos activos cargados:', this.segmentos);
       } else {
         console.error('No se encontraron segmentos activos en la respuesta:', response);
       }
@@ -81,11 +79,9 @@ export class ModificarColaboradorComponent implements OnInit {
       ECollaboratorStatus: 1,
     };
   
-    console.log('Datos del colaborador modificados:', colaboradorModificado);
   
     this.collaboratorService.updateCollaborator(colaboradorModificado.Id, colaboradorModificado)
       .then(response => {
-        console.log('Colaborador actualizado con éxito:', response);
         this.guardar.emit(colaboradorModificado);  
       })
       .catch(error => {
@@ -97,7 +93,6 @@ export class ModificarColaboradorComponent implements OnInit {
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
-      console.log('Archivo seleccionado:', file);
     }
   }
 }

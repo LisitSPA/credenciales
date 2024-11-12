@@ -15,12 +15,10 @@ export class ModificarGerenciaComponent {
   @Output() guardar = new EventEmitter<{ id: number; name: string; active: boolean }>();  
 
   cerrarModalModificar() {
-    console.log('Cerrando modal sin guardar');
     this.cerrar.emit();  
   }
 
   guardarModificacionGerencia() {
-    console.log('Guardando cambios para la gerencia seleccionada:', this.gerenciaSeleccionada);
     this.guardar.emit(this.gerenciaSeleccionada); 
   }
 }

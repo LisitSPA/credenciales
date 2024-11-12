@@ -50,10 +50,8 @@ export class GerenciaService {
           Name: name.trim(),
         };
       
-        console.log('Payload enviado para crear gerencia:', payload);
         return this.http.post(this.apiUrl, payload, { headers }).toPromise()
           .then(response => {
-            console.log('Respuesta de creación de gerencia:', response);
             return response;
           })
           .catch(error => {
@@ -80,11 +78,9 @@ export class GerenciaService {
       Active: gerencia.active,
     };
 
-    console.log('Modificando gerencia con payload:', payload);
 
     return this.http.put(this.apiUrl, payload, { headers }).toPromise()
       .then(response => {
-        console.log('Respuesta de modificación:', response);
         return response;
       })
       .catch(error => {

@@ -49,7 +49,6 @@ export class NuevoColaboradorComponent {
     try {
       const response = await this.gerenciaService.getPaginatedGerencias(1, 100);  
       this.gerencias = response.content.data;
-      console.log('Gerencias cargadas:', this.gerencias);
     } catch (error) {
       console.error('Error al cargar gerencias:', error);
     }
@@ -58,18 +57,16 @@ export class NuevoColaboradorComponent {
   async loadSegmentos() {
     try {
       const response = await this.segmentoService.getPaginatedSegments(1, 100);  
-      console.log('Respuesta completa del servicio de segmentos:', response);
   
       if (response && response.content && response.content.data) {
         this.segmentos = response.content.data
-          .filter((item: any) => item.active) // Filtrar solo segmentos activos
+          .filter((item: any) => item.active) 
           .map((item: any) => ({
             id: item.id,
             nombreCompleto: item.name,  
             color: item.color,
             activo: item.active,
           }));
-        console.log('Segmentos después de filtrar y mapear:', this.segmentos);
       } else {
         console.error('No se encontraron segmentos en la respuesta:', response);
       }
@@ -105,10 +102,8 @@ export class NuevoColaboradorComponent {
     try {
       const response = await this.collaboratorService.createCollaborator(nuevoColaborador);
       const colaboradorId = response.content;            
-      console.log('Respuesta completa del servidor:', response);
   
       if (colaboradorId) {
-          console.log('Colaborador creado con éxito, ID:', colaboradorId);
   
           if (this.foto) {
               await this.subirArchivo(colaboradorId, this.foto, 'Photo');
@@ -140,7 +135,6 @@ export class NuevoColaboradorComponent {
   async subirArchivo(colaboradorId: number, archivo: File, tipo: string) {
     try {
       await this.collaboratorService.uploadAttachment(colaboradorId, archivo, tipo);
-      console.log(`${tipo} subido con éxito`);
     } catch (error: any) {
       console.error(`Error al subir ${tipo}:`, error);
       alert(`Hubo un error al subir el archivo de ${tipo}.`);
@@ -157,7 +151,6 @@ export class NuevoColaboradorComponent {
       } else {
         this.foto = input.files[0];
       }
-      console.log('Archivo seleccionado:', input.files[0]);
     }
   }
 

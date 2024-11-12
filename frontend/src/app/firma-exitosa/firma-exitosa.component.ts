@@ -44,9 +44,7 @@ export class FirmaExitosaComponent implements OnInit {
     this.collaboratorService.getCollaboratorById(id).then(colaborador => {
       if (colaborador && colaborador.content) {
         this.nombre = colaborador.content.completeName;
-        console.log('Nombre asignado:', this.nombre);
         this.cargo = colaborador.content.position;
-        console.log('Cargo asignado:', this.cargo);
         this.correo = colaborador.content.email;
         this.celular = colaborador.content.phone;
         this.segmento = colaborador.content.segment;
@@ -66,10 +64,8 @@ export class FirmaExitosaComponent implements OnInit {
   async generarQRCode(id: number) {
     const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
 
-    console.log('URL para el QR:', url); 
     try {
       this.qrCodeDataUrl = await QRCode.toDataURL(url);
-      console.log('QR Code generado:', this.qrCodeDataUrl); 
     } catch (error) {
       console.error('Error generando QR Code:', error);
     }

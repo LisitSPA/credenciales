@@ -28,16 +28,13 @@ export class SearchSectionComponent {
   ) {}
 
   onSearch() {
-    console.log('Buscar:', this.searchQuery);
   }
 
   onUpload() {
     this.isDropdownVisible = !this.isDropdownVisible; 
-    console.log('Carga masiva de documentos');
   }
 
   onLoadOption(option: string) {
-    console.log('Opción seleccionada:', option);
     this.selectedOption = option; 
   }
 
@@ -54,10 +51,8 @@ export class SearchSectionComponent {
       }
   
       this.selectedFile = file;
-      console.log('Archivo seleccionado:', this.selectedFile.name);
     } else {
       this.selectedFile = null;
-      console.log('No se ha seleccionado ningún archivo.');
     }
   }
   
@@ -83,7 +78,6 @@ export class SearchSectionComponent {
 
         uploadPromise
             .then(response => {
-                console.log('Carga exitosa:', response);
                 this.mostrarMensajeExito = true;
 
                 if (this.selectedOption === 'Colaboradores') {

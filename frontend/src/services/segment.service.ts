@@ -61,7 +61,6 @@ export class SegmentService {
   
       return this.http.post(`${this.apiUrl}`, payload, { headers }).toPromise()
         .then(response => {
-          console.log('Respuesta del servidor:', response);
           return response;
         })
         .catch(error => {
@@ -83,7 +82,6 @@ export class SegmentService {
   deleteSegment(id: number): Promise<any> {
     try {
       const headers = this.createHeaders();
-      console.log(`Eliminando el segmento con ID: ${id}`);
       return this.http.delete(`${this.apiUrl}/${id}`, { headers }).toPromise();
     } catch (error) {
       console.error('Error al eliminar el segmento:', error);
@@ -100,11 +98,9 @@ export class SegmentService {
         Color: color,
         Active: active,
       };
-      console.log('Actualizando segmento con los valores:', payload);
   
       return this.http.put(`${this.apiUrl}`, payload, { headers }).toPromise()
         .then(response => {
-          console.log('Respuesta del servidor al actualizar el segmento:', response);
           return response;
         })
         .catch(error => {

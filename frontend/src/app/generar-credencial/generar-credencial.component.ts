@@ -108,7 +108,6 @@ export class GenerarCredencialComponent implements OnInit {
 
     try {
       this.qrCodeUrl = await QRCode.toDataURL(url);
-      console.log('QR Code generado:', this.qrCodeUrl);
     } catch (err) {
       console.error('Error generando QR Code:', err);
     }

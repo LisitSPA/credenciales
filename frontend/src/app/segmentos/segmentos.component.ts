@@ -45,7 +45,6 @@ export class SegmentosComponent {
   cargarListaSegmentos() {
     this.segmentService.getPaginatedSegments(this.currentPage, this.itemsPerPage)
       .then((response: any) => {
-        console.log('Respuesta obtenida del servicio:', response);
   
         if (response && response.content && response.content.data) {
           this.segmentos = response.content.data
@@ -57,12 +56,9 @@ export class SegmentosComponent {
               activo: item.active,
               seleccionado: false,
             }));
-  
-          console.log('Segmentos después de filtrar y mapear:', this.segmentos);
-  
+    
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
           this.updatePaginatedSegmentos();  
-          console.log('Segmentos obtenidos:', this.segmentos);
         } else {
           this.segmentos = [];
           console.error('Error: se esperaba un array de datos de segmentos.');
@@ -79,25 +75,18 @@ export class SegmentosComponent {
   }
   
   transformColor(color: string): string {
-    console.log('Transformando el color:', color);
-  
     if (color && color.startsWith('#') && (color.length === 4 || color.length === 5)) {
       color = color + '0';
-      console.log('Color transformado a:', color);
-    } else {
-      console.log('Color no necesita transformación o no cumple con las condiciones:', color);
-    }
+    } 
     return color;
   }
   
 
   isValidColor(color: string): boolean {
-    console.log('Verificando si el color es válido:', color);
 
     const s = new Option().style;
     s.color = color;
     const isValid = s.color !== '';
-    console.log('Resultado de la verificación del color:', isValid);
     return isValid;
   }
 
@@ -105,7 +94,6 @@ export class SegmentosComponent {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     this.paginatedSegmentos = this.segmentos.slice(start, end);
-    console.log('Lista paginada actualizada:', this.paginatedSegmentos);
   }
 
   previousPage() {
@@ -156,7 +144,6 @@ export class SegmentosComponent {
 
     try {
       await this.segmentService.createSegment(nuevoSegmento.Description, nuevoSegmento.Color);
-      console.log('Segmento creado exitosamente');
       this.cargarListaSegmentos();  
       this.cerrarModalNuevoSegmento();  
     } catch (error) {
@@ -168,7 +155,6 @@ export class SegmentosComponent {
     if (this.idSegmentoSeleccionado !== null) {
       try {
         await this.segmentService.deleteSegment(this.idSegmentoSeleccionado);
-        console.log('Segmento eliminado exitosamente del backend');
         this.cargarListaSegmentos(); 
         this.cerrarModalEliminar(); 
       } catch (error) {
@@ -181,7 +167,6 @@ export class SegmentosComponent {
     if (segmentoModificado && segmentoModificado.id) {
       this.segmentService.updateSegment(segmentoModificado.id, segmentoModificado.nombreCompleto, segmentoModificado.color, segmentoModificado.activo)
         .then(response => {
-          console.log('Segmento actualizado:', response);
           this.cargarListaSegmentos(); 
           this.cerrarFormulario(); 
         })

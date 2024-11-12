@@ -26,10 +26,8 @@ export class NuevaSegmentoComponent {
   async crearSegmento() {
     if (this.nombreSegmento.trim() && this.colorSegmento.trim()) {
       try {
-        console.log('Color seleccionado:', this.colorSegmento);
   
         await this.segmentService.createSegment(this.nombreSegmento, this.colorSegmento);
-        console.log('Segmento creado exitosamente');
   
         this.guardar.emit({
           Description: this.nombreSegmento,
@@ -38,7 +36,7 @@ export class NuevaSegmentoComponent {
   
         this.cerrarModal(); 
       } catch (error: unknown) {
-        const err = error as any; // Realiza una conversión a 'any' para acceder a las propiedades.
+        const err = error as any; 
         console.error('Error al crear el segmento:', err);
         if (err.message && err.message.includes('El segmento con este nombre ya existe')) {
           alert('El segmento con este nombre ya existe. Por favor, elige un nombre diferente.');

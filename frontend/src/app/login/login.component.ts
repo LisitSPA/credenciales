@@ -41,7 +41,6 @@ export class LoginComponent {
     this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, loginCommand, { withCredentials: true })
       .subscribe(response => {
         this.loading = false;
-        console.log('Inicio de sesión exitoso');
         this.router.navigate(['/home']);
       }, error => {
         this.loading = false;

@@ -56,10 +56,8 @@ export class ColaboradoresComponent {
   
     this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage)
       .then(response => {
-        console.log('Respuesta completa de la API al obtener colaboradores:', response);
         if (response && response.content && response.content.data) {
           this.colaboradores = response.content.data.map((item: any) => {
-            console.log('Colaborador antes de ser mapeado:', item);
             return {
               id: item.id,
               nombre: item.completeName,
@@ -76,7 +74,6 @@ export class ColaboradoresComponent {
             };
           });
   
-          console.log('Colaboradores después de actualizar:', this.colaboradores);
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
         } else {
           this.colaboradores = [];
@@ -161,14 +158,11 @@ export class ColaboradoresComponent {
     if (this.selectedColaborador) {
       this.collaboratorService.deleteCollaborator(this.selectedColaborador.id).then(response => {
         if (response && response.statusCode === 200) {
-          console.log(`Colaborador con ID ${this.selectedColaborador?.id} eliminado.`);
           this.colaboradores = this.colaboradores.filter(c => c.id !== this.selectedColaborador?.id);
           this.cerrarModalEliminar(); 
         } else {
-          console.error('Error al eliminar colaborador:', response);
         }
       }).catch(error => {
-        console.error('Error al eliminar colaborador:', error);
         alert('Error al eliminar colaborador: ' + error.message);
       });
     }
@@ -179,7 +173,6 @@ export class ColaboradoresComponent {
     this.selectedColaborador = colaborador;
     this.mostrarModificar = true;
     this.mostrarFormulario = false; 
-    console.log('Colaborador para editar:', colaborador);
   }
   cerrarModificar() {
     this.mostrarModificar = false;
@@ -190,7 +183,6 @@ export class ColaboradoresComponent {
     if (colaboradorModificado && colaboradorModificado.id) {
       this.collaboratorService.updateCollaborator(colaboradorModificado.id, colaboradorModificado)
         .then(response => {
-          console.log('Colaborador actualizado:', response);
           this.updateColaboradores();  
           this.mostrarModificar = false;
         })
@@ -207,7 +199,6 @@ export class ColaboradoresComponent {
   onColaboradorCreado() {
     this.updateColaboradores(); 
     this.cerrarFormulario();  
-    console.log('Evento colaboradorCreado recibido. Actualizando colaboradores...');
 
   } 
 

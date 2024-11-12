@@ -45,7 +45,6 @@ export class ModificarSegmentoComponent implements OnInit {
           id: segment.id,
           description: segment.description,
         }));
-        console.log('Segmentos cargados:', this.segmentos);
       } else {
         console.error('No se encontraron datos en la respuesta:', response);
       }
@@ -68,7 +67,6 @@ export class ModificarSegmentoComponent implements OnInit {
       activo: this.segmento.activo
     };
   
-    console.log('Guardando datos del segmento:', segmentoModificado);
     this.guardar.emit(segmentoModificado);
   }
   

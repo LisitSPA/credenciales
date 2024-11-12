@@ -32,7 +32,6 @@ export class NuevaGerenciaComponent {
       name: this.nombreGerencia.trim(),
     };
 
-    console.log('Guardando nueva gerencia:', nuevaGerencia);
     this.guardar.emit(nuevaGerencia); 
     this.cerrarModal();
   }

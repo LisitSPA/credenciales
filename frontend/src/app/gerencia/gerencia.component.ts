@@ -44,19 +44,16 @@ export class GerenciasComponent {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
     this.paginatedGerencias = this.gerencias.slice(start, end); 
-    console.log('Gerencias paginadas:', this.paginatedGerencias);  
   }
 
   cargarListaGerencias() {
     this.gerenciaService.getPaginatedGerencias(this.currentPage, this.itemsPerPage).then((response: any) => {
-      console.log('Respuesta completa de la API:', response); 
   
       if (response && response.content && Array.isArray(response.content.data)) {
         this.gerencias = response.content.data.map((g: any) => ({
           ...g,
           fechaCreacion: new Date()  
         }));
-        console.log('Gerencias cargadas:', this.gerencias);
       } else {
         console.error('No se encontraron datos en la respuesta de la API');
         this.gerencias = [];
@@ -112,9 +109,7 @@ export class GerenciasComponent {
     }
   
     try {
-      console.log('Guardando nueva gerencia:', gerenciaCreada);
       await this.gerenciaService.crearGerencia(gerenciaCreada.name);
-      console.log('Gerencia creada exitosamente');
       this.cargarListaGerencias();  
       this.cerrarModalNuevaGerencia();
     } catch (error) {
@@ -138,11 +133,9 @@ export class GerenciasComponent {
 
   async guardarModificacionGerencia(gerenciaModificada: Gerencia) {
     if (gerenciaModificada && gerenciaModificada.id !== undefined) {
-      console.log('Guardando cambios en la gerencia:', gerenciaModificada);
   
       try {
         await this.gerenciaService.modificarGerencia(gerenciaModificada as Required<Gerencia>); 
-        console.log('Gerencia modificada exitosamente');
         this.cargarListaGerencias();
         this.cerrarModalModificar();
       } catch (error) {
@@ -160,7 +153,6 @@ export class GerenciasComponent {
       return;
     }
     this.gerenciaSeleccionada = this.gerencias.find(g => g.id === id) || null;
-    console.log('Gerencia seleccionada con ID:', id);
   }
   
   abrirModalEliminar() {
@@ -179,7 +171,6 @@ export class GerenciasComponent {
     if (this.gerenciaSeleccionada?.id !== undefined) {
       try {
         await this.gerenciaService.eliminarGerencia(this.gerenciaSeleccionada.id);
-        console.log('Gerencia eliminada exitosamente');
         this.cargarListaGerencias();
         this.cerrarModalEliminar();
       } catch (error) {

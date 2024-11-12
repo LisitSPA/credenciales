@@ -43,10 +43,8 @@ export class HomeComponent {
       }
   
       this.selectedFile = file;
-      console.log('Archivo seleccionado:', this.selectedFile.name);
     } else {
       this.selectedFile = null;
-      console.log('No se ha seleccionado ningún archivo.');
     }
   }
   
@@ -63,9 +61,7 @@ export class HomeComponent {
 
   iniciarSesion() {
     if (this.usuario.email === "usuario@ejemplo.com" && this.usuario.password === "c") {
-      console.log('Inicio de sesión exitoso');
     } else {
-      console.log('Correo electrónico o contraseña incorrectos');
     }
   }
 }

@@ -33,7 +33,6 @@ export class CredencialExitosaComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id'];
-      console.log('ID recibido desde la ruta:', id); 
       if (id) {
         this.cargarDatosColaborador(id);
       } else {
@@ -54,7 +53,6 @@ export class CredencialExitosaComponent implements OnInit {
         this.segmento = colaborador.segment || '';
         this.area = colaborador.leadership || '';
 
-        console.log('Datos del colaborador:', colaborador); 
 
         this.generarQRCode(id);
 
@@ -70,10 +68,8 @@ export class CredencialExitosaComponent implements OnInit {
   async generarQRCode(id: number) {
     const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
 
-    console.log('URL para el QR:', url); 
     try {
       this.qrCodeDataUrl = await QRCode.toDataURL(url);
-      console.log('QR Code generado:', this.qrCodeDataUrl); 
     } catch (error) {
       console.error('Error generando QR Code:', error);
     }

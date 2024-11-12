@@ -82,9 +82,7 @@ export class CollaboratorService {
         formData.append('Photo', colaborador.Photo);
     }
 
-    console.log('Datos a enviar (formData):');
     formData.forEach((value: any, key: string) => {
-      console.log(`${key}: ${value}`);
     });
 
     return lastValueFrom(
@@ -95,7 +93,6 @@ export class CollaboratorService {
             })
         )
     ).then(response => {
-        console.log('Respuesta del servidor:', response);
         return response;
     }).catch(error => {
         console.error('Error capturado en catch:', error);

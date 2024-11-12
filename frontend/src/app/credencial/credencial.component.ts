@@ -29,6 +29,5 @@ export class CredencialComponent {
   }
 
   onSubmit() {
-    console.log(this.formulario.value);
   }
 }
