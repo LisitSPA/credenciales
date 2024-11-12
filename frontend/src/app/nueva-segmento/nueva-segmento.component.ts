@@ -34,13 +34,17 @@ export class NuevaSegmentoComponent {
         this.guardar.emit({
           Description: this.nombreSegmento,
           Color: this.colorSegmento,
-          
         });
   
         this.cerrarModal(); 
-      } catch (error) {
-        console.error('Error al crear el segmento:', error);
-        alert('Hubo un error al crear el segmento. Verifica la conexión y los datos proporcionados.');
+      } catch (error: unknown) {
+        const err = error as any; // Realiza una conversión a 'any' para acceder a las propiedades.
+        console.error('Error al crear el segmento:', err);
+        if (err.message && err.message.includes('El segmento con este nombre ya existe')) {
+          alert('El segmento con este nombre ya existe. Por favor, elige un nombre diferente.');
+        } else {
+          alert('Hubo un error al crear el segmento. Verifica la conexión y los datos proporcionados.');
+        }
       }
     } else {
       console.error('El nombre o el color del segmento no pueden estar vacíos.');

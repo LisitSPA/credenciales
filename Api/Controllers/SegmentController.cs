@@ -37,6 +37,12 @@ namespace Api.Controllers
         public async Task<IActionResult> CreateSegment([FromBody] CreateSegmentCommand command)
         {
             var result = await Mediator.Send(command);
+
+            if (result.StatusCode == 409)
+            {
+                return Conflict(new { message = result.ErrorProvider.Errors.FirstOrDefault()?.Message });
+            }
+
             return HandleResult(result.Result, result.ErrorProvider);
         }
 

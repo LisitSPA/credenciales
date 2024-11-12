@@ -36,11 +36,12 @@ public class CreateCollaboratorCommandHandler
         Response<int> result = new();
         try
         {
-
             var exists = _repository.GetAll().Any(x => x.Name == request.Name);
             if (exists)
             {
-                throw new Exception($"El segmento {request.Name} ya existe");
+                result.ErrorProvider.AddError("Validation", $"El segmento '{request.Name}' ya existe");
+                result.StatusCode = 409; 
+                return result;
             }
 
             var segment = new Segment()
@@ -52,9 +53,7 @@ public class CreateCollaboratorCommandHandler
             _repository.Add(segment);
             _repository.Save();
 
-
             result.Result = segment.Id;
-
         }
         catch (Exception ex)
         {
@@ -62,6 +61,6 @@ public class CreateCollaboratorCommandHandler
         }
         return result;
     }
-
 }
+
 
