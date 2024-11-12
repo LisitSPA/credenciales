@@ -10,18 +10,18 @@ import { GenerarFirmaComponent } from './generar-firma/generar-firma.component';
 import { FirmaExitosaComponent } from './firma-exitosa/firma-exitosa.component';
 import { CredencialExitosaComponent } from './credencial-exitosa/credencial-exitosa.component';
 import { CredencialWebComponent } from './credencialWeb/credencialWeb';
+import { AuthGuard } from './auth.guard';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
-    { path: 'home', component: HomeComponent},
-    {path: 'colaboradores', component: ColaboradoresComponent},
-    {path: 'segmentos', component: SegmentosComponent},
-    {path: 'gerencias', component: GerenciasComponent},
-    {path: 'generar', component:GenerarCredencialComponent},
-    {path:'descargar', component:DescargarCredencialComponent},
-    {path: 'generarfirma', component: GenerarFirmaComponent},
-    { path: 'firmaexitosa/:id', component: FirmaExitosaComponent },
-    {path:'credencialexitosa/:id', component:CredencialExitosaComponent},
-    {path:'credencialweb', component:CredencialWebComponent},
-
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'colaboradores', component: ColaboradoresComponent, canActivate: [AuthGuard] },
+    { path: 'segmentos', component: SegmentosComponent, canActivate: [AuthGuard] },
+    { path: 'gerencias', component: GerenciasComponent, canActivate: [AuthGuard] },
+    { path: 'generar', component: GenerarCredencialComponent, canActivate: [AuthGuard] },
+    { path: 'descargar', component: DescargarCredencialComponent, canActivate: [AuthGuard] },
+    { path: 'generarfirma', component: GenerarFirmaComponent, canActivate: [AuthGuard] },
+    { path: 'firmaexitosa/:id', component: FirmaExitosaComponent, canActivate: [AuthGuard] },
+    { path: 'credencialexitosa/:id', component: CredencialExitosaComponent, canActivate: [AuthGuard] },
+    { path: 'credencialweb', component: CredencialWebComponent },
 ];
