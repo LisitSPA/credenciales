@@ -18,6 +18,8 @@ export class LoginComponent {
     password: ''
   };
   mensajeError = '';
+  loading: boolean = false;
+
 
   constructor(private router: Router, private http: HttpClient) {
     const token = localStorage.getItem('token');
@@ -26,20 +28,26 @@ export class LoginComponent {
     }
   }
 
+
   gotoHome() {
+    if (this.loading) return;
+  
+    this.loading = true;
     const loginCommand = {
       username: this.usuario.email,
       password: this.usuario.password
     };
-
-    this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, loginCommand)
+  
+    this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, loginCommand, { withCredentials: true })
       .subscribe(response => {
-        localStorage.setItem('token', response.token); 
+        this.loading = false;
         console.log('Inicio de sesión exitoso');
         this.router.navigate(['/home']);
       }, error => {
+        this.loading = false;
         this.mensajeError = 'Correo electrónico o contraseña incorrectos';
         console.error(error);
       });
   }
+  
 }
