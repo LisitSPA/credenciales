@@ -33,10 +33,23 @@ export class HomeComponent {
   onFileSelected(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0]; 
+      const file = input.files[0];
+      const allowedFileTypes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv'];
+  
+      if (!allowedFileTypes.includes(file.type)) {
+        alert('Tipo de archivo no permitido. Solo se permiten archivos Excel o CSV.');
+        this.selectedFile = null;
+        return;
+      }
+  
+      this.selectedFile = file;
       console.log('Archivo seleccionado:', this.selectedFile.name);
+    } else {
+      this.selectedFile = null;
+      console.log('No se ha seleccionado ningún archivo.');
     }
   }
+  
 
   onUpload() {
     if (this.selectedFile) {

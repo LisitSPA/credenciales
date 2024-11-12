@@ -41,6 +41,12 @@ public class CreateMasiveCollaboratorCommandHandler
         {
             if (command.FileData != null)
             {
+                var allowedFileTypes = new List<string> { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "text/csv" };
+                if (!allowedFileTypes.Contains(command.FileData.ContentType))
+                {
+                    result.ErrorProvider.AddError("Validation", "El tipo de archivo no es válido. Solo se permiten archivos Excel o CSV.");
+                    return result;
+                }
                 var stream = command.FileData.OpenReadStream();
                 List<RowWithError> errors = new List<RowWithError>();
                 List<RowSuccess> success = new List<RowSuccess>();
