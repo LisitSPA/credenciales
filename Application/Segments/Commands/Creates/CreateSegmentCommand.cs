@@ -40,7 +40,6 @@ public class CreateCollaboratorCommandHandler
             if (exists)
             {
                 result.ErrorProvider.AddError("Validation", $"El segmento '{request.Name}' ya existe");
-                result.StatusCode = 409; 
                 return result;
             }
 
