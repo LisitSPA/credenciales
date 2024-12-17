@@ -38,11 +38,6 @@ namespace Api.Controllers
         {
             var result = await Mediator.Send(command);
 
-            if (result.StatusCode == 409)
-            {
-                return Conflict(new { message = result.ErrorProvider.Errors.FirstOrDefault()?.Message });
-            }
-
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
