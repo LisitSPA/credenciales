@@ -23,7 +23,8 @@ namespace Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(ValidateLoginCommand authenticate)
         {
-            var user = (await Mediator.Send(authenticate)).Result;
+            var result = await Mediator.Send(authenticate);
+            var user = result.Result;
 
             if (user != null)
             {
@@ -31,7 +32,7 @@ namespace Api.Controllers
                 return Ok(new { token });
             }
 
-            return Unauthorized();
+            return HandleResult(result.Result, result.ErrorProvider);
         }
 
         [AllowAnonymous]

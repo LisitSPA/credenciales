@@ -55,6 +55,8 @@ public class ValidateLoginCommandHandler : IRequestHandler<ValidateLoginCommand,
 
             if (user is not null && _passwordHasher.VerifyPassword(command.Password, user?.Password))
                 result.Result = user;
+            else
+                result.ErrorProvider.AddError("400","Incorrect user or password");
 
         }
         catch (Exception ex)
