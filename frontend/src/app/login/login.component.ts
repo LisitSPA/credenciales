@@ -38,10 +38,9 @@ export class LoginComponent {
       password: this.usuario.password
     };
   
-    this.http.post<string>(`${environment.apiUrl}/auth/login`, loginCommand)
+    this.http.post<any>(`${environment.apiUrl}/auth/login`, loginCommand)
       .subscribe(response => {
-        this.loading = false;
-        localStorage.setItem('token', response);
+        localStorage.setItem('token', response.token); 
         this.router.navigate(['/home']);
       }, error => {
         this.loading = false;
