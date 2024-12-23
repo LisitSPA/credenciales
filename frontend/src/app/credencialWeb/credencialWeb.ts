@@ -51,14 +51,14 @@ export class CredencialWebComponent implements OnInit {
 
   agendarContacto() {
     const vCardData = `BEGIN:VCARD
-    VERSION:3.0
-    FN:${this.nombre}
-    TEL:${this.celular}
-    EMAIL:${this.correo}
-    ADR:${this.sede}
-    ORG:Test
-    TITLE:${this.cargo}
-    END:VCARD`;
+VERSION:3.0
+FN:${this.nombre}
+TEL:${this.celular}
+EMAIL:${this.correo}
+ADR:${this.sede}
+ORG:${this.nombre}
+TITLE:${this.cargo}
+END:VCARD`;
 
     const blob = new Blob([vCardData], { type: 'text/vcard' });
     const url = window.URL.createObjectURL(blob);
@@ -76,7 +76,7 @@ export class CredencialWebComponent implements OnInit {
     TEL:${this.celular}
     EMAIL:${this.correo}
     ADR:${this.sede}
-    ORG:Test
+    ORG:${this.nombre}
     TITLE:${this.cargo}
     END:VCARD`;
 
