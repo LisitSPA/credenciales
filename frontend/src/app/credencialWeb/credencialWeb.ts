@@ -56,7 +56,7 @@ export class CredencialWebComponent implements OnInit {
     TEL:${this.celular}
     EMAIL:${this.correo}
     ADR:${this.sede}
-    ORG:${this.nombre}
+    ORG:Nombre ${this.nombre}
     TITLE:${this.cargo}
     END:VCARD`;
 
@@ -76,7 +76,7 @@ export class CredencialWebComponent implements OnInit {
     TEL:${this.celular}
     EMAIL:${this.correo}
     ADR:${this.sede}
-    ORG:${this.nombre}
+    ORG:Nombre ${this.nombre}
     TITLE:${this.cargo}
     END:VCARD`;
 
