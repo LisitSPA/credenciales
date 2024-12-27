@@ -22,7 +22,6 @@ namespace Api.Controllers
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
-        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetCollaboratorsById")]
         public async Task<IActionResult> GetCollaboratorsById(int id)
         {
@@ -30,7 +29,6 @@ namespace Api.Controllers
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
-        [AllowAnonymous]
         [HttpPost("", Name = "CreateCollaborator")]
         public async Task<IActionResult> CreateCollaborator([FromQuery] CreateCollaboratorCommand command)
         {

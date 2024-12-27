@@ -42,24 +42,18 @@ public class AddAttachmentsCommandHandler
         Response<int> result = new();
         try
         {
-            var folderPath = Path.Combine(_configuration["FilesRoutes"]);
-            if (!Directory.Exists(folderPath))
-            {
-                Directory.CreateDirectory(folderPath);
-            }
-
-            var filePath = Path.Combine(folderPath, command.Attachment.FileName);
-
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await command.Attachment.CopyToAsync(stream);
-            }
+            var memoryStream = new MemoryStream();
+            command.Attachment.CopyTo(memoryStream);
+            byte[] fileBytes = memoryStream.ToArray();
+            string base64String = Convert.ToBase64String(fileBytes);
 
             var attachment = new Domain.Entities.Attachment
             {
                 EAttachmentType = command.AttachmentType,
                 FileName = command.Attachment.FileName,
-                CollaboratorId = command.CollaboratorId
+                CollaboratorId = command.CollaboratorId,
+                FileType = command.Attachment.ContentType,
+                Base64 = base64String
             };
 
             _repoAttach.Add(attachment);

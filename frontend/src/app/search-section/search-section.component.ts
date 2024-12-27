@@ -20,6 +20,9 @@ export class SearchSectionComponent {
   selectedOption: string | null = null; 
   selectedFile: File | null = null;  
   mostrarMensajeExito: boolean = false;
+  submit: boolean = false;
+title: any;
+message: any;
 
   constructor(
     private collaboratorService: CollaboratorService,
@@ -58,6 +61,7 @@ export class SearchSectionComponent {
   
 
   onLoadExcel() {
+    this.submit = true;
     if (this.selectedFile && this.selectedOption) {
         let uploadPromise;
 
@@ -78,18 +82,26 @@ export class SearchSectionComponent {
 
         uploadPromise
             .then(response => {
-                this.mostrarMensajeExito = true;
+              this.isDropdownVisible = false;
+              this.submit = false
 
-                if (this.selectedOption === 'Colaboradores') {
-                    this.colaboradoresActualizados.emit(response); 
-                }
-
-                setTimeout(() => this.mostrarMensajeExito = false, 3000);
+              if(response.content?.errors?.length){
+                this.title = "Error!";
+                this.message = "Fila: "+ response.content.errors[0].rowNumber + ", " + response.content.errors[0].messsages
+              }
+              else
+              {
+                this.title = "Exitoso!";
+                this.message = "Documento cargado exitosamente"
+              } 
+             
+              setTimeout(() => this.title = "", 3000);
             })
             .catch(error => {
-                console.error('Error en la carga:', error);
+              alert(error);
             });
     } else {
+      this.submit = false
         console.warn('Por favor, selecciona un archivo y una opción.');
     }
   }

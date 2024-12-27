@@ -1,42 +1,45 @@
 <div class="search-section">
   <h2 class="title-search">Gestión de Firmas y Credenciales</h2>
   <div class="search-section-white">
-    <h3 class="text-search">Buscar en la plataforma</h3>
+    <!-- <h3 class="text-search">Buscar en la plataforma</h3>
     <input class="search"
       type="text"
       placeholder="Buscar por Nombre, RUT, Correo Electrónico..."
-      [(ngModel)]="searchQuery">
-    <div class="divider"></div>
+      [(ngModel)]="searchQuery"> -->
+    <!-- <div class="divider"></div> -->
     <div class="flex-container">
       <button (click)="onUpload()" class="btn-secondary-1">
         Carga Masiva de Documentos
         <img src="/dropdown.svg" alt="Icono" style="width: 16px; height: 16px; margin-left: 10px;">
       </button>
       
-      <div *ngIf="isDropdownVisible" class="dropdown-menu"> 
-        <h3 class="btn-secondary-1_">Carga masiva de Documentos
-        </h3>
-        <button (click)="onLoadOption('Colaboradores')" 
-                class="dropdown-option" 
-                [ngClass]="{'selected': selectedOption === 'Colaboradores'}">Colaboradores</button>
-        <button (click)="onLoadOption('Segmentos')" 
-                class="dropdown-option" 
-                [ngClass]="{'selected': selectedOption === 'Segmentos'}">Segmentos</button>
-        <button (click)="onLoadOption('Gerencias')" 
-                class="dropdown-option" 
-                [ngClass]="{'selected': selectedOption === 'Gerencias'}">Gerencias</button>
-        
-        <input type="file" (change)="onFileSelected($event)" *ngIf="selectedOption" accept=".xlsx,.xls,.zip" />
-        
-        <button (click)="onLoadExcel()" class="dropdown-option load-excel-button" [disabled]="!selectedOption || !selectedFile">Cargar excel o .zip</button>
-      </div>
+    
 
-      <button (click)="onSearch()" class="btn-secondary">Buscar</button>
+      <!-- <button (click)="onSearch()" class="btn-secondary">Buscar</button> -->
+    </div>
+    <div *ngIf="isDropdownVisible" class="dropdown-menu"> 
+      <h3 class="btn-secondary-1_">Carga masiva de Documentos
+      </h3>
+      <button (click)="onLoadOption('Colaboradores')" 
+              class="dropdown-option" 
+              [ngClass]="{'selected': selectedOption === 'Colaboradores'}">Colaboradores</button>
+      <button (click)="onLoadOption('Segmentos')" 
+              class="dropdown-option" 
+              [ngClass]="{'selected': selectedOption === 'Segmentos'}">Segmentos</button>
+      <button (click)="onLoadOption('Gerencias')" 
+              class="dropdown-option" 
+              [ngClass]="{'selected': selectedOption === 'Gerencias'}">Gerencias</button>
+      
+      <input type="file" (change)="onFileSelected($event)" *ngIf="selectedOption" accept=".xlsx,.xls,.zip" />
+      <br>
+      <br>
+      <button *ngIf="selectedFile && !submit" (click)="onLoadExcel()" class="dropdown-option load-excel-button" >Cargar excel o .zip</button>
     </div>
   </div>
-  <div *ngIf="mostrarMensajeExito" class="mensaje-exito">
-    <strong>Cambios Guardados</strong><br>
-    <span>Hemos guardado los últimos cambios realizados de forma exitosa</span>
+  <br>
+  <div class="mensaje-exito" *ngIf="title">
+    <strong>{{title}}</strong><br>
+    <span>{{message}}</span>
   </div>
   
   <div class="search-section">

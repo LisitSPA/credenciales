@@ -36,7 +36,7 @@ public class CreateCollaboratorCommandHandler
         Response<int> result = new();
         try
         {
-            var exists = _repository.GetAll().Any(x => x.Name == request.Name);
+            var exists = _repository.GetAllActive().Any(x => x.Name == request.Name);
             if (exists)
             {
                 result.ErrorProvider.AddError("Validation", $"El segmento '{request.Name}' ya existe");

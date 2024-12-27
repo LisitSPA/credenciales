@@ -35,10 +35,10 @@ public class CreateAreaCommandHandler
         Response<int> result = new();
         try
         {
-            var exists = _repository.GetAll().Any(x => x.Name == request.Name);
+            var exists = _repository.GetAllActive().Any(x => x.Name == request.Name);
             if (exists)
             {
-                throw new Exception($"Gerencia {request.Name} ya existe");
+                throw new Exception($"Gerencia '{request.Name}' ya existe");
             }
 
             var leadership = new Leadership()

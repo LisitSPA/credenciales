@@ -12,6 +12,8 @@ namespace Domain.Entities
         public int CollaboratorId { get; set; }
         public string FileName { get; set; }
         public string Description { get; set; }
+        public string Base64 { get; set; }
+        public string FileType { get; set; }
         public EAttachmentType EAttachmentType { get; set; }
     }
     

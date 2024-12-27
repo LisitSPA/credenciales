@@ -92,9 +92,10 @@
   border-radius: 5px;
   padding: 10px;
   position: absolute;
-  z-index: 1000;
-  width: 235px; 
-  margin-top: 50px;
+  /* z-index: 1000; */
+  width: 315px; 
+  color: black;
+  /* margin-top: 50px; */
 }
 
 .dropdown-option {
@@ -134,16 +135,12 @@
   cursor: not-allowed; 
   color: darkgray; 
 }
+
 .mensaje-exito {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: #4caf50; 
-  color: white;
+  background-color: white; 
+  color: black;
   padding: 10px 20px;
   border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
 }

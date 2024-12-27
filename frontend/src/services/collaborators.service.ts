@@ -50,40 +50,20 @@ export class CollaboratorService {
 
   createCollaborator(colaborador: any): Promise<any> {
     let headers = this.headers;
-    const formData: any = new FormData();
-
-    if (colaborador.CompleteName) {
-        formData.append('CompleteName', colaborador.CompleteName);
-    }
-    if (colaborador.RUT) {
-        formData.append('RUT', colaborador.RUT);
-    }
-    if (colaborador.LeadershipId) {
-        formData.append('LeadershipId', colaborador.LeadershipId.toString());
-    }
-    if (colaborador.SegmentId) {
-        formData.append('SegmentId', colaborador.SegmentId.toString());
-    }
-    if (colaborador.Position) {
-        formData.append('Position', colaborador.Position);
-    }
-    if (colaborador.Area) {
-        formData.append('Area', colaborador.Area);
-    }
-    if (colaborador.Phone) {
-        formData.append('Phone', colaborador.Phone);
-    }
-    if (colaborador.Email) {
-        formData.append('Email', colaborador.Email);
-    }
-    formData.append('ECollaboratorStatus', colaborador.ECollaboratorStatus.toString());
+    const formData = new FormData();
+    formData.append('completeName', colaborador.CompleteName);
+    formData.append('rut', colaborador.RUT);
+    formData.append('leadershipId', colaborador.LeadershipId.toString());
+    formData.append('segmentId', colaborador.SegmentId.toString());
+    formData.append('position', colaborador.Position);
+    formData.append('sede', colaborador.Area);
+    formData.append('phone', colaborador.Phone);
+    formData.append('email', colaborador.Email);
+    formData.append('eCollaboratorStatus', colaborador.ECollaboratorStatus.toString());
 
     if (colaborador.Photo) {
         formData.append('Photo', colaborador.Photo);
     }
-
-    formData.forEach((value: any, key: string) => {
-    });
 
     return lastValueFrom(
       this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(

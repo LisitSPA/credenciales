@@ -51,10 +51,10 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
     {
         if (request.RUT != null)
         {
-            var exists = _repository.GetAll().Any(x => x.RUT == request.RUT);
+            var exists = _repository.GetAllActive().Any(x => x.RUT == request.RUT);
             if (exists)
             {
-                throw new Exception($"El colaborador {request.RUT} ya existe");
+                throw new Exception($"El colaborador '{request.RUT}' ya existe");
             }
         }           
 

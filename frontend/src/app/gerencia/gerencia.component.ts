@@ -147,20 +147,18 @@ export class GerenciasComponent {
   }
   
 
-  seleccionarGerencia(id: number | undefined) {
-    if (id === undefined) {
-      console.error('ID de gerencia no válido');
-      return;
-    }
-    this.gerenciaSeleccionada = this.gerencias.find(g => g.id === id) || null;
-  }
+  // seleccionarGerencia(id: number | undefined) {
+  //   if (id === undefined) {
+  //     console.error('ID de gerencia no válido');
+  //     return;
+  //   }
+  //   this.gerenciaSeleccionada = this.gerencias.find(g => g.id === id) || null;
+  // }
   
-  abrirModalEliminar() {
-    if (this.gerenciaSeleccionada !== null) {
+  abrirModalEliminar(gerencia: any) {
+    this.gerenciaSeleccionada = gerencia;
       this.mostrarModalEliminar = true;
-    } else {
-      alert('Por favor selecciona una gerencia para eliminar.');
-    }
+   
   }
 
   cerrarModalEliminar() {

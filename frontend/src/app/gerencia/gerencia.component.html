@@ -15,7 +15,7 @@
       <table class="table">
           <thead>
               <tr>
-                  <th><input type="checkbox"></th>
+                  <th></th>
                   <th>Gerencia</th> 
                   <th>Editado</th>
                   <th>Estado</th>
@@ -24,7 +24,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let gerencia of paginatedGerencias">
-              <td><input type="checkbox" (change)="seleccionarGerencia(gerencia.id)"></td>
+              <td></td>
               <td>{{ gerencia.name }}</td>  
               <td>{{ gerencia.fechaCreacion | date:'dd/MM/yyyy' }}</td>  
               <td>{{ gerencia.active ? 'Activo' : 'Inactivo' }}</td> 
@@ -32,7 +32,7 @@
                 <button class="btn-edit" (click)="abrirModalModificar(gerencia)">
                   <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;">
                 </button>
-                <button class="btn-delete" (click)="abrirModalEliminar()">
+                <button class="btn-delete" (click)="abrirModalEliminar(gerencia)">
                   <img src="/trash-solid (1).svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;">
                 </button>
               </td>
