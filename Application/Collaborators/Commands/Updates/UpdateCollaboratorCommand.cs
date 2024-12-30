@@ -28,7 +28,7 @@ public record UpdateCollaboratorCommand : IRequest<Response<int>>
     public string Phone { get; set; }
     public string Email { get; set; }
     public ECollaboratorStatus ECollaboratorStatus { get; set; }
-    public IFormFile Photo { get; set; }
+    //public IFormFile Photo { get; set; }
 }
 
 public class CreateCollaboratorCommandHandler
@@ -59,21 +59,21 @@ public class CreateCollaboratorCommandHandler
             _repository.Update(collaborator);
             _repository.Save();
 
-            if (request.Photo != null)
-            {
-                //delete current
-                var currentPhoto = _repositoryAttach.GetAll().FirstOrDefault(x => x.CollaboratorId == request.Id && x.EAttachmentType == EAttachmentType.Photo);
-                if (currentPhoto != null)
-                {
-                    currentPhoto.Active = false;
-                    _repositoryAttach.Update(currentPhoto);
-                    _repositoryAttach.Save();
-                }
+            //if (request.Photo != null)
+            //{
+            //    //delete current
+            //    var currentPhoto = _repositoryAttach.GetAll().FirstOrDefault(x => x.CollaboratorId == request.Id && x.EAttachmentType == EAttachmentType.Photo);
+            //    if (currentPhoto != null)
+            //    {
+            //        currentPhoto.Active = false;
+            //        _repositoryAttach.Update(currentPhoto);
+            //        _repositoryAttach.Save();
+            //    }
 
-                //add new
-                _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
+            //    //add new
+            //    _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
 
-            }
+            //}
 
             SendEmail(collaborator); //TODO: se debe enviar la credencial cuando se actualiza un colaborador?
 
