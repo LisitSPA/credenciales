@@ -21,7 +21,7 @@ export class NuevoColaboradorComponent {
   celular: string = '';
   correo: string = '';
   sede: string = 'Sin Sede';  
-  foto: File | null = null;
+  foto!: File;
   firma: File | null = null;
   credencial: File | null = null;
 
@@ -33,6 +33,7 @@ export class NuevoColaboradorComponent {
 
   @Output() cerrar = new EventEmitter<void>();
   @Output() colaboradorCreado = new EventEmitter<void>();
+file: any;
 
   constructor(
     private collaboratorService: CollaboratorService,
@@ -91,12 +92,12 @@ export class NuevoColaboradorComponent {
       CompleteName: this.nombre,
       RUT: this.rut,
       Position: this.cargo,
-      Area: this.sede,
       Phone: this.celular,
       Email: this.correo,
       ECollaboratorStatus: 1,
       LeadershipId: leadershipId,
       SegmentId: segmentoId,
+      Sede: this.sede
     };
   
     try {
@@ -106,16 +107,16 @@ export class NuevoColaboradorComponent {
       if (colaboradorId) {
   
           if (this.foto) {
-              await this.subirArchivo(colaboradorId, this.foto, 'Photo');
+              await this.subirArchivo(colaboradorId, this.foto, 1);
           }
   
-          if (this.adjuntarFirma && this.firma) {
-              await this.subirArchivo(colaboradorId, this.firma, 'Signature');
-          }
+          // if (this.adjuntarFirma && this.firma) {
+          //     await this.subirArchivo(colaboradorId, this.firma, 'Signature');
+          // }
   
-          if (this.adjuntarCredencial && this.credencial) {
-              await this.subirArchivo(colaboradorId, this.credencial, 'Credential');
-          }
+          // if (this.adjuntarCredencial && this.credencial) {
+          //     await this.subirArchivo(colaboradorId, this.credencial, 'Credential');
+          // }
   
           this.colaboradorCreado.emit();
           this.cerrar.emit();
@@ -132,7 +133,7 @@ export class NuevoColaboradorComponent {
   
 
 
-  async subirArchivo(colaboradorId: number, archivo: File, tipo: string) {
+  async subirArchivo(colaboradorId: number, archivo: File, tipo: number) {
     try {
       await this.collaboratorService.uploadAttachment(colaboradorId, archivo, tipo);
     } catch (error: any) {
@@ -144,13 +145,13 @@ export class NuevoColaboradorComponent {
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      if (this.adjuntarFirma) {
-        this.firma = input.files[0];
-      } else if (this.adjuntarCredencial) {
-        this.credencial = input.files[0];
-      } else {
+      // if (this.adjuntarFirma) {
+      //   this.firma = input.files[0];
+      // } else if (this.adjuntarCredencial) {
+      //   this.credencial = input.files[0];
+      // } else {
         this.foto = input.files[0];
-      }
+      
     }
   }
 

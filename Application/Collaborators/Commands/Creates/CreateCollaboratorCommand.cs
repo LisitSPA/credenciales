@@ -49,14 +49,12 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
     Response<int> result = new();
     try
     {
-        if (request.RUT != null)
-        {
-            var exists = _repository.GetAllActive().Any(x => x.RUT == request.RUT);
-            if (exists)
-            {
-                throw new Exception($"El colaborador '{request.RUT}' ya existe");
-            }
-        }           
+        if(request.RUT == null)
+            throw new Exception($"El RUT es requerido");
+
+        var exists = _repository.GetAllActive().Any(x => x.RUT == request.RUT);
+        if (exists)
+            throw new Exception($"El colaborador '{request.RUT}' ya existe");                   
 
         var collaborator = new Collaborator()
         {
@@ -75,8 +73,8 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
         _repository.Add(collaborator);
         _repository.Save();
 
-        if (request.Photo != null)
-            _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
+        //if (request.Photo != null)
+        //    _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
 
         try
         {

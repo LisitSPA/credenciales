@@ -50,23 +50,9 @@ export class CollaboratorService {
 
   createCollaborator(colaborador: any): Promise<any> {
     let headers = this.headers;
-    const formData = new FormData();
-    formData.append('completeName', colaborador.CompleteName);
-    formData.append('rut', colaborador.RUT);
-    formData.append('leadershipId', colaborador.LeadershipId.toString());
-    formData.append('segmentId', colaborador.SegmentId.toString());
-    formData.append('position', colaborador.Position);
-    formData.append('sede', colaborador.Area);
-    formData.append('phone', colaborador.Phone);
-    formData.append('email', colaborador.Email);
-    formData.append('eCollaboratorStatus', colaborador.ECollaboratorStatus.toString());
-
-    if (colaborador.Photo) {
-        formData.append('Photo', colaborador.Photo);
-    }
-
+  
     return lastValueFrom(
-      this._httpClient.post(`${this.apiUrl}`, formData, { headers }).pipe(
+      this._httpClient.post(`${this.apiUrl}`, colaborador, { headers }).pipe(
         catchError(error => {
                 console.error('Error al crear colaborador:', error);
                 return this.handleError(error, 'No se pudo crear el colaborador. Verifique la conexión.');
@@ -139,23 +125,24 @@ updateCollaborator(id: number, colaborador: any): Promise<any> {
     this.colaborador = null;
   }
 
-  uploadAttachment(collaboratorId: number, file: File, attachmentType: string): Promise<any> {
+  uploadAttachment(collaboratorId: any, file: File, attachmentType: any): Promise<any> {
     const headers = this.headers;
     const formData = new FormData();
+    formData.append('CollaboratorId', collaboratorId);
     formData.append('Attachment', file);
     formData.append('AttachmentType', attachmentType);
-    formData.append('CollaboratorId', collaboratorId.toString());
   
     return lastValueFrom(
-      this._httpClient.post(`${this.apiUrl}/attachments`, formData, { headers }).pipe(
+      this._httpClient.post(`${this.apiUrl}/attachments?CollaboratorId=${collaboratorId}&AttachmentType=${attachmentType}`, formData, { headers }).pipe(
         catchError(error => this.handleError(error, 'No se pudo subir el archivo adjunto. Verifique la conexión.'))
       )
     );
   }
-  getAttachment(colaboradorId: number, tipoArchivo: string): Promise<any> {
+  
+  getAttachment(colaboradorId: number, tipoArchivo: number): Promise<any> {
     let headers = this.headers;
     return lastValueFrom(
-      this._httpClient.get(`${this.apiUrl}/${colaboradorId}/attachments/${tipoArchivo}`, {
+      this._httpClient.get(`${this.apiUrl}/${colaboradorId}/Attachments/${tipoArchivo}`, {
         headers,
         responseType: 'blob' 
       }).pipe(

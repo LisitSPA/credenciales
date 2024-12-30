@@ -1,9 +1,11 @@
+using Application.Attachments.Commands;
 using Application.Collaborators.Commands.Creates;
 using Application.Collaborators.Commands.Delete;
 using Application.Collaborators.Commands.Updates;
 using Application.Collaborators.Queries;
 using Domain.Common;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Threading.Tasks;
@@ -30,14 +32,21 @@ namespace Api.Controllers
         }
 
         [HttpPost("", Name = "CreateCollaborator")]
-        public async Task<IActionResult> CreateCollaborator([FromQuery] CreateCollaboratorCommand command)
-        {
+        public async Task<IActionResult> CreateCollaborator([FromBody] CreateCollaboratorCommand command)
+        {           
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
         [HttpPost("UploadMassive", Name = "UploadMassiveCollaborator")]
         public async Task<IActionResult> UploadMassiveCollaborator([FromQuery] CreateMasiveCollaboratorCommand command)
+        {
+            var result = await Mediator.Send(command);
+            return HandleResult(result.Result, result.ErrorProvider);
+        }
+
+        [HttpPost("Attachments", Name = "SaveAttachment")]
+        public async Task<IActionResult> SaveAttachment([FromQuery] AddAttachmentsCommand command)
         {
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);

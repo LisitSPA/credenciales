@@ -210,7 +210,7 @@ export class ColaboradoresComponent {
     this.router.navigate(['/credencialexitosa', colaborador.id]);
   }
 
-  descargarArchivo(colaboradorId: number, tipoArchivo: string) {
+  descargarArchivo(colaboradorId: number, tipoArchivo: number) {
     this.collaboratorService.getAttachment(colaboradorId, tipoArchivo)
       .then(response => {
         const blob = new Blob([response], { type: response.type });

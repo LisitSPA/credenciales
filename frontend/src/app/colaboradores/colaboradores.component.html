@@ -46,15 +46,15 @@
               <td>{{ colaborador.correo }}</td>
               <td>
                 <div class="icon-container">
-                  <div *ngIf="colaborador.tieneFoto" class="icon-item" (click)="descargarArchivo(colaborador.id, 'Photo')">
+                  <div *ngIf="colaborador.tieneFoto" class="icon-item" (click)="descargarArchivo(colaborador.id, 1)">
                     <img src="/image-regular.svg" alt="Foto" />
                     <span>Foto</span>
                   </div>
-                  <div *ngIf="colaborador.tieneFirma" class="icon-item" (click)="descargarArchivo(colaborador.id, 'Signature')">
+                  <div *ngIf="colaborador.tieneFirma" class="icon-item" (click)="descargarArchivo(colaborador.id, 2)">
                     <img src="/signature-solid.svg" alt="Firma" />
                     <span>Firma</span>
                   </div>
-                  <div *ngIf="colaborador.tieneCredencial" class="icon-item" (click)="descargarArchivo(colaborador.id, 'Credential')">
+                  <div *ngIf="colaborador.tieneCredencial" class="icon-item" (click)="descargarArchivo(colaborador.id, 3)">
                     <img src="/id-card-solid.svg" alt="Credencial" />
                     <span>Credencial</span>
                   </div>
