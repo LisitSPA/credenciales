@@ -22,6 +22,8 @@ export class CredencialExitosaComponent implements OnInit {
   qrCodeDataUrl: string = ''; 
   segmento: string = '';
   area: string = '';
+  fileType: any;
+  photoBase64: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,7 +54,8 @@ export class CredencialExitosaComponent implements OnInit {
         this.celular = colaborador.phone || '';
         this.segmento = colaborador.segment || '';
         this.area = colaborador.leadership || '';
-
+        this.fileType = colaborador.attachments[0]?.fileType;
+        this.photoBase64 = colaborador.attachments[0]?.base64;
 
         this.generarQRCode(id);
 

@@ -70,7 +70,8 @@
           <h3 style="font-weight: 400;">Foto</h3>
           <div class="foto-container">
             <div class="foto-placeholder"></div>
-            <input type="file" [(ngModel)]="file" (change)="onFileSelected($event)" class="input-field" />
+            <input type="file" [(ngModel)]="file" accept="image/jpeg, image/png" (change)="onFileSelected($event)" class="input-field" />
+            <span style="color: gray; size: 12px;">Formato permitido: .jpg .jpeg .png (10mb max)</span>
           </div>
         </div>
       </div>

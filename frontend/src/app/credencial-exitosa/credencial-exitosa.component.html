@@ -10,7 +10,8 @@
           </div>
           <div class="info-section">
             <div class="text-container">
-              <img src="/user-2935527_1920.png" alt="Foto de Perfil" class="profile-picture">
+              <img *ngIf="!photoBase64" src="/user-2935527_1920.png" alt="Foto de Perfil" class="profile-picture">
+              <img *ngIf="photoBase64" src="data:{{fileType}};base64,{{photoBase64}}" alt="Foto de Perfil" class="profile-picture">
               <div class="info-container">
                 <h2 class="name" style="font-family: 'Titillium Web', sans-serif; font-size:18px; font-weight: 600;">{{ nombre }}</h2>
                 <p class="position" style="font-family: 'Titillium Web', sans-serif; font-size:16px; font-weight: 300;">{{ cargo }}</p>
