@@ -24,6 +24,7 @@ namespace Api.Controllers
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetCollaboratorsById")]
         public async Task<IActionResult> GetCollaboratorsById(int id)
         {
@@ -60,7 +61,7 @@ namespace Api.Controllers
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
-        [AllowAnonymous]
+
         [HttpDelete("{id}", Name = "DeleteCollaborator")]
         public async Task<IActionResult> DeleteCollaborator(int id)
         {
