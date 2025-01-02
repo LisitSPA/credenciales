@@ -33,6 +33,8 @@ export class SegmentosComponent {
   segmentoSeleccionado: Segmento | null = null; 
   currentPage = 1;  
   mostrarModificar: boolean = false;
+  textSearch: any;
+  allSegmentos: Segmento[] = []; 
 
   constructor(private segmentService: SegmentService) {
     this.cargarListaSegmentos(); 
@@ -56,7 +58,7 @@ export class SegmentosComponent {
               activo: item.active,
               seleccionado: false,
             }));
-    
+          this.allSegmentos = [...this.segmentos];
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
           this.updatePaginatedSegmentos();  
         } else {
@@ -74,6 +76,18 @@ export class SegmentosComponent {
       });
   }
   
+  search() {
+    if(this.textSearch)
+    {
+      this.textSearch =  this.textSearch.toLowerCase()
+      this.segmentos = this.allSegmentos.filter(x => x.nombreCompleto?.toLowerCase().includes(this.textSearch))
+    }
+    else
+      this.segmentos = [...this.allSegmentos]
+
+    this.updatePaginatedSegmentos();  
+  }
+
   transformColor(color: string): string {
     if (color && color.startsWith('#') && (color.length === 4 || color.length === 5)) {
       color = color + '0';

@@ -9,8 +9,12 @@
           <span>Nueva Gerencia</span>
         </button>
     </div>
+
+   <input type="text" [(ngModel)]="textSearch" (input)="search()" placeholder="Buscar por Gerencia" class="search-bar" />
+
   </div>
   
+
   <div class="table-wrapper">
       <table class="table">
           <thead>

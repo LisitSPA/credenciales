@@ -6,6 +6,7 @@ import { ModificarColaboradorComponent } from '../modificar-colaborador/modifica
 import { Router } from '@angular/router';
 import { CollaboratorService } from '../../services/collaborators.service';
 import { saveAs } from 'file-saver';
+import { FormsModule } from '@angular/forms';
 
 interface Colaborador {
   id: number;
@@ -25,11 +26,12 @@ interface Colaborador {
 @Component({
   selector: 'app-colaboradores',
   standalone: true,
-  imports: [ModificarColaboradorComponent, CommonModule, NuevoColaboradorComponent, EliminarComponent],
+  imports: [ModificarColaboradorComponent, CommonModule, NuevoColaboradorComponent, EliminarComponent, FormsModule],
   templateUrl: './colaboradores.component.html',
   styleUrls: ['./colaboradores.component.css']
 })
 export class ColaboradoresComponent {
+
   colaboradores: Colaborador[] = [];
   selectedColaboradores: Colaborador[] = [];
   currentPage = 1;
@@ -39,6 +41,8 @@ export class ColaboradoresComponent {
   mostrarFormulario: boolean = false;
   mostrarModificar: boolean = false;
   mostrarModalEliminarFlag: boolean = false;
+  textSearch: any;
+  allColaboradores: Colaborador[] = [];;
 
   constructor(private collaboratorService: CollaboratorService, private router: Router) {
     this.updateColaboradores();
@@ -57,7 +61,7 @@ export class ColaboradoresComponent {
     this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage)
       .then(response => {
         if (response && response.content && response.content.data) {
-          this.colaboradores = response.content.data.map((item: any) => {
+          this.allColaboradores = response.content.data.map((item: any) => {
             return {
               id: item.id,
               nombre: item.completeName,
@@ -73,7 +77,7 @@ export class ColaboradoresComponent {
               tieneCredencial: item.hasCredential
             };
           });
-  
+          this.colaboradores = [...this.allColaboradores]
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
         } else {
           this.colaboradores = [];
@@ -91,7 +95,16 @@ export class ColaboradoresComponent {
       });
   }
   
-  
+  search() {
+    if(this.textSearch)
+    {
+      this.textSearch =  this.textSearch.toLowerCase()
+      this.colaboradores = this.allColaboradores.filter(x => x.nombre?.toLowerCase().includes(this.textSearch) || x.rut?.includes(this.textSearch) || x.correo?.toLowerCase().includes(this.textSearch))
+    }
+    else
+      this.colaboradores = [...this.allColaboradores]
+  }
+
   toggleSelection(colaborador: Colaborador, event: any) {
     if (event.target.checked) {
       this.selectedColaboradores.push(colaborador);

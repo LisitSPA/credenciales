@@ -21,6 +21,7 @@ interface Gerencia {
   styleUrls: ['./gerencia.component.css']
 })
 export class GerenciasComponent {
+
   gerencias: Gerencia[] = [];  
   paginatedGerencias: Gerencia[] = [];  
   currentPage = 1;  
@@ -31,6 +32,8 @@ export class GerenciasComponent {
   mostrarModalNuevaGerencia: boolean = false;  
   mostrarModalModificar: boolean = false;  
   mostrarModalEliminar: boolean = false;
+  textSearch: any;
+  allGerencias!: Gerencia[];
 
   constructor(private gerenciaService: GerenciaService) {
     this.cargarListaGerencias(); 
@@ -54,6 +57,7 @@ export class GerenciasComponent {
           ...g,
           fechaCreacion: new Date()  
         }));
+        this.allGerencias = [...this.gerencias];
       } else {
         console.error('No se encontraron datos en la respuesta de la API');
         this.gerencias = [];
@@ -68,6 +72,18 @@ export class GerenciasComponent {
         alert('Ocurrió un error al obtener las gerencias: ' + error.message);
       }
     });
+  }
+
+  search() {
+    if(this.textSearch)
+    {
+      this.textSearch =  this.textSearch.toLowerCase()
+      this.gerencias = this.allGerencias.filter(x => x.name?.toLowerCase().includes(this.textSearch))
+    }
+    else
+      this.gerencias = [...this.allGerencias]
+
+    this.updatePaginatedGerencias();  
   }
 
   previousPage() {

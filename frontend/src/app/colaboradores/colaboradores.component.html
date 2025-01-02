@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <input type="text" placeholder="Buscar por Nombre, RUT, Correo electrónico..." class="search-bar" />
+      <input type="text" [(ngModel)]="textSearch" (input)="search()" placeholder="Buscar por Nombre, RUT, Correo electrónico" class="search-bar" />
 
       <div class="table-wrapper">
         <table class="table">
