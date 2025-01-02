@@ -64,7 +64,8 @@
           <h3>Foto</h3>
           <div class="foto-container">
             <div class="foto-placeholder"></div>
-            <input type="file" (change)="onFileSelected($event)" class="input-field"/>
+            <input type="file" (change)="onFileSelected($event)" accept="image/jpeg, image/png" class="input-field"/>
+            <span style="color: gray; size: 12px;">Formato permitido: .jpg .jpeg .png (10mb max)</span>
           </div>
         </div>
       </div>

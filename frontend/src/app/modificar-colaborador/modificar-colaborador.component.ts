@@ -19,6 +19,7 @@ export class ModificarColaboradorComponent implements OnInit {
 
   gerencias: any[] = [];  
   segmentos: any[] = [];  
+  foto!: File;
 
   constructor(
     private collaboratorService: CollaboratorService,
@@ -82,7 +83,12 @@ export class ModificarColaboradorComponent implements OnInit {
   
     this.collaboratorService.updateCollaborator(colaboradorModificado.Id, colaboradorModificado)
       .then(response => {
-        this.guardar.emit(colaboradorModificado);  
+        if (this.foto) {
+          this.subirArchivo(colaboradorModificado.Id, this.foto, 1);
+        }
+        this.guardar.emit(colaboradorModificado); 
+        this.cerrar.emit()
+
       })
       .catch(error => {
         console.error('Error al actualizar colaborador:', error);
@@ -90,9 +96,23 @@ export class ModificarColaboradorComponent implements OnInit {
       });
   }
   
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
+  async subirArchivo(colaboradorId: number, archivo: File, tipo: number) {
+    try {
+      await this.collaboratorService.uploadAttachment(colaboradorId, archivo, tipo);
+    } catch (error: any) {
+      console.error(`Error al subir ${tipo}:`, error);
+      alert(`Hubo un error al subir el archivo de ${tipo}.`);
     }
   }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+    
+        this.foto = input.files[0];
+      
+    }
+  }
+
+
 }
