@@ -60,7 +60,7 @@ namespace Api.Controllers
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
-
+        [AllowAnonymous]
         [HttpDelete("{id}", Name = "DeleteCollaborator")]
         public async Task<IActionResult> DeleteCollaborator(int id)
         {
