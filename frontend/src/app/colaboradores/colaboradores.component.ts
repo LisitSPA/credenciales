@@ -21,6 +21,7 @@ interface Colaborador {
   tieneFoto?: boolean;
   tieneFirma?: boolean;
   tieneCredencial?: boolean;
+  sede: string;
 }
 
 @Component({
@@ -74,7 +75,8 @@ export class ColaboradoresComponent {
               estado: item.status,
               tieneFoto: item.hasPhoto,
               tieneFirma: item.hasSignature,
-              tieneCredencial: item.hasCredential
+              tieneCredencial: item.hasCredential,
+              sede: item.area
             };
           });
           this.colaboradores = [...this.allColaboradores]
@@ -119,8 +121,8 @@ export class ColaboradoresComponent {
       return;
     }
 
-    localStorage.setItem('colaboradoresSeleccionados', JSON.stringify(this.selectedColaboradores));
-    this.router.navigate(['/generar-credencial']);
+    localStorage.setItem('print', JSON.stringify(this.selectedColaboradores[0]));
+    this.router.navigate(['/generar']);
   }
 
   nextPage() {
