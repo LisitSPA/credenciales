@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CollaboratorService } from '../../services/collaborators.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-credencialWeb',
   standalone: true,
   templateUrl: './credencialWeb.html',
   styleUrls: ['./credencialWeb.css'],
+  imports: [CommonModule]
 })
 export class CredencialWebComponent implements OnInit {
   nombre: string = '';
@@ -15,6 +17,8 @@ export class CredencialWebComponent implements OnInit {
   celular: string = '';
   sede: string = '';
   segmento: string = '';
+  fileType: any;
+  photoBase64: any;
 
   constructor(private route: ActivatedRoute, private collaboratorService: CollaboratorService) {}
 
@@ -40,6 +44,8 @@ export class CredencialWebComponent implements OnInit {
         this.celular = colaborador.phone || '';
         this.sede = colaborador.leadership || '';
         this.segmento = colaborador.segment || '';
+        this.fileType = colaborador.attachments[0]?.fileType;
+        this.photoBase64 = colaborador.attachments[0]?.base64;
 
       } else {
         console.error('El objeto `response.content` no contiene datos.');

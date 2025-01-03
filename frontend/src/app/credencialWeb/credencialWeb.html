@@ -5,7 +5,8 @@
     <div class="business-card">
       <div class="card-header">
         <div class="image-section">
-          <img src="/user-2935527_1920.png" alt="Imagen del repositorio" class="repo-image">
+          <img *ngIf="!photoBase64" src="/user-2935527_1920.png" alt="Foto de Perfil" class="repo-image">
+          <img *ngIf="photoBase64" src="data:{{fileType}};base64,{{photoBase64}}" alt="Foto de Perfil" class="repo-image">
         </div>
         <div class="contact-info">
           <h3 class="name">{{ nombre }}</h3>
