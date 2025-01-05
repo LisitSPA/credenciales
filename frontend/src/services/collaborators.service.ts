@@ -76,14 +76,14 @@ updateCollaborator(id: number, colaborador: any): Promise<any> {
       LeadershipId: colaborador.LeadershipId,
       SegmentId: colaborador.SegmentId,
       Position: colaborador.Position,
-      Area: colaborador.Area || "Sin Sede",
+      Sede: colaborador.Sede || "Sin Sede",
       Phone: colaborador.Phone,
       Email: colaborador.Email,
       ECollaboratorStatus: colaborador.ECollaboratorStatus,
   };
 
   return lastValueFrom(
-    this._httpClient.put(`${this.apiUrl}`, payload, { headers }).pipe(
+    this._httpClient.put(this.apiUrl, payload, { headers }).pipe(
       catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
       )
   );

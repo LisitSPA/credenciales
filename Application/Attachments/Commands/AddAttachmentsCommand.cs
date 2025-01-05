@@ -47,20 +47,38 @@ public class AddAttachmentsCommandHandler
             byte[] fileBytes = memoryStream.ToArray();
             string base64String = Convert.ToBase64String(fileBytes);
 
-            var attachment = new Domain.Entities.Attachment
+            var existingAttachment = _repoAttach.GetAll()
+                .Where(a => a.CollaboratorId == command.CollaboratorId)
+                .FirstOrDefault();
+
+
+            if (existingAttachment != null)
             {
-                EAttachmentType = command.AttachmentType,
-                FileName = command.Attachment.FileName,
-                CollaboratorId = command.CollaboratorId,
-                FileType = command.Attachment.ContentType,
-                Base64 = base64String
-            };
+                existingAttachment.FileName = command.Attachment.FileName;
+                existingAttachment.FileType = command.Attachment.ContentType;
+                existingAttachment.Base64 = base64String;
 
-            _repoAttach.Add(attachment);
+                _repoAttach.Update(existingAttachment);
+                result.Result = existingAttachment.Id;
+            }
+            else
+            {
 
+                var attachment = new Domain.Entities.Attachment
+                {
+                    EAttachmentType = command.AttachmentType,
+                    FileName = command.Attachment.FileName,
+                    CollaboratorId = command.CollaboratorId,
+                    FileType = command.Attachment.ContentType,
+                    Base64 = base64String
+                };
+
+                _repoAttach.Add(attachment);
+                result.Result = attachment.Id; 
+            }
+
+  
             _repository.Save();
-            result.Result = attachment.Id;
-
         }
         catch (Exception ex)
         {
@@ -68,8 +86,6 @@ public class AddAttachmentsCommandHandler
         }
         return result;
     }
-
-
-
 }
+
 

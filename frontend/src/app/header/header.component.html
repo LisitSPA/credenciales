@@ -8,12 +8,15 @@
     <a href="colaboradores">Colaboradores</a>
     <a href="segmentos">Segmentos</a>
   </nav>
-  <div class="user-info">
+  <div class="user-info" (click)="toggleDropdown()">
     <div class="user-text">
-        <span style="font-size: large;">Usuario</span>
-        <span style="color:gray">Administrador</span>
+      <span style="font-size: large;">Usuario</span>
+      <span style="color:gray">Administrador</span>
     </div>
     <img src="/blank-profile-picture-973460_1280.png" alt="Icono Usuario" />
-</div>
+    <div *ngIf="dropdownOpen" class="dropdown-menu">
+      <button (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
 
 </header>

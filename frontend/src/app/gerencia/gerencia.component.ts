@@ -27,26 +27,26 @@ export class GerenciasComponent {
   currentPage = 1;  
   itemsPerPage = 7;  
   selectedFile: File | null = null;  
-
+  filteredGerencias: Gerencia[] = [];
   gerenciaSeleccionada: Gerencia | null = null; 
   mostrarModalNuevaGerencia: boolean = false;  
   mostrarModalModificar: boolean = false;  
   mostrarModalEliminar: boolean = false;
-  textSearch: any;
-  allGerencias!: Gerencia[];
+  textSearch: string = '';
+  allGerencias: Gerencia[] = [];
 
   constructor(private gerenciaService: GerenciaService) {
     this.cargarListaGerencias(); 
   }
 
   get totalPages() {
-    return Math.ceil(this.gerencias.length / this.itemsPerPage);  
+    return Math.ceil(this.filteredGerencias.length / this.itemsPerPage);  
   }
 
   updatePaginatedGerencias() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    this.paginatedGerencias = this.gerencias.slice(start, end); 
+    this.paginatedGerencias = this.filteredGerencias.slice(start, end); 
   }
 
   cargarListaGerencias() {
@@ -57,7 +57,7 @@ export class GerenciasComponent {
           ...g,
           fechaCreacion: new Date()  
         }));
-        this.allGerencias = [...this.gerencias];
+        this.filteredGerencias = [...this.gerencias];
       } else {
         console.error('No se encontraron datos en la respuesta de la API');
         this.gerencias = [];
@@ -75,15 +75,15 @@ export class GerenciasComponent {
   }
 
   search() {
-    if(this.textSearch)
-    {
-      this.textSearch =  this.textSearch.toLowerCase()
-      this.gerencias = this.allGerencias.filter(x => x.name?.toLowerCase().includes(this.textSearch))
-    }
-    else
-      this.gerencias = [...this.allGerencias]
+    if (this.textSearch) {
+      const searchText = this.textSearch.toLowerCase();
 
-    this.updatePaginatedGerencias();  
+      this.filteredGerencias = this.allGerencias.filter(x =>
+        x.name?.toLowerCase().includes(searchText));
+    } else {
+      this.filteredGerencias = [...this.allGerencias];
+    }
+      this.updatePaginatedGerencias();
   }
 
   previousPage() {

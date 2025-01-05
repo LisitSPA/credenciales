@@ -80,8 +80,7 @@ header {
 
 
 .segmento {
-    background-color: #ffda79;
-    color: #333;
+    color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
     margin-top: 10px;
@@ -133,13 +132,20 @@ img {
 }
 
 .footer {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
     text-align: center;
     font-size: 0.9em;
-    color: #777;
-    margin-top: 20px;
-    padding-top: 10px;
-    border-top: 1px solid #ddd;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px 0; 
+    border-top: 1px solid #ddd; 
+    background-color: var(--segmentoColor); 
+    width: 100%; 
+    height: auto; 
 }
+
 .divider {
     border-bottom: 1px solid rgb(224, 213, 213);
     margin: 10px 0; 

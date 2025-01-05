@@ -33,7 +33,7 @@
           <h3>Segmento</h3>
           <select [(ngModel)]="colaborador.segmento" name="segmento" required class="select-field">
             <option value="">Seleccione un segmento</option>
-            <option *ngFor="let seg of segmentos" [value]="seg.id">{{ seg.description }}</option>
+            <option *ngFor="let segmento of segmentos" [value]="segmento.id">{{ segmento.nombreCompleto }}</option>
           </select>
         </div>
       </div>
@@ -66,6 +66,10 @@
             <div class="foto-placeholder"></div>
             <input type="file" (change)="onFileSelected($event)" accept="image/jpeg, image/png" class="input-field"/>
             <span style="color: gray; size: 12px;">Formato permitido: .jpg .jpeg .png (10mb max)</span>
+          </div>
+          <div class="footer-section">
+            <h3>Vista previa:</h3>
+            <img *ngIf="colaborador.fotoPreview" [src]="colaborador.fotoPreview" alt="Vista previa" />
           </div>
         </div>
       </div>

@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './credencialWeb.html',
   styleUrls: ['./credencialWeb.css'],
-  imports: [CommonModule]
+  imports: [CommonModule],
 })
 export class CredencialWebComponent implements OnInit {
   nombre: string = '';
@@ -16,25 +16,46 @@ export class CredencialWebComponent implements OnInit {
   correo: string = '';
   celular: string = '';
   sede: string = '';
+  segmentoColor: string = '';
   segmento: string = '';
   fileType: any;
   photoBase64: any;
+  segmentColors: { [key: string]: string } = {
+    'Calidad': '#ff9999',
+    'Mantención': '#ffda79',
+    'Agrícola': '#79d279',
+    'Bodega': '#cccccc',
+    'Patio': '#999999',
+    'Frigorífico': '#79c2ff',
+    'Packing': '#6666ff',
+    'Administración': '#008080',
+  };
 
   constructor(private route: ActivatedRoute, private collaboratorService: CollaboratorService) {}
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.cargarDatosColaborador(id);
-      } else {
-        console.error('No se proporcionó el ID del colaborador');
-      }
-    });
-  }
+ngOnInit() {
+  this.route.queryParams.subscribe((params) => {
+    const id = params['id'];
+    const color = params['color']; 
+    if (id) {
+      this.cargarDatosColaborador(id);
+    } else {
+      console.error('No se proporcionó el ID del colaborador');
+    }
+
+    if (color) {
+      this.segmentoColor = color; 
+    } else {
+      console.error('No se proporcionó el color en la URL');
+    }
+
+    console.log('ID recibido:', id);
+    console.log('Color recibido:', color);
+  });
+}
 
   cargarDatosColaborador(id: number) {
-    this.collaboratorService.getCollaboratorById(id).then(response => {
+    this.collaboratorService.getCollaboratorById(id).then((response) => {
       if (response && response.content) {
         const colaborador = response.content;
 
@@ -42,15 +63,16 @@ export class CredencialWebComponent implements OnInit {
         this.cargo = colaborador.position || '';
         this.correo = colaborador.email || '';
         this.celular = colaborador.phone || '';
+        this.fileType = colaborador.attachments[0]?.fileType || 'image/png'; 
+        this.photoBase64 = colaborador.attachments[0]?.base64 || null; 
         this.sede = colaborador.leadership || '';
         this.segmento = colaborador.segment || '';
-        this.fileType = colaborador.attachments[0]?.fileType;
-        this.photoBase64 = colaborador.attachments[0]?.base64;
 
+        this.segmentoColor = this.segmentColors[this.segmento] || '#000000';
       } else {
         console.error('El objeto `response.content` no contiene datos.');
       }
-    }).catch(error => {
+    }).catch((error) => {
       console.error('Error al cargar los datos del colaborador:', error);
     });
   }

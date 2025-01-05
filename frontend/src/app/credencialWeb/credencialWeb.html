@@ -6,11 +6,13 @@
       <div class="card-header">
         <div class="image-section">
           <img *ngIf="!photoBase64" src="/user-2935527_1920.png" alt="Foto de Perfil" class="repo-image">
-          <img *ngIf="photoBase64" src="data:{{fileType}};base64,{{photoBase64}}" alt="Foto de Perfil" class="repo-image">
+          <!-- <img *ngIf="photoBase64" src="data:{{fileType}};base64,{{photoBase64}}" alt="Foto de Perfil" class="repo-image"> -->
+          <img *ngIf="photoBase64" [src]="'data:' + fileType + ';base64,' + photoBase64" alt="Foto de Perfil" class="repo-image" />
+
         </div>
         <div class="contact-info">
           <h3 class="name">{{ nombre }}</h3>
-          <span class="segmento">{{ segmento }}</span>
+          <span class="segmento" [ngStyle]="{ 'background-color': segmentoColor }">{{ segmento }}</span>
           <p class="position">{{ cargo }}</p>
           <p class="direccion">{{ sede }}</p>
           <hr class="divider">
@@ -20,7 +22,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="office-info">
       <h3>Mis Datos</h3>
       <hr class="divider">
@@ -33,13 +35,11 @@
           <span class="label">Contacto Telefónico:</span>
           <a href="tel:{{ celular }}" class="contact-link">{{ celular }}</a>
         </div>
-        
         <button (click)="agendarContacto()" class="btn-action">
           <img src="/agenda.png" alt="Agendar Contacto" class="icon">
         </button>
       </div>
       <hr class="divider">
-      
       <div class="email-section">
         <div class="contact-row">
           <span class="label">Correo electrónico:</span>
@@ -54,6 +54,5 @@
     <div class="qr-section">
       <img src="/logos.png" alt="Logo adicional">
     </div>
-    <div class="footer"></div>
   </div>
 </div>

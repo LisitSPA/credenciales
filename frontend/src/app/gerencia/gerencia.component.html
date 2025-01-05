@@ -33,6 +33,10 @@
               <td>{{ gerencia.fechaCreacion | date:'dd/MM/yyyy' }}</td>  
               <td>{{ gerencia.active ? 'Activo' : 'Inactivo' }}</td> 
               <td>
+                <tr *ngIf="paginatedGerencias.length === 0">
+                  <td colspan="3">No se encontraron resultados.</td>
+                </tr>
+                
                 <button class="btn-edit" (click)="abrirModalModificar(gerencia)">
                   <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;">
                 </button>

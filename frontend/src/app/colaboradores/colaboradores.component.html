@@ -35,12 +35,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let colaborador of colaboradores">
+            <tr *ngFor="let colaborador of paginatedColaboradores">
               <td><input type="checkbox" (change)="toggleSelection(colaborador, $event)" /></td>
               <td>{{ colaborador.nombre }}</td>
               <td>{{ colaborador.rut }}</td>
-              <td>{{ colaborador.segmento }}</td>
-              <td>{{ colaborador.gerencia }}</td>
+              <td>{{ colaborador.nombreSegmento }}</td>
+              <td>{{ colaborador.nombreGerencia }}</td>
               <td>{{ colaborador.cargo }}</td>
               <td>{{ colaborador.celular }}</td>
               <td>{{ colaborador.correo }}</td>
@@ -82,8 +82,8 @@
             {{ page }}
           </button>
         </div>
-        
-        <span (click)="nextPage()" [class.disabled]="currentPage === totalPages" class="arrow">›</span>
+    
+        <span (click)="nextPage()" [class.disabled]="currentPage === totalPagesCalculated" class="arrow">›</span>
         <span class="label">Final</span>
       </div>
     </div>
@@ -95,12 +95,13 @@
   (confirmar)="eliminarColaborador()">
 </app-eliminar>
 
-<app-modificar-colaborador 
-  *ngIf="mostrarModificar" 
-  [colaborador]="selectedColaborador" 
-  (guardar)="guardarModificaciones($event)" 
-  (cerrar)="cerrarFormulario()">
-</app-modificar-colaborador>
+<app-modificar-colaborador
+  *ngIf="mostrarModificar"
+  [colaborador]="selectedColaborador"
+  (guardar)="onColaboradorModificado($event)"
+  (cerrar)="cerrarFormulario()"
+></app-modificar-colaborador>
+
 
 
 <app-nuevo-colaborador 

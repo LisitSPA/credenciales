@@ -25,13 +25,14 @@ interface Segmento {
 export class SegmentosComponent {
   segmentos: Segmento[] = []; 
   paginatedSegmentos: Segmento[] = []; 
-  itemsPerPage = 7; 
+  itemsPerPage = 4; 
   totalPages = 1;  
   mostrarModalNuevoSegmento: boolean = false;  
   mostrarModalEliminar: boolean = false;
   idSegmentoSeleccionado: number | null = null;
   segmentoSeleccionado: Segmento | null = null; 
-  currentPage = 1;  
+  currentPage = 1;
+  fixedPages: number[] = [1, 2, 3, 4, 5]; 
   mostrarModificar: boolean = false;
   textSearch: any;
   allSegmentos: Segmento[] = []; 
@@ -40,17 +41,13 @@ export class SegmentosComponent {
     this.cargarListaSegmentos(); 
   }
 
-  get totalPagesCalculation() {
-    return Math.ceil(this.segmentos.length / this.itemsPerPage);
-  }
 
   cargarListaSegmentos() {
     this.segmentService.getPaginatedSegments(this.currentPage, this.itemsPerPage)
       .then((response: any) => {
-  
         if (response && response.content && response.content.data) {
           this.segmentos = response.content.data
-            .filter((item: any) => item.active) 
+            .filter((item: any) => item.active)
             .map((item: any) => ({
               id: item.id,
               nombreCompleto: item.name,
@@ -58,21 +55,16 @@ export class SegmentosComponent {
               activo: item.active,
               seleccionado: false,
             }));
-          this.allSegmentos = [...this.segmentos];
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
-          this.updatePaginatedSegmentos();  
+          this.updatePaginatedSegmentos();
         } else {
           this.segmentos = [];
-          console.error('Error: se esperaba un array de datos de segmentos.');
+          console.error('Error: No se encontraron datos de segmentos.');
         }
       })
       .catch((error) => {
         console.error('Error al obtener segmentos:', error);
-        if (error.name === 'HttpErrorResponse' && error.status === 0) {
-          alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-        } else {
-          alert('Ocurrió un error al obtener los segmentos: ' + error.message);
-        }
+        alert('Ocurrió un error al obtener los segmentos.');
       });
   }
   
@@ -104,6 +96,10 @@ export class SegmentosComponent {
     return isValid;
   }
 
+  get totalPagesCalculation() {
+    return Math.ceil(this.segmentos.length / this.itemsPerPage);
+  }
+  
   updatePaginatedSegmentos() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
@@ -118,7 +114,7 @@ export class SegmentosComponent {
   }
 
   nextPage() {
-    if (this.currentPage < this.totalPages) {
+    if (this.currentPage < this.totalPagesCalculated) {
       this.currentPage++;
       this.updatePaginatedSegmentos();
     }
@@ -128,9 +124,16 @@ export class SegmentosComponent {
     this.currentPage = page;
     this.updatePaginatedSegmentos();
   }
-
-  pages() {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  get totalPagesCalculated() {
+    return Math.ceil(this.segmentos.length / this.itemsPerPage);  
+  }
+  changeItemsPerPage() {
+    this.currentPage = 1;  
+    this.updatePaginatedSegmentos();  
+  }
+  
+  generatePageNumbers() {
+    return Array.from({ length: this.totalPagesCalculated }, (_, i) => i + 1);
   }
 
   abrirModalNuevoSegmento() {

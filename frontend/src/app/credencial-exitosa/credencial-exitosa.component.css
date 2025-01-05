@@ -128,7 +128,6 @@ body {
 }
 
 .footer-section {
-  background-color: #1abc9c;
   text-align: center;
   padding: 8px 0;
   position: absolute;
@@ -138,12 +137,15 @@ body {
 }
 
 .footer-text {
-  color: white;
-  font-size: 6px;
+  color: #fff;
   text-align: center;
-  font-size: medium;
-  margin-bottom: 20px;
-
+  background-color: var(--segmento-color);
+  bottom: 0;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 10px 5px;
+  border-radius: 5px;
+  margin: 0;
 }
 
 .back-card .footer-section {

@@ -13,7 +13,9 @@ interface Colaborador {
   nombre: string;
   rut: string;
   segmento: string;
+  nombreSegmento: string;
   gerencia: string;
+  nombreGerencia: string;
   cargo: string;
   celular: string;
   correo: string;
@@ -36,75 +38,73 @@ export class ColaboradoresComponent {
   colaboradores: Colaborador[] = [];
   selectedColaboradores: Colaborador[] = [];
   currentPage = 1;
-  itemsPerPage = 7;
+  itemsPerPage = 4;
   totalPages: number = 0;
   selectedColaborador: Colaborador | null = null;
   mostrarFormulario: boolean = false;
   mostrarModificar: boolean = false;
   mostrarModalEliminarFlag: boolean = false;
   textSearch: any;
-  allColaboradores: Colaborador[] = [];;
+  allColaboradores: Colaborador[] = [];
+  paginatedColaboradores: Colaborador[] = [];
+  filteredColaboradores: Colaborador[] = [];
+
 
   constructor(private collaboratorService: CollaboratorService, private router: Router) {
-    this.updateColaboradores();
+    this.cargarListaColaboradores();
   }
 
-  get totalPagesCalculated() {
-    return Math.ceil(this.colaboradores.length / this.itemsPerPage);
-  }
 
-  updateColaboradores() {
-    const params = {
-      page: this.currentPage,
-      pageSize: this.itemsPerPage
-    };
-  
+  cargarListaColaboradores() {
     this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage)
       .then(response => {
         if (response && response.content && response.content.data) {
-          this.allColaboradores = response.content.data.map((item: any) => {
-            return {
-              id: item.id,
-              nombre: item.completeName,
-              rut: item.rut,
-              segmento: item.segment,
-              gerencia: item.leadership,
-              cargo: item.position,
-              celular: item.phone,
-              correo: item.email,
-              estado: item.status,
-              tieneFoto: item.hasPhoto,
-              tieneFirma: item.hasSignature,
-              tieneCredencial: item.hasCredential,
-              sede: item.area
-            };
-          });
-          this.colaboradores = [...this.allColaboradores]
-          this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
-        } else {
-          this.colaboradores = [];
-          console.warn('No se encontraron colaboradores en la respuesta:', response);
+          this.allColaboradores = response.content.data.map((item: any) => ({
+            id: item.id,
+            nombre: item.completeName,
+            rut: item.rut,
+            segmento: item.segmentId,
+            nombreSegmento: item.segment,
+            gerencia: item.leadershipId,
+            nombreGerencia: item.leadership,
+            cargo: item.position,
+            celular: item.phone,
+            correo: item.email,
+            estado: item.status,
+            tieneFoto: item.hasPhoto,
+            tieneFirma: item.hasSignature,
+            tieneCredencial: item.hasCredential,
+            sede: item.area
+          }));
+          
+          this.filteredColaboradores = [...this.allColaboradores];
+          this.updatePaginatedColaboradores();
         }
       })
       .catch(error => {
         console.error('Error al obtener colaboradores:', error);
-  
-        if (error.name === 'HttpErrorResponse' && error.status === 0) {
-          alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-        } else {
-          alert('Ocurrió un error al obtener los colaboradores: ' + error.message);
-        }
       });
   }
   
+  updatePaginatedColaboradores() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedColaboradores = this.filteredColaboradores.slice(start, end);  
+  }
+  
   search() {
-    if(this.textSearch)
-    {
-      this.textSearch =  this.textSearch.toLowerCase()
-      this.colaboradores = this.allColaboradores.filter(x => x.nombre?.toLowerCase().includes(this.textSearch) || x.rut?.includes(this.textSearch) || x.correo?.toLowerCase().includes(this.textSearch))
+    if (this.textSearch) {
+      const searchText = this.textSearch.toLowerCase();
+
+      this.filteredColaboradores = this.allColaboradores.filter(x =>
+        x.nombre?.toLowerCase().includes(searchText) ||
+        x.rut?.includes(searchText) ||
+        x.correo?.toLowerCase().includes(searchText)
+      );
+    } else {
+      this.filteredColaboradores = [...this.allColaboradores];
     }
-    else
-      this.colaboradores = [...this.allColaboradores]
+      this.updatePaginatedColaboradores();
   }
 
   toggleSelection(colaborador: Colaborador, event: any) {
@@ -126,27 +126,42 @@ export class ColaboradoresComponent {
   }
 
   nextPage() {
-    if (this.currentPage < this.totalPages) {
+    if (this.currentPage < this.totalPagesCalculated) {
       this.currentPage++;
-      this.updateColaboradores();
+      this.updatePaginatedColaboradores();
     }
   }
 
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.updateColaboradores();
+      this.updatePaginatedColaboradores();
     }
   }
 
   pages() {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    return Array.from({ length: this.totalPagesCalculated }, (_, i) => i + 1);
+  }
+
+  changeItemsPerPage() {
+    this.currentPage = 1;  
+    this.updatePaginatedColaboradores();  
   }
 
   goToPage(page: number) {
-    this.currentPage = page;
-    this.updateColaboradores();
+    if (page >= 1 && page <= this.totalPagesCalculated) {
+      this.currentPage = page;
+      this.updatePaginatedColaboradores();
+    }
   }
+
+  get totalPagesCalculated() {
+    return Math.ceil(this.allColaboradores.length / this.itemsPerPage); 
+  }
+  onColaboradorModificado(colaboradorModificado: Colaborador) {
+    this.cargarListaColaboradores();
+  }
+  
 
   abrirFormulario() {
     this.selectedColaborador = null;
@@ -198,7 +213,7 @@ export class ColaboradoresComponent {
     if (colaboradorModificado && colaboradorModificado.id) {
       this.collaboratorService.updateCollaborator(colaboradorModificado.id, colaboradorModificado)
         .then(response => {
-          this.updateColaboradores();  
+          this.updatePaginatedColaboradores();  
           this.mostrarModificar = false;
         })
         .catch(error => {
@@ -212,7 +227,7 @@ export class ColaboradoresComponent {
   }
 
   onColaboradorCreado() {
-    this.updateColaboradores(); 
+    this.cargarListaColaboradores(); 
     this.cerrarFormulario();  
 
   } 

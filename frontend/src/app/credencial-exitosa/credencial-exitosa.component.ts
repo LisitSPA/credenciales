@@ -24,6 +24,17 @@ export class CredencialExitosaComponent implements OnInit {
   area: string = '';
   fileType: any;
   photoBase64: any;
+  segmentoColor: string = '';
+  segmentColors: { [key: string]: string } = {
+    'Calidad': '#ff9999',
+    'Mantención': '#ffda79',
+    'Agrícola': '#79d279',
+    'Bodega': '#cccccc',
+    'Patio': '#999999',
+    'Frigorífico': '#79c2ff',
+    'Packing': '#6666ff',
+    'Administración': '#008080',
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +55,9 @@ export class CredencialExitosaComponent implements OnInit {
   }
 
   cargarDatosColaborador(id: number) {
+    console.log('Cargando datos del colaborador...');
     this.collaboratorService.getCollaboratorById(id).then(response => {
+      console.log('Datos del colaborador cargados:', response);
       if (response && response.content) {
         const colaborador = response.content;
 
@@ -54,9 +67,13 @@ export class CredencialExitosaComponent implements OnInit {
         this.celular = colaborador.phone || '';
         this.segmento = colaborador.segment || '';
         this.area = colaborador.leadership || '';
-        this.fileType = colaborador.attachments[0]?.fileType;
-        this.photoBase64 = colaborador.attachments[0]?.base64;
-
+        this.fileType = colaborador.attachments[0]?.fileType || 'image/png';
+        this.photoBase64 = colaborador.attachments[0]?.base64 || null;
+        this.segmento = colaborador.segment || '';
+        this.cargo = colaborador.position || '';
+        
+        this.segmentoColor = this.segmentColors[this.segmento] || '#000000';
+        
         this.generarQRCode(id);
 
         this.cdr.detectChanges();
@@ -70,6 +87,11 @@ export class CredencialExitosaComponent implements OnInit {
 
   async generarQRCode(id: number) {
     const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
+
+    // const url =
+    // window.location.hostname === 'localhost'
+    //   ? `http://localhost:4200/credencialweb?id=${id}&color=${encodeURIComponent(this.segmentoColor)}`
+    //   : `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}&color=${encodeURIComponent(this.segmentoColor)}`;
 
     try {
       this.qrCodeDataUrl = await QRCode.toDataURL(url);

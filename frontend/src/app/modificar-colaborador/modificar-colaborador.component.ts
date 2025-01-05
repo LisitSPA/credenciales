@@ -35,7 +35,7 @@ export class ModificarColaboradorComponent implements OnInit {
   async loadGerencias() {
     try {
       const response = await this.gerenciaService.getPaginatedGerencias(1, 100);
-      this.gerencias = response.content.data.filter((gerencia: any) => gerencia.active);
+      this.gerencias = response.content.data;
     } catch (error) {
       console.error('Error al cargar gerencias:', error);
     }
@@ -43,12 +43,21 @@ export class ModificarColaboradorComponent implements OnInit {
 
   async loadSegmentos() {
     try {
-      const response = await this.segmentoService.getPaginatedSegments(1, 100);
+      const response = await this.segmentoService.getPaginatedSegments(1, 100);  
+  
       if (response && response.content && response.content.data) {
-        this.segmentos = response.content.data.filter((segment: any) => segment.active);
+        this.segmentos = response.content.data
+          .filter((item: any) => item.active) 
+          .map((item: any) => ({
+            id: item.id,
+            nombreCompleto: item.name,  
+            color: item.color,
+            activo: item.active,
+          }));
       } else {
-        console.error('No se encontraron segmentos activos en la respuesta:', response);
+        console.error('No se encontraron segmentos en la respuesta:', response);
       }
+      
     } catch (error) {
       console.error('Error al cargar segmentos:', error);
     }
@@ -59,7 +68,7 @@ export class ModificarColaboradorComponent implements OnInit {
       console.error('No hay colaborador para modificar.');
       return;
     }
-  
+
     const leadershipId = this.colaborador.gerencia ? Number(this.colaborador.gerencia) : null;
     const segmentId = this.colaborador.segmento ? Number(this.colaborador.segmento) : null;
   
@@ -67,7 +76,7 @@ export class ModificarColaboradorComponent implements OnInit {
       alert('Por favor, selecciona una gerencia y un segmento válidos.');
       return;
     }
-  
+
     const colaboradorModificado = {
       Id: this.colaborador.id,
       CompleteName: this.colaborador.nombre,
@@ -81,23 +90,32 @@ export class ModificarColaboradorComponent implements OnInit {
     };
   
   
-    this.collaboratorService.updateCollaborator(colaboradorModificado.Id, colaboradorModificado)
-      .then(response => {
-        if (this.foto) {
-          this.subirArchivo(colaboradorModificado.Id, this.foto, 1);
-        }
-        this.guardar.emit(colaboradorModificado); 
-        this.cerrar.emit()
-
-      })
-      .catch(error => {
-        console.error('Error al actualizar colaborador:', error);
-        alert('Hubo un error al actualizar el colaborador.');
-      });
+ this.collaboratorService.updateCollaborator(colaboradorModificado.Id, colaboradorModificado)
+    .then(response => {
+      if (this.foto) {
+        this.subirArchivo(colaboradorModificado.Id, this.foto, 1).then(() => {
+          this.collaboratorService.getCollaboratorById(colaboradorModificado.Id).then((updatedColaborador) => {
+            console.log('Datos actualizados del colaborador:', updatedColaborador);
+            this.colaborador = updatedColaborador.content;
+            this.guardar.emit(this.colaborador); 
+          });
+        });
+      } else {
+        this.guardar.emit(colaboradorModificado);
+      }
+      this.cerrar.emit();
+    })
+    .catch(error => {
+      console.error('Error al actualizar colaborador:', error);
+      alert('Hubo un error al actualizar el colaborador.');
+    });
   }
   
   async subirArchivo(colaboradorId: number, archivo: File, tipo: number) {
     try {
+      console.log('Intentando subir archivo...');
+      console.log('Archivo:', archivo);
+      console.log('ID del colaborador:', colaboradorId);
       await this.collaboratorService.uploadAttachment(colaboradorId, archivo, tipo);
     } catch (error: any) {
       console.error(`Error al subir ${tipo}:`, error);
@@ -108,11 +126,27 @@ export class ModificarColaboradorComponent implements OnInit {
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-    
-        this.foto = input.files[0];
-      
+      const file = input.files[0];
+  
+      const allowedTypes = ['image/jpeg', 'image/png'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Solo se permiten archivos JPEG, JPG y PNG  ');
+        return;
+      }
+  
+      const maxSize = 10 * 1024 * 1024; // 10 MB
+      if (file.size > maxSize) {
+        alert('El archivo excede el tamaño máximo permitido de 10MB.');
+        return;
+      }
+  
+      this.foto = file;
+  
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.colaborador.fotoPreview = e.target.result;
+      };
+      reader.readAsDataURL(this.foto);
     }
   }
-
-
 }
