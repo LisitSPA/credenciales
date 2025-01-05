@@ -86,7 +86,7 @@ export class CredencialExitosaComponent implements OnInit {
   }
 
   async generarQRCode(id: number) {
-    const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}`;
+    const url = `https://proud-water-04c9dae10.5.azurestaticapps.net/credencialweb?id=${id}&color=${encodeURIComponent(this.segmentoColor)}`;
 
     // const url =
     // window.location.hostname === 'localhost'
