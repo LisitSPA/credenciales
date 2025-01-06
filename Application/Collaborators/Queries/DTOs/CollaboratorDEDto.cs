@@ -25,6 +25,7 @@ namespace Application.Collaborators.Queries.DTOs
         public string Status { get; set; }
         public string Leadership { get; set; }
         public string Segment { get; set; }
+        public string SegmentColor { get; set; }
         public List<Attachment> Attachments { get; set; }
 
         public void Mapping(Profile profile)
@@ -32,6 +33,7 @@ namespace Application.Collaborators.Queries.DTOs
             profile.CreateMap<Collaborator, CollaboratorDEDto>()
             .ForMember(x => x.Leadership, opt => opt.MapFrom(s => s.Leadership.Name))
             .ForMember(x => x.Segment, opt => opt.MapFrom(s => s.Segment.Name))
+            .ForMember(x => x.SegmentColor, opt => opt.MapFrom(s => s.Segment.Color))
             .ForMember(x => x.Status, opt => opt.MapFrom(s => s.ECollaboratorStatus.GetDescriptionByVal()));
         }
     }

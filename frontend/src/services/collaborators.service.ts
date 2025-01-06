@@ -89,14 +89,17 @@ updateCollaborator(id: number, colaborador: any): Promise<any> {
   );
 }
 
-  getCollaboratorById(id: number): Promise<any> {
-    let headers = this.headers;
-    return lastValueFrom(
-      this._httpClient.get(`${this.apiUrl}/${id}`,{headers}).pipe(
-        catchError(error => this.handleError(error, 'No se pudo obtener los detalles del colaborador. Verifique la conexión.'))
+getCollaboratorById(id: number): Promise<any> {
+  let headers = this.headers;
+  return lastValueFrom(
+    this._httpClient.get(`${this.apiUrl}/${id}`, { headers }).pipe(
+      catchError((error) =>
+        this.handleError(error, 'No se pudo obtener los detalles del colaborador. Verifique la conexión.')
       )
-    );
-  }
+    )
+  );
+}
+
   private handleError(error: any, customMessage: string) {
     if (error.status === 0) {
       this._snackBar.open('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.', 'Cerrar', {

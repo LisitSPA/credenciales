@@ -83,7 +83,7 @@ namespace Api
 
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
-           
+
             // services.AddCompression();
             services.AddApplicationInsightsTelemetry();
             services.AddHealthChecks()

@@ -8,8 +8,11 @@ using Application.Segments.Commands.Delete;
 using Application.Segments.Commands.Updates;
 using Application.Segments.Queries;
 using Domain.Common;
+using DataAccess.DBContexts;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 namespace Api.Controllers
 {
@@ -32,6 +35,8 @@ namespace Api.Controllers
             var result = await Mediator.Send(new GetSegmentByIdQuery { Id = id });
             return HandleResult(result.Result, result.ErrorProvider);
         }
+
+
 
         [HttpPost("", Name = "CreateSegment")]
         public async Task<IActionResult> CreateSegment([FromBody] CreateSegmentCommand command)

@@ -20,16 +20,6 @@ export class CredencialWebComponent implements OnInit {
   segmento: string = '';
   fileType: any;
   photoBase64: any;
-  segmentColors: { [key: string]: string } = {
-    'Calidad': '#ff9999',
-    'Mantención': '#ffda79',
-    'Agrícola': '#79d279',
-    'Bodega': '#cccccc',
-    'Patio': '#999999',
-    'Frigorífico': '#79c2ff',
-    'Packing': '#6666ff',
-    'Administración': '#008080',
-  };
 
   constructor(private route: ActivatedRoute, private collaboratorService: CollaboratorService) {}
 
@@ -49,8 +39,6 @@ ngOnInit() {
       console.error('No se proporcionó el color en la URL');
     }
 
-    console.log('ID recibido:', id);
-    console.log('Color recibido:', color);
   });
 }
 
@@ -68,7 +56,7 @@ ngOnInit() {
         this.sede = colaborador.leadership || '';
         this.segmento = colaborador.segment || '';
 
-        this.segmentoColor = this.segmentColors[this.segmento] || '#000000';
+        this.segmentoColor = colaborador.segmentColor || '#cccccc';
       } else {
         console.error('El objeto `response.content` no contiene datos.');
       }

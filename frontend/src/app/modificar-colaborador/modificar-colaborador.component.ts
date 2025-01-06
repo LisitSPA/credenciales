@@ -95,7 +95,6 @@ export class ModificarColaboradorComponent implements OnInit {
       if (this.foto) {
         this.subirArchivo(colaboradorModificado.Id, this.foto, 1).then(() => {
           this.collaboratorService.getCollaboratorById(colaboradorModificado.Id).then((updatedColaborador) => {
-            console.log('Datos actualizados del colaborador:', updatedColaborador);
             this.colaborador = updatedColaborador.content;
             this.guardar.emit(this.colaborador); 
           });
@@ -113,12 +112,8 @@ export class ModificarColaboradorComponent implements OnInit {
   
   async subirArchivo(colaboradorId: number, archivo: File, tipo: number) {
     try {
-      console.log('Intentando subir archivo...');
-      console.log('Archivo:', archivo);
-      console.log('ID del colaborador:', colaboradorId);
       await this.collaboratorService.uploadAttachment(colaboradorId, archivo, tipo);
     } catch (error: any) {
-      console.error(`Error al subir ${tipo}:`, error);
       alert(`Hubo un error al subir el archivo de ${tipo}.`);
     }
   }

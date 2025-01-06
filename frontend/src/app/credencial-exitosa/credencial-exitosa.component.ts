@@ -25,16 +25,6 @@ export class CredencialExitosaComponent implements OnInit {
   fileType: any;
   photoBase64: any;
   segmentoColor: string = '';
-  segmentColors: { [key: string]: string } = {
-    'Calidad': '#ff9999',
-    'Mantención': '#ffda79',
-    'Agrícola': '#79d279',
-    'Bodega': '#cccccc',
-    'Patio': '#999999',
-    'Frigorífico': '#79c2ff',
-    'Packing': '#6666ff',
-    'Administración': '#008080',
-  };
 
   constructor(
     private route: ActivatedRoute,
@@ -55,9 +45,7 @@ export class CredencialExitosaComponent implements OnInit {
   }
 
   cargarDatosColaborador(id: number) {
-    console.log('Cargando datos del colaborador...');
     this.collaboratorService.getCollaboratorById(id).then(response => {
-      console.log('Datos del colaborador cargados:', response);
       if (response && response.content) {
         const colaborador = response.content;
 
@@ -71,8 +59,7 @@ export class CredencialExitosaComponent implements OnInit {
         this.photoBase64 = colaborador.attachments[0]?.base64 || null;
         this.segmento = colaborador.segment || '';
         this.cargo = colaborador.position || '';
-        
-        this.segmentoColor = this.segmentColors[this.segmento] || '#000000';
+        this.segmentoColor = colaborador.segmentColor || '#cccccc';
         
         this.generarQRCode(id);
 
