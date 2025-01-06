@@ -38,7 +38,8 @@
     <ProjectReference Include="..\Utility\Utility.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Images\" />
+    <Content Include="Assets\Images\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\EmailTemplates\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
