@@ -75,8 +75,6 @@ public class CreateCollaboratorCommandHandler
 
             //}
 
-            SendEmail(collaborator); //TODO: se debe enviar la credencial cuando se actualiza un colaborador?
-
             result.Result = collaborator.Id;
 
         }
@@ -85,22 +83,6 @@ public class CreateCollaboratorCommandHandler
             result.ErrorProvider.AddError(ex.Source, ex.GetBaseException().Message);
         }
         return result;
-    }
-
-    private void SendEmail(Collaborator collaborator)
-    {
-        Dictionary<string, string> data = new Dictionary<string, string>()
-        {
-            { "NAME", collaborator.CompleteName },
-        };
-
-        _emailNotification.SendEmail(new EmailNotification
-        {
-            Body = data,
-            Subject = "Configura tu firma de correo",
-            ToEmail = collaborator.Email,
-            TemplateName = "CollaboratorCreation.html"
-        });
     }
 }
 
