@@ -21,8 +21,9 @@ export class SearchSectionComponent {
   selectedFile: File | null = null;  
   mostrarMensajeExito: boolean = false;
   submit: boolean = false;
-title: any;
-message: any;
+  title: any;
+  errors: any;
+  message: any;
 
   constructor(
     private collaboratorService: CollaboratorService,
@@ -81,28 +82,34 @@ message: any;
         }
 
         uploadPromise
-            .then(response => {
-              this.isDropdownVisible = false;
-              this.submit = false
-
-              if(response.content?.errors?.length){
-                this.title = "Error!";
-                this.message = "Fila: "+ response.content.errors[0].rowNumber + ", " + response.content.errors[0].messsages
-              }
-              else
-              {
-                this.title = "Exitoso!";
-                this.message = "Documento cargado exitosamente"
-              } 
-             
-              setTimeout(() => this.title = "", 3000);
-            })
-            .catch(error => {
-              alert(error);
-            });
+          .then(response => {
+            this.isDropdownVisible = false;
+            this.submit = false;
+        
+            if (response.content?.errors?.length) {
+              this.title = "Error!";
+              this.errors = response.content.errors.map((error: { rowNumber: any; messsages: any; }) => ({
+                rowNumber: error.rowNumber,
+                messages: error.messsages
+              }));
+            } else {
+              this.title = "Exitoso!";
+              this.message = "Documento cargado exitosamente";
+              this.errors = [];
+            }
+          })
+          .catch(error => {
+            alert(error);
+          });
     } else {
       this.submit = false
         console.warn('Por favor, selecciona un archivo y una opción.');
     }
   }
+  
+  closeMessage() {
+    this.title = "";
+    this.message = null;
+    this.errors = [];
+  }  
 }

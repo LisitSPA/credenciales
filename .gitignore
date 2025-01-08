@@ -20,3 +20,4 @@
 *.user
 /Frontend/.angular/cache/18.2.5
 /Frontend/node_modules
+.DS_Store
