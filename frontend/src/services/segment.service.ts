@@ -57,6 +57,7 @@ export class SegmentService {
       const payload = {
         Name: nombreCompleto,
         Color: colorSegmento,
+        active: true
       };
   
       return this.http.post(`${this.apiUrl}`, payload, { headers }).toPromise()

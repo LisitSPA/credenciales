@@ -154,17 +154,24 @@ export class SegmentosComponent {
   }
 
   async guardarNuevoSegmento(nuevoSegmento: { Description: string, Color: string }) {
-    if (!nuevoSegmento.Description.trim() || !nuevoSegmento.Color.trim()) {
-      console.error('El nombre o el color del segmento no pueden estar vacíos.');
-      return;
-    }
-
     try {
-      await this.segmentService.createSegment(nuevoSegmento.Description, nuevoSegmento.Color);
-      this.cargarListaSegmentos();  
-      this.cerrarModalNuevoSegmento();  
+      const creado = await this.segmentService.createSegment(nuevoSegmento.Description, nuevoSegmento.Color);
+      const nuevoSegmentoCreado = {
+        id: creado.id, 
+        nombreCompleto: nuevoSegmento.Description,
+        color: nuevoSegmento.Color,
+        activo: true,
+        seleccionado: false,
+        descripcion: nuevoSegmento.Description 
+        
+      };
+  
+      this.segmentos.unshift(nuevoSegmentoCreado); 
+      this.updatePaginatedSegmentos(); 
+  
+      alert('Segmento creado exitosamente.');
     } catch (error) {
-      console.error('Error al crear el segmento:', error);
+      alert('Error al crear el segmento');
     }
   }
 
