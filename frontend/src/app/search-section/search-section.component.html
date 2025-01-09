@@ -37,10 +37,18 @@
     </div>
   </div>
   <br>
-  <div class="mensaje-exito" *ngIf="title">
-    <strong>{{title}}</strong><br>
-    <span>{{message}}</span>
+  <div class="alert" [ngClass]="title === 'Exitoso!' ? 'alert-success' : 'alert-error'" *ngIf="title">
+    <button class="close-btn" (click)="closeMessage()">&times;</button>
+    <strong>{{ title }}</strong>
+    <p *ngIf="message">{{ message }}</p>
+    <ul *ngIf="errors.length">
+      <li *ngFor="let error of errors">
+        Fila: {{ error.rowNumber }}, {{ error.messages }}
+      </li>
+    </ul>
   </div>
+  
+  
   
   <div class="search-section">
 </div>

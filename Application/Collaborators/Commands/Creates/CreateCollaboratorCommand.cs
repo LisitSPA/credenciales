@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Notifications.Helpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -50,11 +51,11 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
     try
     {
         if(request.RUT == null)
-            throw new Exception($"El RUT es requerido");
+            throw new ValidationException($"El RUT es requerido");
 
         var exists = _repository.GetAllActive().Any(x => x.RUT == request.RUT);
         if (exists)
-            throw new Exception($"El colaborador '{request.RUT}' ya existe");                   
+            throw new ValidationException($"El colaborador '{request.RUT}' ya existe");                   
 
         var collaborator = new Collaborator()
         {

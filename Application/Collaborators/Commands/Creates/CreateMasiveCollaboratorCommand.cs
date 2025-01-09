@@ -90,16 +90,6 @@ public class CreateMasiveCollaboratorCommandHandler
                             });
                         }
 
-                        if (errors.Count > 0)
-                        {
-                            result.Result = new()
-                            {
-                                Success = success,
-                                Errors = errors,
-                            };
-                            return result;
-                        }
-
                         try
                         {
                             var res = await _mediator.Send(new CreateCollaboratorCommand
