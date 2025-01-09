@@ -26,14 +26,10 @@ export class NuevaSegmentoComponent {
   async crearSegmento() {
     if (this.nombreSegmento.trim() && this.colorSegmento.trim()) {
       try {
-  
-        await this.segmentService.createSegment(this.nombreSegmento, this.colorSegmento);
-  
         this.guardar.emit({
           Description: this.nombreSegmento,
           Color: this.colorSegmento,
         });
-  
         this.cerrarModal(); 
       } catch (error: unknown) {
         const err = error as any; 

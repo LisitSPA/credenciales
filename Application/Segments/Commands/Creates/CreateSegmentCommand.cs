@@ -47,6 +47,7 @@ public class CreateCollaboratorCommandHandler
             {
                 Name = request.Name,
                 Color = request.Color,
+                Active = true
             };
 
             _repository.Add(segment);
