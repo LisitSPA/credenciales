@@ -77,14 +77,14 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
         //if (request.Photo != null)
         //    _mediator.Send(new AddAttachmentsCommand { CollaboratorId = collaborator.Id, AttachmentType = EAttachmentType.Photo, Attachment = request.Photo });
 
-        try
-        {
-            SendEmail(collaborator);
-        }
-        catch (Exception emailEx)
-        {
-            Console.WriteLine($"Error al enviar el correo: {emailEx.Message}");
-        }
+        //try
+        //{
+        //    SendEmail(collaborator);
+        //}
+        //catch (Exception emailEx)
+        //{
+        //    Console.WriteLine($"Error al enviar el correo: {emailEx.Message}");
+        //}
 
         if (request.Password != null)
         {
