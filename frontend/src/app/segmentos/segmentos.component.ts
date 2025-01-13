@@ -171,7 +171,7 @@ export class SegmentosComponent {
   
       alert('Segmento creado exitosamente.');
     } catch (error) {
-      alert('Segmento duplicado');
+      alert('Error al crear el segmento');
     }
   }
 

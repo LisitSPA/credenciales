@@ -188,7 +188,7 @@ export class ColaboradoresComponent {
     if (this.selectedColaborador) {
       this.collaboratorService.deleteCollaborator(this.selectedColaborador.id).then(response => {
         if (response && response.statusCode === 200) {
-          this.cargarListaColaboradores();
+          this.colaboradores = this.colaboradores.filter(c => c.id !== this.selectedColaborador?.id);
           this.cerrarModalEliminar(); 
         } else {
         }
