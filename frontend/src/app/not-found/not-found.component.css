@@ -1,0 +1,65 @@
+.not-found-container {
+    margin-top: 200px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    padding: 20px;
+    opacity: 0; 
+    transform: translateY(-50px); 
+    animation: slideIn 2.5s ease-out forwards; 
+}
+
+.not-found-visible {
+    display: block; 
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.error-code {
+    font-size: 120px;
+    font-weight: bold;
+    color: #000000; 
+    margin-bottom: 20px;
+}
+
+.error-message h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.error-message p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.go-home-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.go-home-btn:hover {
+    background-color: #0056b3;
+}
+
+.go-home-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5);
+}

@@ -34,14 +34,12 @@ namespace Api
         }
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                });
-                      
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -56,7 +54,6 @@ namespace Api
                 c.DocInclusionPredicate((docName, apiDesc) =>
                 {
                     if (!apiDesc.TryGetMethodInfo(out MethodInfo methodInfo)) return false;
-                    // Exclude all DevExpress reporting controllers
                     return !methodInfo.DeclaringType.AssemblyQualifiedName.StartsWith("DevExpress", StringComparison.OrdinalIgnoreCase);
                 });
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
@@ -84,27 +81,37 @@ namespace Api
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
-            // services.AddCompression();
             services.AddApplicationInsightsTelemetry();
             services.AddHealthChecks()
-            .AddSqlServer(Configuration.GetValue<string>("ConnectionString"), name: "ComplaintDBConnection");
+                .AddSqlServer(Configuration.GetValue<string>("ConnectionString"), name: "ComplaintDBConnection");
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors("CorsPolicy");
 
-            //if (env.IsDevelopment())
-            //{
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1"));
-            //}
+            }
 
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers.Append("X-Frame-Options", "DENY"); 
+                context.Response.Headers.Append("X-Content-Type-Options", "nosniff"); 
+                context.Response.Headers.Append("Referrer-Policy", "no-referrer"); 
+
+                if (!env.IsDevelopment()) 
+                {
+                    context.Response.Headers.Append("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+                }
+
+                await next();
+            });
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthentication();
@@ -113,14 +120,9 @@ namespace Api
 
             app.UseEndpoints(endpoints =>
             {
-               
                 endpoints.MapControllers();
-                
             });
-
-           
-
         }
-
+    
     }
 }
