@@ -11,9 +11,11 @@ import { FirmaExitosaComponent } from './firma-exitosa/firma-exitosa.component';
 import { CredencialExitosaComponent } from './credencial-exitosa/credencial-exitosa.component';
 import { CredencialWebComponent } from './credencialWeb/credencialWeb';
 import { AuthGuard } from './auth.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
-    { path: '', component: LoginComponent },
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'colaboradores', component: ColaboradoresComponent, canActivate: [AuthGuard] },
     { path: 'segmentos', component: SegmentosComponent, canActivate: [AuthGuard] },
@@ -24,4 +26,5 @@ export const routes: Routes = [
     { path: 'firmaexitosa/:id', component: FirmaExitosaComponent, canActivate: [AuthGuard] },
     { path: 'credencialexitosa/:id', component: CredencialExitosaComponent, canActivate: [AuthGuard] },
     { path: 'credencialweb', component: CredencialWebComponent },
+    { path: '**', component: NotFoundComponent }
 ];
