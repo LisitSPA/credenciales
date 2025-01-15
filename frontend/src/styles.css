@@ -13,3 +13,13 @@ body
 
 
 
+ngx-spinner {
+    z-index: 10000 !important;
+  }
+  
+  .custom-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

@@ -13,6 +13,11 @@
     display: block; 
 }
 
+.hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
 @keyframes slideIn {
     0% {
         opacity: 0;
@@ -63,3 +68,24 @@
     outline: none;
     box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.5);
 }
+
+@media (max-width: 768px) {
+    .not-found-container {
+      margin-top: 100px;
+      font-size: 14px;
+    }
+  
+    .error-code {
+      font-size: 80px;
+    }
+  
+    .error-message h1 {
+      font-size: 24px;
+    }
+  
+    .go-home-btn {
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+  }
+  

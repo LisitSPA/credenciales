@@ -1,4 +1,11 @@
 <router-outlet></router-outlet>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#033baa"
+  type="ball-beat"
+  [fullScreen]="true"
+></ngx-spinner>
 
 <div class="main-content" *ngIf="!isLoginRoute() && !isCredencialWebRoute()">
   <app-header></app-header>

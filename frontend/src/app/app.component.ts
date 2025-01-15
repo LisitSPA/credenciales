@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GenerarCredencialComponent } from './generar-credencial/generar-credencial.component';
 import { GenerarFirmaComponent } from './generar-firma/generar-firma.component';
 import { SearchSectionComponent } from './search-section/search-section.component';
+import { SpinnerService } from '../services/spinner.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +24,13 @@ import { SearchSectionComponent } from './search-section/search-section.componen
     FooterComponent,
     FormsModule,
     ReactiveFormsModule,
+    NgxSpinnerModule
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router,public spinnerService: SpinnerService) {}
 
   isLoginRoute(): boolean {
     return this.router.url === '/';

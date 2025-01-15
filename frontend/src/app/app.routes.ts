@@ -25,6 +25,5 @@ export const routes: Routes = [
     { path: 'firmaexitosa/:id', component: FirmaExitosaComponent, canActivate: [AuthGuard] },
     { path: 'credencialexitosa/:id', component: CredencialExitosaComponent, canActivate: [AuthGuard] },
     { path: 'credencialweb', component: CredencialWebComponent },
-
     { path: '**', component: NotFoundComponent }
 ];

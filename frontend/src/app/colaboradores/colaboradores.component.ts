@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CollaboratorService } from '../../services/collaborators.service';
 import { saveAs } from 'file-saver';
 import { FormsModule } from '@angular/forms';
+import { SpinnerService } from '../../services/spinner.service';
 
 interface Colaborador {
   id: number;
@@ -50,12 +51,14 @@ export class ColaboradoresComponent {
   filteredColaboradores: Colaborador[] = [];
 
 
-  constructor(private collaboratorService: CollaboratorService, private router: Router) {
+  constructor(private collaboratorService: CollaboratorService, private router: Router, private spinnerService: SpinnerService) {
     this.cargarListaColaboradores();
   }
 
 
   cargarListaColaboradores() {
+    this.spinnerService.showSpinner();
+
     this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage)
       .then(response => {
         if (response && response.content && response.content.data) {
@@ -80,9 +83,10 @@ export class ColaboradoresComponent {
           this.filteredColaboradores = [...this.allColaboradores];
           this.updatePaginatedColaboradores();
         }
-      })
+        setTimeout(() => this.spinnerService.hideSpinner(), 1000);     
+       })
       .catch(error => {
-        console.error('Error al obtener colaboradores:', error);
+        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
       });
   }
   
@@ -120,9 +124,11 @@ export class ColaboradoresComponent {
       alert('Por favor, selecciona al menos un colaborador.');
       return;
     }
-
+    this.spinnerService.showSpinner();
     localStorage.setItem('print', JSON.stringify(this.selectedColaboradores[0]));
-    this.router.navigate(['/generar']);
+    this.router.navigate(['/generar']).then(() => {
+      setTimeout(() => this.spinnerService.hideSpinner(), 1500); 
+    });
   }
 
   nextPage() {
@@ -186,14 +192,18 @@ export class ColaboradoresComponent {
 
   eliminarColaborador() {
     if (this.selectedColaborador) {
+      this.spinnerService.showSpinner();
+
       this.collaboratorService.deleteCollaborator(this.selectedColaborador.id).then(response => {
         if (response && response.statusCode === 200) {
           this.cargarListaColaboradores();
           this.cerrarModalEliminar(); 
         } else {
         }
+        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
       }).catch(error => {
         alert('Error al eliminar colaborador: ' + error.message);
+        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
       });
     }
   }
@@ -211,10 +221,13 @@ export class ColaboradoresComponent {
 
   guardarModificaciones(colaboradorModificado: Colaborador) {
     if (colaboradorModificado && colaboradorModificado.id) {
+      this.spinnerService.showSpinner();
+
       this.collaboratorService.updateCollaborator(colaboradorModificado.id, colaboradorModificado)
         .then(response => {
           this.updatePaginatedColaboradores();  
           this.mostrarModificar = false;
+          setTimeout(() => this.spinnerService.hideSpinner(), 1500); 
         })
         .catch(error => {
           if (error.status === 400 && error.error && error.error.message) {
@@ -222,6 +235,7 @@ export class ColaboradoresComponent {
           } else {
             alert('Error al modificar colaborador: ' + error.message);  
           }
+          setTimeout(() => this.spinnerService.hideSpinner(), 1500);
         });
     }
   }
@@ -241,6 +255,8 @@ export class ColaboradoresComponent {
   }
 
   descargarArchivo(colaboradorId: number, tipoArchivo: number) {
+    this.spinnerService.showSpinner();
+
     this.collaboratorService.getAttachment(colaboradorId, tipoArchivo)
       .then(response => {
         const blob = new Blob([response], { type: response.type });
@@ -256,10 +272,12 @@ export class ColaboradoresComponent {
         }
 
         saveAs(blob, `${tipoArchivo}_${colaboradorId}.pdf`); 
+        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
       })
       .catch(error => {
         console.error(`Error al descargar el archivo ${tipoArchivo} para el colaborador con ID ${colaboradorId}:`, error);
         alert(`Hubo un error al descargar el archivo de ${tipoArchivo}.`);
+        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
       });
   }
 

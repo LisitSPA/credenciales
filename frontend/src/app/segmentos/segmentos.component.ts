@@ -5,6 +5,7 @@ import { EliminarComponent } from '../eliminar/eliminar.component';
 import { NuevaSegmentoComponent } from '../nueva-segmento/nueva-segmento.component';
 import { FormsModule } from '@angular/forms';
 import { ModificarSegmentoComponent } from '../modificar-segmento/modificar-segmento.component';
+import { SpinnerService } from '../../services/spinner.service';
 
 interface Segmento {
   id: number;
@@ -37,12 +38,14 @@ export class SegmentosComponent {
   textSearch: any;
   allSegmentos: Segmento[] = []; 
 
-  constructor(private segmentService: SegmentService) {
+  constructor(private segmentService: SegmentService, public spinnerService: SpinnerService) {
     this.cargarListaSegmentos(); 
   }
 
 
   cargarListaSegmentos() {
+    this.spinnerService.showSpinner();
+
     this.segmentService.getPaginatedSegments(this.currentPage, this.itemsPerPage)
       .then((response: any) => {
         if (response && response.content && response.content.data) {
@@ -61,10 +64,12 @@ export class SegmentosComponent {
           this.segmentos = [];
           console.error('Error: No se encontraron datos de segmentos.');
         }
+        setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
       })
       .catch((error) => {
         console.error('Error al obtener segmentos:', error);
         alert('Ocurrió un error al obtener los segmentos.');
+        setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
       });
   }
   
@@ -154,6 +159,8 @@ export class SegmentosComponent {
   }
 
   async guardarNuevoSegmento(nuevoSegmento: { Description: string, Color: string }) {
+    this.spinnerService.showSpinner();
+    
     try {
       const creado = await this.segmentService.createSegment(nuevoSegmento.Description, nuevoSegmento.Color);
       const nuevoSegmentoCreado = {
@@ -170,35 +177,45 @@ export class SegmentosComponent {
       this.updatePaginatedSegmentos(); 
   
       alert('Segmento creado exitosamente.');
+      setTimeout(() => this.spinnerService.hideSpinner(), 1200);
     } catch (error) {
       alert('Segmento duplicado');
+      setTimeout(() => this.spinnerService.hideSpinner(), 1200);
     }
   }
 
   async eliminarSegmentoSeleccionado() {
     if (this.idSegmentoSeleccionado !== null) {
+      this.spinnerService.showSpinner();
+
       try {
         await this.segmentService.deleteSegment(this.idSegmentoSeleccionado);
         this.cargarListaSegmentos(); 
         this.cerrarModalEliminar(); 
+        setTimeout(() => this.spinnerService.hideSpinner(), 1200);
       } catch (error) {
         console.error('Error al eliminar el segmento del backend:', error);
+        setTimeout(() => this.spinnerService.hideSpinner(), 1200);
       }
     }
   }
   
   guardarModificaciones(segmentoModificado: Segmento) {
     if (segmentoModificado && segmentoModificado.id) {
+      this.spinnerService.showSpinner();
+
       this.segmentService.updateSegment(segmentoModificado.id, segmentoModificado.nombreCompleto, segmentoModificado.color, segmentoModificado.activo)
         .then(response => {
           this.cargarListaSegmentos(); 
           this.cerrarFormulario(); 
+          setTimeout(() => this.spinnerService.hideSpinner(), 1200);
         })
         .catch(error => {
           if (error.status === 400 && error.error && error.error.message) {
             alert('Error: ' + error.error.message);
           } else {
             alert('Error al modificar segmento: ' + error.message);
+            setTimeout(() => this.spinnerService.hideSpinner(), 1200);
           }
         });
     }

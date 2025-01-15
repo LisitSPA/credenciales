@@ -5,6 +5,7 @@ import { EliminarGerenciaComponent } from '../eliminar-gerencia/eliminar-gerenci
 import { NuevaGerenciaComponent } from '../nueva-gerencia/nueva-gerencia.component';
 import { FormsModule } from '@angular/forms';
 import { ModificarGerenciaComponent } from '../modificar-gerencia/modificar-gerencia.component';
+import { SpinnerService } from '../../services/spinner.service';
 
 interface Gerencia {
   id: number;
@@ -35,7 +36,7 @@ export class GerenciasComponent {
   textSearch: string = '';
   allGerencias: Gerencia[] = [];
 
-  constructor(private gerenciaService: GerenciaService) {
+  constructor(private gerenciaService: GerenciaService, private spinnerService: SpinnerService,) {
     this.cargarListaGerencias(); 
   }
 
@@ -50,6 +51,7 @@ export class GerenciasComponent {
   }
 
   cargarListaGerencias() {
+    this.spinnerService.showSpinner();
     this.gerenciaService.getPaginatedGerencias(this.currentPage, this.itemsPerPage).then((response: any) => {
   
       if (response && response.content && Array.isArray(response.content.data)) {
@@ -63,13 +65,15 @@ export class GerenciasComponent {
         this.gerencias = [];
       }
   
-      this.updatePaginatedGerencias();  
+      this.updatePaginatedGerencias();
+      setTimeout(() => this.spinnerService.hideSpinner(), 1200);  
     }).catch((error: any) => {
       console.error('Error al obtener las gerencias:', error);
       if (error.name === 'HttpErrorResponse' && error.status === 0) {
         alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
       } else {
         alert('Ocurrió un error al obtener las gerencias: ' + error.message);
+        setTimeout(() => this.spinnerService.hideSpinner(), 1200);
       }
     });
   }
@@ -123,14 +127,17 @@ export class GerenciasComponent {
       alert('Por favor, ingresa un nombre válido para la gerencia.');
       return;
     }
-  
+
+    this.spinnerService.showSpinner();
     try {
       await this.gerenciaService.crearGerencia(gerenciaCreada.name);
       this.cargarListaGerencias();  
       this.cerrarModalNuevaGerencia();
+     setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
     } catch (error) {
       console.error('Error al crear la gerencia:', error);
       alert('Ocurrió un error al crear la gerencia. Verifica los datos e inténtalo nuevamente.');
+     setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
     }
   }
   
@@ -149,16 +156,19 @@ export class GerenciasComponent {
 
   async guardarModificacionGerencia(gerenciaModificada: Gerencia) {
     if (gerenciaModificada && gerenciaModificada.id !== undefined) {
-  
+      this.spinnerService.showSpinner();
       try {
         await this.gerenciaService.modificarGerencia(gerenciaModificada as Required<Gerencia>); 
         this.cargarListaGerencias();
         this.cerrarModalModificar();
+        setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
       } catch (error) {
         console.error('Error al modificar la gerencia:', error);
+        setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
       }
     } else {
       console.error('ID de gerencia no válido para modificar');
+      setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
     }
   }
   

@@ -1,0 +1,12 @@
+.spinner-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50px);
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 1001;
+    text-align: center;
+  }
+  

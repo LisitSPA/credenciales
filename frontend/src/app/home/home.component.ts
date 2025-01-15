@@ -5,11 +5,14 @@ import { SearchSectionComponent } from '../search-section/search-section.compone
 import { CollaboratorService } from '../../services/collaborators.service';
 import { GerenciaService } from '../../services/gerencia.service';
 import { SegmentService } from '../../services/segment.service';
+import { SpinnerService } from '../../services/spinner.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from '../../environment/environment';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, MantenedoresComponent, SearchSectionComponent],
+  imports: [FormsModule, MantenedoresComponent, SearchSectionComponent, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -21,12 +24,33 @@ export class HomeComponent {
     password: ''
   };
   selectedFile: File | null = null; 
+  data: any;
 
   constructor(
     private collaboratorService: CollaboratorService,
     private gerenciaService: GerenciaService,
+    private spinnerService: SpinnerService,
+    private http: HttpClient,
     private segmentService: SegmentService
   ) {}
+
+  ngOnInit() {
+    this.spinnerService.showSpinner(); 
+    
+    this.http.get<any>(`${environment.apiUrl}/data/home`).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.spinnerService.hideSpinner(); 
+        }, 2000); 
+      },
+      error: () => {
+        console.error('Error al cargar los datos:');
+        setTimeout(() => {
+          this.spinnerService.hideSpinner(); 
+        }, 1000); 
+      }
+    });
+  }
 
   onSearch() {}
 
@@ -51,9 +75,11 @@ export class HomeComponent {
 
   onUpload() {
     if (this.selectedFile) {
+      this.spinnerService.showSpinner();
       this.collaboratorService.uploadMissiveCollaborator(this.selectedFile);
       this.gerenciaService.uploadMissiveGerencia(this.selectedFile);
       this.segmentService.uploadMissiveSegment(this.selectedFile);
+      this.spinnerService.hideSpinner();
     } else {
       console.warn('No se ha seleccionado ningún archivo.');
     }

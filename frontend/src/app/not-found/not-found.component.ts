@@ -7,15 +7,20 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent implements OnInit {
-  isVisible: boolean = false;
+  isVisible: boolean = false; 
+  hidden: boolean = true;    
+
   constructor(private router: Router) {}
+
   ngOnInit(): void {
-    setTimeout(() => {
-      this.isVisible = true; 
-    }, 1000); 
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+          this.hidden = false;
+      }
+    });
   }
-  goHome(): void{
+
+  goHome(): void {
     this.router.navigate(['/home']);
   }
 }
-    
