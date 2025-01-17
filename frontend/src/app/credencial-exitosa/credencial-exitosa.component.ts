@@ -222,7 +222,7 @@ export class CredencialExitosaComponent implements OnInit {
               <XamlTextElement Text="${escapeXml(this.cargo)}" TextColor="#FFFCFFFF" BackgroundColor="#00000000" AlignmentV="Top" AlignmentH="Left" FontFamily="Bahnschrift" FontStyle="Normal" FontSize="10" Top="135.36" Left="20.16" Width="164" Height="20" />
                <XamlTextElement Text="${escapeXml(this.segmento)} | OFICINA CENTRAL" TextColor="#FFFCFFFF" BackgroundColor="#00000000" AlignmentV="Center" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontSize="8" Top="291.84" Left="21.12" Width="164" Height="20" />
               <XamlTextElement Text="#EntregandoLoMejor" TextColor="#FFFCFFFF" BackgroundColor="#00000000" AlignmentV="Top" AlignmentH="Left" FontFamily="Bahnschrift" FontSize="10" Top="228.48" Left="23.04" Width="164" Height="20" />              
-              <XamlTextElement Text="DavidDelCurto.cl" TextColor="#FFFCFFFF" TextDecorations="Underline" BackgroundColor="#00000000" AlignmentV="Top" AlignmentH="Left" FontFamily="Bahnschrift" FontStyle="Normal" FontSize="10" Top="243" Left="24"  Width="164" Height="20" />
+              <XamlTextElement Text="ddc.cl" TextColor="#FFFCFFFF" TextDecorations="Underline" BackgroundColor="#00000000" AlignmentV="Top" AlignmentH="Left" FontFamily="Bahnschrift" FontStyle="Normal" FontSize="10" Top="243" Left="24"  Width="164" Height="20" />
               <XamlImageElement Source="qr_code.png" Top="208.32" Left="129.6" Width="60" Height="60" />
             </Elements>
           </XamlDesignLayer>
