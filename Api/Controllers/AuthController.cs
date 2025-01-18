@@ -56,26 +56,5 @@ namespace Api.Controllers
             var result = await Mediator.Send(command);
             return HandleResult(result.Result, result.ErrorProvider);
         }
-
-        [AllowAnonymous]
-        [HttpPost("ValidaCorreoUsuario")]
-        public async Task<IActionResult> validateEmailUser(ValidateEmailUserCommand command)
-        {
-            var result = await _mediator.Send(command);
-            var encryptedResult = JsonConvert.SerializeObject(result).Encrypt(_config.GetSection("EncryptKey").Value!);
-            return Ok(encryptedResult);
-            return Ok(result);
-        }
-
-        [AllowAnonymous]
-        [HttpPut("ActualizarContrasena")]
-        public async Task<IActionResult> updatePassword(UpdatePasswordCommand command)
-        {
-            var result = await _mediator.Send(command);
-            var encryptedResult = JsonConvert.SerializeObject(result).Encrypt(_config.GetSection("EncryptKey").Value!);
-            return Ok(encryptedResult);
-            return Ok(result);
-        }
-
     }
 }
