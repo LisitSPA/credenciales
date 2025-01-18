@@ -26,7 +26,7 @@ namespace Application.Common.Interfaces
         void DeleteRangeSync(T[] entities);
         void DeactivateSync(int id);
         void Deactivate(T entity);
-        Task<T> GetByIdAsync(int id); 
+        Task<T> GetByIdAsync(int id);
         Task<T> GetByIdAsync(string id);
         bool Save();
         Task<bool> SaveSync(CancellationToken cancellationToken);

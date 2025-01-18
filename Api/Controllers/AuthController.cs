@@ -4,6 +4,11 @@ using System.Threading.Tasks;
 using Api.JwtConfig;
 using Application.Users.Commands;
 using Microsoft.AspNetCore.Authorization;
+using Application.Login.Commands;
+using DevExpress.CodeParser;
+using Newtonsoft.Json;
+using MediatR;
+using Domain.Domain.Helpers;
 
 namespace Api.Controllers
 {
@@ -13,10 +18,12 @@ namespace Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _config;
+        private readonly IMediator _mediator;
 
-        public AuthController(IConfiguration config)
+        public AuthController(IConfiguration config, IMediator mediator)
         {
             _config = config;
+            _mediator = mediator;
         }
 
         [AllowAnonymous]
@@ -50,6 +57,25 @@ namespace Api.Controllers
             return HandleResult(result.Result, result.ErrorProvider);
         }
 
+        [AllowAnonymous]
+        [HttpPost("ValidaCorreoUsuario")]
+        public async Task<IActionResult> validateEmailUser(ValidateEmailUserCommand command)
+        {
+            var result = await _mediator.Send(command);
+            var encryptedResult = JsonConvert.SerializeObject(result).Encrypt(_config.GetSection("EncryptKey").Value!);
+            return Ok(encryptedResult);
+            return Ok(result);
+        }
+
+        [AllowAnonymous]
+        [HttpPut("ActualizarContrasena")]
+        public async Task<IActionResult> updatePassword(UpdatePasswordCommand command)
+        {
+            var result = await _mediator.Send(command);
+            var encryptedResult = JsonConvert.SerializeObject(result).Encrypt(_config.GetSection("EncryptKey").Value!);
+            return Ok(encryptedResult);
+            return Ok(result);
+        }
 
     }
 }
