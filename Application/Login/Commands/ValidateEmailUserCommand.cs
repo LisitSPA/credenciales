@@ -12,16 +12,17 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using DevExpress.XtraPrinting.Native;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Domain.Domain.Helpers;
 
 namespace Application.Login.Commands
 {
-    public record ValidateEmailUserCommand : IRequest<Responsed<ValidateEmailDto>>
+    public record ValidateEmailUserCommand : IRequest<Responsed<ValidateEmailResponseDto>>
     {
-        public string Email { get; set; }
-        public string Token { get; set; }
+        public string Data { get; set; }
     }
 
-    public class ValidateEmailUserCommandHandler : IRequestHandler<ValidateEmailUserCommand, Responsed<ValidateEmailDto>>
+    public class ValidateEmailUserCommandHandler : IRequestHandler<ValidateEmailUserCommand, Responsed<ValidateEmailResponseDto>>
     {
         private readonly IRepository<User> _userRepository;
         private readonly IConfiguration _configuration;
@@ -40,24 +41,37 @@ namespace Application.Login.Commands
             _configuration = configuration;
         }
 
-        public async Task<Responsed<ValidateEmailDto>> Handle(ValidateEmailUserCommand request, CancellationToken cancellationToken)
+        public async Task<Responsed<ValidateEmailResponseDto>> Handle(ValidateEmailUserCommand request, CancellationToken cancellationToken)
         {
             string apiKey = _configuration.GetSection("ApiKey").Value!;
+            string encryptKey = _configuration.GetSection("EncryptKey").Value!;
 
-            if (apiKey != request.Token)
-                return new Responsed<ValidateEmailDto>(null, false, "El Token es inválido.");
+            ValidateEmailDto validateEmailDto = JsonConvert.DeserializeObject<ValidateEmailDto>(request.Data.Decrypt(encryptKey));
 
-            if (!IsValidEmail(request.Email))
-                return new Responsed<ValidateEmailDto>(null, false, "El formato del correo electrónico no es válido.");
+            if (apiKey != validateEmailDto.Token)
+                return new Responsed<ValidateEmailResponseDto>(new ValidateEmailResponseDto()
+                {
+                    Data = null,
+                    Message = "El Token es inválido.",
+                    Status = false
+                });
 
-            User user = (await _userRepository.GetByConditionsAsync(u => u.Email == request.Email)).FirstOrDefault();
+            if (!IsValidEmail(validateEmailDto.Email))
+                return new Responsed<ValidateEmailResponseDto>(new ValidateEmailResponseDto()
+                {
+                    Data = null,
+                    Message = "El formato del correo electrónico no es válido.",
+                    Status = false
+                });
+
+            User user = (await _userRepository.GetByConditionsAsync(u => u.Email == validateEmailDto.Email)).FirstOrDefault();
 
             if (user == null)
-                return new Responsed<ValidateEmailDto>(null, false, "El correo electrónico no está asociado a ningún usuario.");
+                return new Responsed<ValidateEmailResponseDto>(new ValidateEmailResponseDto() { Data = null, Message = "El correo electrónico no está asociado a ningún usuario.", Status = false });
 
             ValidateEmailDto userDto = _mapper.Map<ValidateEmailDto>(user);
 
-            return new Responsed<ValidateEmailDto>(userDto, true, "El correo electrónico es válido.");
+            return new Responsed<ValidateEmailResponseDto>(new ValidateEmailResponseDto() { Data = userDto, Message = "El correo electrónico es válido.", Status = true });
         }
         
         private bool IsValidEmail(string email)

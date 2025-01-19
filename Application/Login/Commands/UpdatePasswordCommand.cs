@@ -3,22 +3,21 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
+using Domain.Domain.Helpers;
 using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Utility.PasswordHasher;
 
 namespace Application.Login.Commands
 {
-    public record UpdatePasswordCommand : IRequest<Responsed<UpdatePasswordDto>>
+    public record UpdatePasswordCommand : IRequest<Responsed<ValidateEmailResponseDto>>
     {
-        public int Id { get; set; }
-        public string Email { get; set; }
-        public string NewPassword { get; set; }
-        public string Token { get; set; }
+        public string Data { get; set; }
     }
 
-    public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, Responsed<UpdatePasswordDto>>
+    public class UpdatePasswordCommandHandler : IRequestHandler<UpdatePasswordCommand, Responsed<ValidateEmailResponseDto>>
     {
         private readonly IRepository<User> _userRepository;
         private readonly IPasswordHasherService _passwordHasherService;
@@ -36,30 +35,34 @@ namespace Application.Login.Commands
            
         }
 
-        public async Task<Responsed<UpdatePasswordDto>> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
+        public async Task<Responsed<ValidateEmailResponseDto>> Handle(UpdatePasswordCommand request, CancellationToken cancellationToken)
         {
-            User user = (await _userRepository.GetByConditionsAsync(u => u.Id == request.Id && u.Email == request.Email)).FirstOrDefault();
+            string encryptKey = _configuration.GetSection("EncryptKey").Value!;
+
+            ValidateEmailDto validateEmailDto = JsonConvert.DeserializeObject<ValidateEmailDto>(request.Data.Decrypt(encryptKey));
+
+            User user = (await _userRepository.GetByConditionsAsync(u => u.Id == validateEmailDto.Id && u.Email == validateEmailDto.Email)).FirstOrDefault();
 
             if (user == null)
-                return new Responsed<UpdatePasswordDto>(null, false, "El correo electrónico o el ID no están asociados a ningún usuario.");
+                return new Responsed<ValidateEmailResponseDto>(new ValidateEmailResponseDto() { Data = null, Message = "El correo electrónico o el ID no están asociados a ningún usuario.", Status = false });
 
             string apiKey = _configuration.GetSection("ApiKey").Value!;
 
-            if (apiKey != request.Token)
-                return new Responsed<UpdatePasswordDto>(null, false, "El Token es inválido.");
+            if (apiKey != validateEmailDto.Token)
+                return new Responsed<ValidateEmailResponseDto>(new ValidateEmailResponseDto() { Data = null, Message = "El Token es inválido.", Status = false });
 
-            user.Password = _passwordHasherService.HashPassword(request.NewPassword);
+            user.Password = _passwordHasherService.HashPassword(validateEmailDto.Password);
 
             _userRepository.Update(user);
             _userRepository.Save();
 
-            var userDto = new UpdatePasswordDto
+            var userDto = new ValidateEmailDto
             {
                 Id = user.Id,
                 Email = user.Email
             };
 
-            return new Responsed<UpdatePasswordDto>(userDto, true, "La contraseña ha sido actualizada correctamente.");
+            return new Responsed<ValidateEmailResponseDto>(new ValidateEmailResponseDto() { Data = userDto, Message = "La contraseña ha sido actualizada correctamente.", Status = true });
         }
     }
 }

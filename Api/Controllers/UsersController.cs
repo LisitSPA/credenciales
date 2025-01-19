@@ -35,7 +35,7 @@ namespace Api.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPut("ActualizarContrasena")]
+        [HttpPost("ActualizarContrasena")]
         public async Task<IActionResult> updatePassword(UpdatePasswordCommand command)
         {
             var result = await _mediator.Send(command);

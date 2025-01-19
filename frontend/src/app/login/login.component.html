@@ -26,7 +26,7 @@
                                placeholder="Ingresa tu contraseña" [(ngModel)]="usuario.password" name="password">
                     </div>
                     <button type="button" class="btn btn-primary btn-block" (click)="gotoHome()" [disabled]="loading">Acceder</button>
-                    <a href="#" class="btn btn-link mt-2">Recupere su contraseña</a>
+                    <a href="https://ambitious-plant-061bff30f.4.azurestaticapps.net/recover-password?returnUrl=credenciales" class="btn btn-link mt-2" >Recupere su contraseña</a>
                     <div *ngIf="mensajeError" class="text-danger mt-2">{{ mensajeError }}</div>
 
                 </form>
