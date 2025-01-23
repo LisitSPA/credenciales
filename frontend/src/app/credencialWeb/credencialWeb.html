@@ -1,34 +1,31 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 <div class="login-container">
   <div class="login-card">
-    <h2><strong>¡Hola!</strong> Esta es mi Identificación Oficial...</h2>
+    <div class="navbar">
+      <div class="navbar-content">
+        <img src="/Logos DDC-04.svg" alt="Logo DDC" class="navbar-logo">  <span class="ecard-title">eCard DDC</span>      
+        
+      </div>
+    </div>
 
     <div class="business-card">
       <div class="card-header">
         <div class="image-section">
           <img *ngIf="!photoBase64" src="/user-2935527_1920.png" alt="Foto de Perfil" class="repo-image">
-          <!-- <img *ngIf="photoBase64" src="data:{{fileType}};base64,{{photoBase64}}" alt="Foto de Perfil" class="repo-image"> -->
           <img *ngIf="photoBase64" [src]="'data:' + fileType + ';base64,' + photoBase64" alt="Foto de Perfil" class="repo-image" />
-
-        </div>
-        <div class="contact-info">
           <h3 class="name">{{ nombre }}</h3>
-          <span class="segmento" [ngStyle]="{ 'background-color': segmentoColor }">{{ segmento }}</span>
-          <p class="position">{{ cargo }}</p>
-          <p class="direccion">{{ sede }}</p>
-          <hr class="divider">
-
-          <p>David del Curto</p>
-          <p>Avenida Las Condes 11700</p>
+          <p class="position">
+            <span>{{ cargo }}</span>
+          </p>
+          <h2 class="gerency">{{ sede }}</h2> 
+          <!-- <span class="segmento" [ngStyle]="{ 'background-color': segmentoColor }">{{ segmento }}</span> -->
         </div>
       </div>
     </div>
 
     <div class="office-info">
-      <h3>Mis Datos</h3>
-      <hr class="divider">
-
-      <p class="name">{{ nombre }}</p>
-      <hr class="divider">
+      <h2 class="personal-data">Datos Personales</h2>
 
       <div class="contact-section">
         <div class="contact-row">
@@ -42,17 +39,27 @@
       <hr class="divider">
       <div class="email-section">
         <div class="contact-row">
-          <span class="label">Correo electrónico:</span>
+          <span class="label">Correo:</span>
           <a href="mailto:{{ correo }}" class="contact-link">{{ correo }}</a>
-          <button (click)="enviarCorreo()" class="btn-action">
-            <img src="/correo.png" alt="Enviar Mail" class="icon">
-          </button>
         </div>
+        <button (click)="enviarCorreo()" class="btn-action">
+          <img src="/correo.png" alt="Enviar Mail" class="icon">
+        </button>
       </div>
       <hr class="divider">
+      <div class="office-location">
+        <br>
+        <h1 class="office-central">Oficina Central Santiago</h1>
+        <p>Av. Las Condes 11700, </p>
+        <p>Torre A, Of. 704. Vitacura,</p>
+        <p> Santiago.</p>
+        <p><i class="fas fa-phone icon"></i>+56 2 2362 2701</p>
+        <br>
+        <p><a href="http://www.ddc.cl" target="_blank">www.ddc.cl</a></p>
     </div>
-    <div class="qr-section">
-      <img src="/logos.png" alt="Logo adicional">
+    <div class="logo-section">
+      <img src="/logos.png" alt="Logo adicional" class="logo-image">
     </div>
   </div>
 </div>
+

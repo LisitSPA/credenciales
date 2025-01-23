@@ -234,12 +234,13 @@ export class CredencialExitosaComponent implements OnInit {
             <Elements>
               <XamlImageElement Source="fondo_blanco.png" Top="0" Left="0" Width="204" Height="324" />
               <XamlImageElement Source="Logos_DDC-04.png" Top="-8.64" Left="-26.88" Width="260.16" Height="127.68" Transparency="0" BackgroundColor="#00000000"  />
-              <XamlTextElement Text="Compromiso DDC" TextColor="#FF003878" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontSize="8.5" Top="98.88" Left="20" Width="164" Height="20" />
-              <XamlTextElement Text="#EntregandoLoMejor" TextColor="#FF003da5" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontSize="11" Top="110.4" Left="20" Width="164" Height="20" />
+              <XamlTextElement Text="Este es mi compromiso:" TextColor="#FF003878" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Light" FontSize="10" Top="98.88" Left="20" Width="164" Height="20" />
+              <XamlTextElement Text="#EntregandoLoMejor" TextColor="#FF003878" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Bold" FontSize="11" Top="110.4" Left="20" Width="164" Height="20" />
               <XamlRectangleElement Top="280" Left="0" Width="204" Height="44" BackgroundColor="#FFffffff" RadiusX="10" RadiusY="10" />
-              <XamlTextElement Text="Esta credencial es personal e intransferible. En caso de" TextColor="#FF0b3dac" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Light" FontSize="6.5" Top="290.88" Left="20.16" Width="164" Height="40" />
-              <XamlTextElement Text="extravío, se ruega dar aviso a" TextColor="#FF0b3dac" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Light" FontSize="6.5" Top="299.52" Left="-18.24" Width="164" Height="40" />
-              <XamlTextElement Text="gerenciapersonas@ddc.cl" TextColor="#FF0b3dac" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Bold" FontSize="6.5" Top="299.52" Left="63.36" Width="164" Height="40" />
+              <XamlTextElement Text="Esta credencial es personal e intransferible." TextColor="#FF0b3dac" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Light" FontSize="8" Top="286.08" Left="17.28" Width="164" Height="40" />
+              <XamlTextElement Text=" En caso de extravío, se ruega dar aviso" TextColor="#FF0b3dac" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Light" FontSize="8" Top="295.68" Left="16.32" Width="164" Height="40" />
+              <XamlTextElement Text=" inmediato a" TextColor="#FF0b3dac" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Light" FontSize="8" Top="304.32" Left="-31.68" Width="164" Height="40" />
+              <XamlTextElement Text="gerenciapersonas@ddc.cl" TextColor="#FF0b3dac" BackgroundColor="#00FFFFFF" AlignmentV="Top" AlignmentH="Center" FontFamily="Bahnschrift" FontStyle="Normal" FontWeight="Bold" FontSize="8" Top="304.32" Left="40.32" Width="164" Height="40" />
               </Elements>
           </XamlDesignLayer>
         </Layers>

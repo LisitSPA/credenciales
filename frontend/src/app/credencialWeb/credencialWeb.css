@@ -10,6 +10,51 @@ body {
     padding: 0;
 }
 
+.navbar-logo {
+    height: 168px; 
+    width: auto; 
+    margin-left: -64px;
+}
+
+.navbar {
+    width: 100%;
+    max-width: 400px; 
+    background-color: #ffffff;
+    padding: 0px 0px; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center; 
+    position: relative; 
+}
+
+.ecard-title {
+    font-family: 'Titillium Web', sans-serif;
+    color: #ffffff; 
+    background-color: #003da5;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: right; 
+    border-radius: 8px;
+    margin: -7px;
+    margin-top: 28px;
+    padding: 0px 8px;
+    white-space: nowrap; 
+    margin-right: 76px;
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-title {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    white-space: nowrap; 
+}
+
 .login-container {
     max-width: 400px;
     width: 100%;
@@ -32,21 +77,22 @@ header {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 .login-card {
-    padding: 20px;
+    padding: 0px;
 }
 .business-card {
     margin-top: 0;
     background: url('/Fondo_azul.png') no-repeat center center;
     background-size: cover;
-    border-radius: 10px;
+    border-radius: 0px;
     color: #fff;
-    padding: 20px;
+    padding: 28px;
     position: relative;
     display: flex;
     align-items: center;
 }
 
 .card-header {
+    flex: 1;
     display: flex;
     justify-content: space-between; 
     align-items: center;
@@ -59,10 +105,11 @@ header {
 }
 
 .repo-image {
-    width: 120px;
-    height: auto;
+    width: 179px;
+    height: 179px;
     border-radius: 8px;
     margin-right: 20px; 
+    object-fit: cover;
 }
 
 .contact-info {
@@ -78,6 +125,21 @@ header {
     margin: 5px 0; 
 }
 
+.name {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 31px;
+    font-weight: bold;
+    margin-top: -1px;
+    text-align: start;
+}
+
+.personal-data{
+    color: #04488e;
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: start; 
+}
 
 .segmento {
     color: #fff;
@@ -88,18 +150,36 @@ header {
     text-align: center;
 }
 
-.position, .direccion {
-    text-align: center;
-    font-size: 16px;
-    margin-top: 5px;
+.position {
+    font-family: 'Titillium Web', sans-serif;
+    text-align: start;
+    font-weight: bold;
+    font-size: -14px;
+    display: flex;
+    flex-direction: column;
+
+}
+.position span {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 20px;
+    margin-top: 3px; 
+}
+.gerency{
+    font-family: 'Titillium Web', sans-serif;
+    text-align: start;
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    margin-top: -19px; 
 }
 
 .office-info {
     background-color: #fff;
-    padding: 20px;
+    padding: 26px;
     border-radius: 10px;
-    margin-top: -20px;
+    margin-top: -51px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+    
 }
 
 .office-info h3 {
@@ -109,16 +189,41 @@ header {
 }
 
 .office-info p {
+    font-family: 'Titillium Web', sans-serif;
     font-size: 14px;
     color: #333;
-    margin: 5px 0;
+    margin: -2px 0;
+}
+
+.office-central{
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin: -2px 0;
 }
 
 .qr-section {
     display: flex;
     justify-content: space-evenly; 
-    align-items: center;
     padding: 10px;
+    margin-left: 50px;
+}
+
+.logo-section {
+    display: flex;
+    justify-content: flex-end; 
+    width: 100%;
+    margin-top: -110px; 
+}
+
+.logo-image {
+    width: 135px; 
+    height: auto;
+    height: 135px; 
+    object-fit: cover; 
+    margin-top: -28px;
+    object-position: right;
+    overflow: hidden;
 }
 
 img {
@@ -192,13 +297,66 @@ h2{
     height: 16px;
 }
 
-
-
-.contact-section, .email-section {
+.contact-section, .email-section  {
+    font-family: 'Titillium Web', sans-serif;
     display: flex;
     align-items: center; 
     justify-content: space-between;
-    margin: 10px 0;
+    margin: 0px 0;
+}
+
+.contact-section .contact-row, .email-section .contact-row {
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+}
+
+.contact-section .label, .email-section .label {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #575656;
+}
+
+.contact-link {
+    color: #007BFF;
+    font-family: 'Titillium Web', sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}
+
+.contact-section .btn-action, .email-section .btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-section .btn-action img, .email-section .btn-action img {
+    width: 16px;
+    height: 16px;
+}
+
+@media (max-width: 300px) {
+    .contact-section, .email-section {
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .contact-section .btn-action, .email-section .btn-action {
+        margin-top: 8px; 
+    }
+}
+
+.contact-row .label {
+    font-family: 'Titillium Web', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #575656;
+    margin-right: 10px; 
 }
 
 hr.divider {
@@ -214,6 +372,7 @@ hr.divider {
 
 .contact-link {
     color: #007BFF; 
+    font-family: 'Titillium Web', sans-serif;
     text-decoration: none; 
     font-weight: bold;
 }
