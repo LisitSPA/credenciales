@@ -162,7 +162,7 @@ body {
 .back-card .footer-section {
   background-color: transparent; 
   text-align: center;
-  padding: 10px 0;
+  padding: 0px 0 !important;
 }
 
 .back-card .footer-text {
