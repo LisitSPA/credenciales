@@ -49,7 +49,8 @@ body {
 
 .front-card, .back-card {
   background-size: cover;
-  background-position: center;
+  background-position: center -60px; 
+
 }
 
 .front-card {
@@ -66,7 +67,7 @@ body {
 }
 
 .logo {
-  width: 70px; 
+  width: 83px; 
   height: auto; 
   transform: scale(5); 
 }
@@ -74,7 +75,7 @@ body {
 .info-section {
   display: flex;
   justify-content: space-between; 
-  padding: 20px;
+  padding: 1px;
   align-items: center; 
 }
 
@@ -83,11 +84,16 @@ body {
 }
 
 .qr-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  position: relative;  /* Necesario para usar absolute en el QR */
   margin-bottom: -170px;
-  margin-left: -100px;
+}
+
+.qr-code {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  left: -97px;
+  top: -44px;
 }
 
 .profile-picture {
@@ -120,12 +126,6 @@ body {
   
 }
 
-.qr-code {
-  width: 80px;
-  height: 80px;
-  margin-top: 10px;
-  margin-left: -800px;
-}
 
 .footer-section {
   text-align: center;
@@ -140,8 +140,8 @@ body {
   bottom: 0;
   width: 100%;
   text-align: center;
-  padding: 25px 0px;
-  font-size: 11px;
+  padding: 23px 0px;
+  font-size: 16px;
   border-radius: 0 0 10px 10px;
   margin: 0px;
   
