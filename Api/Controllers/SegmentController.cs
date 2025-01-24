@@ -23,7 +23,7 @@ namespace Api.Controllers
     {
 
         [HttpGet("paginated", Name = "GetAllSegmentPaginated")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> GetAllSegmentPaginated([FromQuery] DataSourceLoadOptions query)
         {
             var result = await Mediator.Send(new GetSegmentPaginatedQueryDE { Params = query });
@@ -31,7 +31,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetSegmentById")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> GetLeadershipById(int id)
         {
             var result = await Mediator.Send(new GetSegmentByIdQuery { Id = id });
@@ -41,7 +41,7 @@ namespace Api.Controllers
 
 
         [HttpPost("", Name = "CreateSegment")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> CreateSegment([FromBody] CreateSegmentCommand command)
         {
             var result = await Mediator.Send(command);
@@ -50,7 +50,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("UploadMassive", Name = "UploadMassiveSegment")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> UploadMassiveSegment([FromQuery] CreateMasiveSegmentCommand command)
         {
             var result = await Mediator.Send(command);
@@ -58,7 +58,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("", Name = "UpdateSegment")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> UpdateSegment(UpdateSegmentCommand command)
         {
             var result = await Mediator.Send(command);
@@ -66,7 +66,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteSegment")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> DeleteSegment(int id)
         {
             var result = await Mediator.Send(new DeleteSegmentCommand { Id = id });

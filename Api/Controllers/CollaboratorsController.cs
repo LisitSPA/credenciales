@@ -3,11 +3,13 @@ using Application.Collaborators.Commands.Creates;
 using Application.Collaborators.Commands.Delete;
 using Application.Collaborators.Commands.Updates;
 using Application.Collaborators.Queries;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Domain.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 namespace Api.Controllers
 {
@@ -26,7 +28,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}", Name = "GetCollaboratorsById")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> GetCollaboratorsById(int id)
         {
             var result = await Mediator.Send(new GetCollaboratorByIdQuery { Id = id });
@@ -34,7 +36,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("", Name = "CreateCollaborator")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> CreateCollaborator([FromBody] CreateCollaboratorCommand command)
         {           
             var result = await Mediator.Send(command);
@@ -42,7 +44,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("UploadMassive", Name = "UploadMassiveCollaborator")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> UploadMassiveCollaborator([FromQuery] CreateMasiveCollaboratorCommand command)
         {
             var result = await Mediator.Send(command);
@@ -50,7 +52,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("Attachments", Name = "SaveAttachment")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> SaveAttachment([FromQuery] AddAttachmentsCommand command)
         {
             var result = await Mediator.Send(command);
@@ -58,7 +60,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("", Name = "UpdateCollaborator")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> UpdateCollaborator([FromBody] UpdateCollaboratorCommand command)
         {
             var result = await Mediator.Send(command);
@@ -67,10 +69,18 @@ namespace Api.Controllers
 
 
         [HttpDelete("{id}", Name = "DeleteCollaborator")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> DeleteCollaborator(int id)
         {
             var result = await Mediator.Send(new DeleteCollaboratorCommand { Id = id});
+            return HandleResult(result.Result, result.ErrorProvider);
+        }
+
+        [HttpPost("TerminoyCondiciones")]
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
+        public async Task<IActionResult> TerminoyCondiciones(int id, bool AceptaTerminos, string IP)
+        {
+            var result = await Mediator.Send(new TerminosyCondicionesCommand { id = id , AceptaTerminos = AceptaTerminos, IP = IP});
             return HandleResult(result.Result, result.ErrorProvider);
         }
 

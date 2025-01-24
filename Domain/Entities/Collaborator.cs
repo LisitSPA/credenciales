@@ -16,6 +16,9 @@ namespace Domain.Entities
         public string Position { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public bool? AceptaTerminosyCondiciones { get; set; }
+        public DateTime? FechaTerminoyCondiciones { get; set; }
+        public string IPTerminoyCondiciones { get; set; }
         public ECollaboratorStatus ECollaboratorStatus { get; set; }
     
         public Segment Segment { get; set; }

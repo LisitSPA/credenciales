@@ -24,7 +24,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetLeadershipById")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> GetLeadershipById(int id)
         {
             var result = await Mediator.Send(new GetLeadershipByIdQuery { Id = id });
@@ -32,7 +32,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("", Name = "CreateLeadership")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> CreateLeadership([FromBody] CreateLeadershipCommand command)
         {
             var result = await Mediator.Send(command);
@@ -40,7 +40,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("UploadMassive", Name = "UploadMassiveLeadership")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> UploadMassiveLeadership([FromQuery] CreateMasiveLeadershipCommand command)
         {
             var result = await Mediator.Send(command);
@@ -48,7 +48,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("", Name = "UpdateLeadership")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> UpdateLeadership(UpdateLeadershipCommand command)
         {
             var result = await Mediator.Send(command);
@@ -56,7 +56,7 @@ namespace Api.Controllers
         }
 
         [HttpDelete("{id}", Name = "DeleteLeadership")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> DeleteLeadership(int id)
         {
             var result = await Mediator.Send(new DeleteLeadershipCommand { Id = id });

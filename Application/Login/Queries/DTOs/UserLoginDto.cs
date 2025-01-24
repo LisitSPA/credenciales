@@ -14,6 +14,6 @@ namespace Application.Users.Queries.DTOs
         public string Email { get; set; }
         public string Password { get; set; }
         public Collaborator Collaborator { get; set; }
-        public ERoleUser EUserType { get; set; }
+        public ERoleUser ERoleUser { get; set; }
     }
 }

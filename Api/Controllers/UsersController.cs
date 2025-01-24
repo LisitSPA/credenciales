@@ -28,7 +28,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("ValidaCorreoUsuario")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> validateEmailUser(ValidateEmailUserCommand command)
         {
             var result = await _mediator.Send(command);
@@ -39,7 +39,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("ActualizarContrasena")]
-        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
+        [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> updatePassword(UpdatePasswordCommand command)
         {
             var result = await _mediator.Send(command);

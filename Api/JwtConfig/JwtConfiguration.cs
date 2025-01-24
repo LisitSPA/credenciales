@@ -79,7 +79,7 @@ namespace Api.JwtConfig
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Collaborator.CompleteName),
-                    new Claim(ClaimTypes.Role, user.EUserType.ToString()),
+                    new Claim(ClaimTypes.Role, user.ERoleUser.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(180),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
