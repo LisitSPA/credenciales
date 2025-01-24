@@ -83,21 +83,26 @@ export class FirmaExitosaComponent implements OnInit {
           transform: 'scale(1)',
           transformOrigin: 'top left',
           backgroundColor: '#FFFFFF',
+          padding: '0px', 
+          margin: 'auto',
+          border: 'none',
+          boxSizing: 'border-box',
           width: `${cardContainer.offsetWidth}px`,
           height: `${cardContainer.offsetHeight}px`,
+          fontFamily: 'Titillium Web, sans-serif', 
         }
       };
-
+  
       DomToImage.toPng(cardContainer, options)
-        .then((dataUrl) => {
+        .then(function (dataUrl) {
           const link = document.createElement('a');
           link.href = dataUrl;
           link.download = 'firma.png';
           link.click();
         })
-        .catch((error) => {
+        .catch(function (error) {
           console.error('Error al generar la imagen:', error);
         });
     }
-  }
+  }  
 }

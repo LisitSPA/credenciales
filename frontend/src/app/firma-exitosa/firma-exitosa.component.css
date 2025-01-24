@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  font-Family: 'Titillium Web, sans-serif';
 }
 .content{
   margin-left: 90px;
@@ -22,6 +22,7 @@ body {
 
 .login-card {
   position: relative; 
+  font-Family: 'Titillium Web, sans-serif';
   background-color: white;
   padding: 30px;
   border-radius: 5px;
@@ -33,6 +34,7 @@ body {
 }
 
 .btn-secondary {
+  font-Family: 'Titillium Web, sans-serif';
     background-color: #005bb5;
     color: white;
     padding: 10px 20px;
@@ -42,6 +44,7 @@ body {
     font-size: medium;
 }
 .btn-secondary-1 {
+  font-Family: 'Titillium Web, sans-serif';
     display: inline-block;  
     background-color: white;
     color: #005bb5;
@@ -58,17 +61,18 @@ body {
 
 
 .button {
+    font-Family: 'Titillium Web, sans-serif';
     display: flex;
     gap: 10px;
     justify-content: flex-end;
     margin-top: 20px;
 }
 .business-card {
+    font-Family: 'Titillium Web, sans-serif';
     border: 1px solid #005bb5;
     border-radius: 10px;
     padding: 40px;
-    width: 600px;
-    font-family: 'Roboto', sans-serif;
+    width: 660px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin:40px;
     overflow: visible;
@@ -98,6 +102,7 @@ body {
     }
   
   .company-name {
+    font-Family: 'Titillium Web, sans-serif';
     color: #005bb5;
     margin: 0;
     font-size: 24px;
@@ -120,7 +125,7 @@ body {
   
   .position {
     margin: 0;
-    font-size: 23px;
+    font-size: 22px;
     color: rgb(0, 61, 165);
     font-family: 'Titillium Web', sans-serif;
     font-weight: light;
@@ -178,7 +183,7 @@ body {
     font-size: 15px;
     margin: 0;
     color:rgb(146, 143, 143);
-    margin-right: 70px;
+    margin-right: 128px;
     font-weight: 500;
 
   }
@@ -199,13 +204,21 @@ body {
   }
   
   .divider {
-    border: none; /* Elimina el borde por defecto */
-    border-top: 1px solid #ccc; /* Línea superior gris */
+    border: none; 
+    border-top: 1px solid #ccc; 
     width:20%;
-    margin-right: 140px;
+    margin-right: 190px;
     margin-top: 0px;
   }
-  
+
+  .download {
+    font-family: 'Titillium Web', sans-serif; /* Fuente Titillium Web */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2px; /* Mantiene el padding reducido */
+    overflow: hidden;
+    font-size: 14px; /* Ajusta el tamaño de la fuente a 14px */
+  }
 
  
 @keyframes spin {
