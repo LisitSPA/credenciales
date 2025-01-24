@@ -212,12 +212,12 @@ body {
   }
 
   .download {
-    font-family: 'Titillium Web', sans-serif; /* Fuente Titillium Web */
+    font-family: 'Titillium Web', sans-serif; 
     width: 100%;
     box-sizing: border-box;
-    padding: 2px; /* Mantiene el padding reducido */
+    padding: 2px; 
     overflow: hidden;
-    font-size: 14px; /* Ajusta el tamaño de la fuente a 14px */
+    font-size: 14px; 
   }
 
  
