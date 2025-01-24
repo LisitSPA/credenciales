@@ -44,6 +44,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("passwordRecovery")]
+        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> RecoverPassword(PasswordRecoveryCommand command)
         {
             var result = await Mediator.Send(command);
@@ -51,6 +52,7 @@ namespace Api.Controllers
         }
 
         [HttpPut("changePassword")]
+        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> ChangePassword(ChangePasswordCommand command)
         {
             var result = await Mediator.Send(command);

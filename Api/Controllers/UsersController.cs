@@ -3,11 +3,13 @@ using Application.Login.Commands;
 using Application.Users.Commands;
 using Domain.Common;
 using Domain.Domain.Helpers;
+using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Security.Claims;
 using System.Threading.Tasks;
 namespace Api.Controllers
 {
@@ -26,6 +28,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("ValidaCorreoUsuario")]
+        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> validateEmailUser(ValidateEmailUserCommand command)
         {
             var result = await _mediator.Send(command);
@@ -36,6 +39,7 @@ namespace Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("ActualizarContrasena")]
+        [Authorize(Roles = "1,2")] // Colaborador = 1, Jefatura = 2
         public async Task<IActionResult> updatePassword(UpdatePasswordCommand command)
         {
             var result = await _mediator.Send(command);
