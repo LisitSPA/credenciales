@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms'; 
 import { MantenedoresComponent } from '../mantenedores/mantenedores.component';
 import { SearchSectionComponent } from '../search-section/search-section.component';
@@ -8,6 +8,9 @@ import { SegmentService } from '../../services/segment.service';
 import { SpinnerService } from '../../services/spinner.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../environment/environment';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +19,7 @@ import { environment } from '../../environment/environment';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   title = 'ddc-app';
   searchQuery: string = '';
   usuario = {
@@ -25,8 +28,15 @@ export class HomeComponent {
   };
   selectedFile: File | null = null; 
   data: any;
+  canSeeHome: boolean = false;
+
+  private inactivityTimeout: any;
+  private readonly INACTIVITY_TIME = 900000;
 
   constructor(
+    private router: Router,
+    private authService: AuthService,
+    private renderer: Renderer2,
     private collaboratorService: CollaboratorService,
     private gerenciaService: GerenciaService,
     private spinnerService: SpinnerService,
@@ -50,6 +60,9 @@ export class HomeComponent {
         }, 1000); 
       }
     });
+
+    this.resetInactivityTimeout();
+    this.addUserInteractionListeners();
   }
 
   onSearch() {}
@@ -72,7 +85,6 @@ export class HomeComponent {
     }
   }
   
-
   onUpload() {
     if (this.selectedFile) {
       this.spinnerService.showSpinner();
@@ -87,7 +99,52 @@ export class HomeComponent {
 
   iniciarSesion() {
     if (this.usuario.email === "usuario@ejemplo.com" && this.usuario.password === "c") {
+      console.log('Inicio de sesión exitoso');
     } else {
+      console.error('Credenciales incorrectas');
     }
+  }
+
+  logout() {
+    this.authService.logout();  
+  }
+
+  private isOnLoginPage(): boolean {
+    const loginPaths = ['/', '/login'];
+    return loginPaths.includes(window.location.pathname);
+  }
+  
+
+  private handleInactivity() {
+    if (!this.isOnLoginPage()) {
+      alert('Su sesión ha expirado por inactividad.');
+      this.logout();
+    }
+  }
+  
+  
+  private resetInactivityTimeout() {
+    if (this.inactivityTimeout) {
+      clearTimeout(this.inactivityTimeout);
+    }
+    this.inactivityTimeout = setTimeout(() => this.handleInactivity(), this.INACTIVITY_TIME);
+  }
+
+  private addUserInteractionListeners() {
+    this.renderer.listen('window', 'mousemove', () => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'scroll', () => {
+      this.resetInactivityTimeout();
+    });
+  }
+  
+  ngOnDestroy() {
+    clearTimeout(this.inactivityTimeout);
+    window.removeEventListener('mousemove', () => this.resetInactivityTimeout());
+    window.removeEventListener('keydown', () => this.resetInactivityTimeout());
   }
 }

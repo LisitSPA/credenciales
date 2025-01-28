@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SegmentService } from '../../services/segment.service';
 import { EliminarComponent } from '../eliminar/eliminar.component';
@@ -6,6 +6,9 @@ import { NuevaSegmentoComponent } from '../nueva-segmento/nueva-segmento.compone
 import { FormsModule } from '@angular/forms';
 import { ModificarSegmentoComponent } from '../modificar-segmento/modificar-segmento.component';
 import { SpinnerService } from '../../services/spinner.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { Renderer2 } from '@angular/core';
 
 interface Segmento {
   id: number;
@@ -37,11 +40,26 @@ export class SegmentosComponent {
   mostrarModificar: boolean = false;
   textSearch: any;
   allSegmentos: Segmento[] = []; 
+  canSeeHome: boolean = false;
 
-  constructor(private segmentService: SegmentService, public spinnerService: SpinnerService) {
+  private inactivityTimeout: any;
+  private readonly INACTIVITY_TIME = 900000;
+
+  constructor(
+    private segmentService: SegmentService, 
+    public spinnerService: SpinnerService,
+    private router: Router,
+    private authService: AuthService,
+    private renderer: Renderer2,
+  
+  ) {
     this.cargarListaSegmentos(); 
   }
 
+  ngOnInit() {
+    this.resetInactivityTimeout();
+    this.addUserInteractionListeners();
+  }
 
   cargarListaSegmentos() {
     this.spinnerService.showSpinner();
@@ -230,8 +248,50 @@ export class SegmentosComponent {
     }
   }
   
-  
   cerrarFormulario() {
     this.mostrarModificar = false;
+  }
+
+  logout() {
+    this.authService.logout();  
+  }
+
+  private isOnLoginPage(): boolean {
+    const loginPaths = ['/', '/login'];
+    return loginPaths.includes(window.location.pathname);
+  }
+  
+
+  private handleInactivity() {
+    if (!this.isOnLoginPage()) {
+      alert('Su sesión ha expirado por inactividad.');
+      this.logout();
+    }
+  }
+  
+  
+  private resetInactivityTimeout() {
+    if (this.inactivityTimeout) {
+      clearTimeout(this.inactivityTimeout);
+    }
+    this.inactivityTimeout = setTimeout(() => this.handleInactivity(), this.INACTIVITY_TIME);
+  }
+
+  private addUserInteractionListeners() {
+    this.renderer.listen('window', 'mousemove', () => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'scroll', () => {
+      this.resetInactivityTimeout();
+    });
+  }
+  
+  ngOnDestroy() {
+    clearTimeout(this.inactivityTimeout);
+    window.removeEventListener('mousemove', () => this.resetInactivityTimeout());
+    window.removeEventListener('keydown', () => this.resetInactivityTimeout());
   }
 }

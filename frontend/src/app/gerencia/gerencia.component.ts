@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GerenciaService } from '../../services/gerencia.service';
 import { EliminarGerenciaComponent } from '../eliminar-gerencia/eliminar-gerencia.component';
@@ -6,6 +6,9 @@ import { NuevaGerenciaComponent } from '../nueva-gerencia/nueva-gerencia.compone
 import { FormsModule } from '@angular/forms';
 import { ModificarGerenciaComponent } from '../modificar-gerencia/modificar-gerencia.component';
 import { SpinnerService } from '../../services/spinner.service';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { Renderer2 } from '@angular/core';
 
 interface Gerencia {
   id: number;
@@ -21,7 +24,7 @@ interface Gerencia {
   templateUrl: './gerencia.component.html',
   styleUrls: ['./gerencia.component.css']
 })
-export class GerenciasComponent {
+export class GerenciasComponent implements OnInit, OnDestroy {
 
   gerencias: Gerencia[] = [];  
   paginatedGerencias: Gerencia[] = [];  
@@ -35,13 +38,26 @@ export class GerenciasComponent {
   mostrarModalEliminar: boolean = false;
   textSearch: string = '';
   allGerencias: Gerencia[] = [];
+  private inactivityTimeout: any;
+  private readonly INACTIVITY_TIME = 900000;
 
-  constructor(private gerenciaService: GerenciaService, private spinnerService: SpinnerService,) {
+  constructor(
+    private gerenciaService: GerenciaService, 
+    private spinnerService: SpinnerService,
+    private router: Router,
+    private authService: AuthService,
+    private renderer: Renderer2,
+  ) {
     this.cargarListaGerencias(); 
   }
 
   get totalPages() {
     return Math.ceil(this.filteredGerencias.length / this.itemsPerPage);  
+  }
+
+  ngOnInit() {
+    this.resetInactivityTimeout();
+    this.addUserInteractionListeners();
   }
 
   updatePaginatedGerencias() {
@@ -215,5 +231,48 @@ export class GerenciasComponent {
         console.error('Error al cargar gerencias:', error);
       }
     }
+  }
+
+  logout() {
+    this.authService.logout();  
+  }
+
+  private isOnLoginPage(): boolean {
+    const loginPaths = ['/', '/login'];
+    return loginPaths.includes(window.location.pathname);
+  }
+  
+
+  private handleInactivity() {
+    if (!this.isOnLoginPage()) {
+      alert('Su sesión ha expirado por inactividad.');
+      this.logout();
+    }
+  }
+  
+  
+  private resetInactivityTimeout() {
+    if (this.inactivityTimeout) {
+      clearTimeout(this.inactivityTimeout);
+    }
+    this.inactivityTimeout = setTimeout(() => this.handleInactivity(), this.INACTIVITY_TIME);
+  }
+
+  private addUserInteractionListeners() {
+    this.renderer.listen('window', 'mousemove', () => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'scroll', () => {
+      this.resetInactivityTimeout();
+    });
+  }
+  
+  ngOnDestroy() {
+    clearTimeout(this.inactivityTimeout);
+    window.removeEventListener('mousemove', () => this.resetInactivityTimeout());
+    window.removeEventListener('keydown', () => this.resetInactivityTimeout());
   }
 }

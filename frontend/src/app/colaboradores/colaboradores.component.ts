@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NuevoColaboradorComponent } from '../nuevo-colaborador/nuevo-colaborador.component';
 import { EliminarComponent } from '../eliminar/eliminar.component';
@@ -8,6 +9,7 @@ import { CollaboratorService } from '../../services/collaborators.service';
 import { saveAs } from 'file-saver';
 import { FormsModule } from '@angular/forms';
 import { SpinnerService } from '../../services/spinner.service';
+import { AuthService } from '../../services/auth.service';
 
 interface Colaborador {
   id: number;
@@ -34,7 +36,7 @@ interface Colaborador {
   templateUrl: './colaboradores.component.html',
   styleUrls: ['./colaboradores.component.css']
 })
-export class ColaboradoresComponent {
+export class ColaboradoresComponent implements OnInit, OnDestroy {
 
   colaboradores: Colaborador[] = [];
   selectedColaboradores: Colaborador[] = [];
@@ -49,12 +51,25 @@ export class ColaboradoresComponent {
   allColaboradores: Colaborador[] = [];
   paginatedColaboradores: Colaborador[] = [];
   filteredColaboradores: Colaborador[] = [];
+  canSeeHome: boolean = false;
+  private inactivityTimeout: any;
+  private readonly INACTIVITY_TIME = 900000;
 
 
-  constructor(private collaboratorService: CollaboratorService, private router: Router, private spinnerService: SpinnerService) {
+  constructor(
+    private collaboratorService: CollaboratorService, 
+    private router: Router, 
+    private spinnerService: SpinnerService,
+    private authService: AuthService,
+    private renderer: Renderer2,
+  ) {
     this.cargarListaColaboradores();
   }
 
+  ngOnInit() {
+    this.resetInactivityTimeout();
+    this.addUserInteractionListeners();
+  }  
 
   cargarListaColaboradores() {
     this.spinnerService.showSpinner();
@@ -281,4 +296,46 @@ export class ColaboradoresComponent {
       });
   }
 
+  logout() {
+    this.authService.logout();  
+  }
+
+  private isOnLoginPage(): boolean {
+    const loginPaths = ['/', '/login'];
+    return loginPaths.includes(window.location.pathname);
+  }
+  
+
+  private handleInactivity() {
+    if (!this.isOnLoginPage()) {
+      alert('Su sesión ha expirado por inactividad.');
+      this.logout();
+    }
+  }
+  
+  
+  private resetInactivityTimeout() {
+    if (this.inactivityTimeout) {
+      clearTimeout(this.inactivityTimeout);
+    }
+    this.inactivityTimeout = setTimeout(() => this.handleInactivity(), this.INACTIVITY_TIME);
+  }
+
+  private addUserInteractionListeners() {
+    this.renderer.listen('window', 'mousemove', () => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'scroll', () => {
+      this.resetInactivityTimeout();
+    });
+  }
+  
+  ngOnDestroy() {
+    clearTimeout(this.inactivityTimeout);
+    window.removeEventListener('mousemove', () => this.resetInactivityTimeout());
+    window.removeEventListener('keydown', () => this.resetInactivityTimeout());
+  }
 }

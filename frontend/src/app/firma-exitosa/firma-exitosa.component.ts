@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,10 @@ import DomToImage from 'dom-to-image';
 import QRCode from 'qrcode';
 import { CollaboratorService } from '../../services/collaborators.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { Renderer2 } from '@angular/core';
+
 
 @Component({
   selector: 'app-firma-exitosa',
@@ -22,11 +26,18 @@ export class FirmaExitosaComponent implements OnInit {
   qrCodeDataUrl: string = ''; 
   segmento: string = '';
   area: string = '';
+  canSeeHome: boolean = false;
+
+  private inactivityTimeout: any;
+  private readonly INACTIVITY_TIME = 900000;
 
   constructor(
     private route: ActivatedRoute,
     private collaboratorService: CollaboratorService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private authService: AuthService,
+    private renderer: Renderer2,
   ) {}
 
   ngOnInit() {
@@ -38,6 +49,8 @@ export class FirmaExitosaComponent implements OnInit {
         console.error('No se proporcionó el ID del colaborador.');
       }
     });
+    this.resetInactivityTimeout();
+    this.addUserInteractionListeners();
   }
 
   cargarDatosColaborador(id: number) {
@@ -105,4 +118,47 @@ export class FirmaExitosaComponent implements OnInit {
         });
     }
   }  
+  
+  logout() {
+    this.authService.logout();  
+  }
+
+  private isOnLoginPage(): boolean {
+    const loginPaths = ['/', '/login'];
+    return loginPaths.includes(window.location.pathname);
+  }
+  
+
+  private handleInactivity() {
+    if (!this.isOnLoginPage()) {
+      alert('Su sesión ha expirado por inactividad.');
+      this.logout();
+    }
+  }
+  
+  
+  private resetInactivityTimeout() {
+    if (this.inactivityTimeout) {
+      clearTimeout(this.inactivityTimeout);
+    }
+    this.inactivityTimeout = setTimeout(() => this.handleInactivity(), this.INACTIVITY_TIME);
+  }
+
+  private addUserInteractionListeners() {
+    this.renderer.listen('window', 'mousemove', () => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
+      this.resetInactivityTimeout();
+    });
+    this.renderer.listen('window', 'scroll', () => {
+      this.resetInactivityTimeout();
+    });
+  }
+  
+  ngOnDestroy() {
+    clearTimeout(this.inactivityTimeout);
+    window.removeEventListener('mousemove', () => this.resetInactivityTimeout());
+    window.removeEventListener('keydown', () => this.resetInactivityTimeout());
+  }
 }
