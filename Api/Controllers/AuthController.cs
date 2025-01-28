@@ -36,7 +36,7 @@ namespace Api.Controllers
             if (user != null)
             {
                 var token = JwtConfiguration.GenerateToken(user, _config);
-                return Ok(new { token });
+                return Ok(new { token, id = user.Id });
             }
 
             return HandleResult(result.Result, result.ErrorProvider);
