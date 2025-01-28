@@ -145,6 +145,61 @@ main {
   background-color: #e9ecef;
   cursor: not-allowed;
 }
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+}
+
+.page-numbers button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+}
+
+.page-numbers button.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.page-numbers button:disabled {
+  background-color: transparent;
+  cursor: default;
+  color: #ccc;
+}
+
+.arrow {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.arrow.disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+.pagination-info {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: -39px;
+}
+
+.pagination-info select {
+  margin: 0 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
 .label {
   margin: 0 10px; 

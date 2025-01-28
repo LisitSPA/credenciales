@@ -47,17 +47,32 @@
         </table>
       </div>
 
-      <div class="pagination">
-        <span class="label">Principio</span>
-        <span (click)="previousPage()" [class.disabled]="currentPage === 1" class="arrow">‹</span>
-        <div class="page-numbers">
-          <button *ngFor="let page of generatePageNumbers()" (click)="goToPage(page)" [class.active]="currentPage === page">
-            {{ page }}
-          </button>
+      <div class="pagination-container">
+        <div class="pagination">
+          <span class="label">Principio</span>
+          <span (click)="previousPage()" [class.disabled]="currentPage === 1" class="arrow">‹</span>
+          <div class="page-numbers">
+            <button *ngFor="let page of pages()" 
+                    (click)="goToPage(page)" 
+                    [class.active]="currentPage === page" 
+                    [disabled]="page === '...'">
+              {{ page }}
+            </button>
+          </div>
+          <span (click)="nextPage()" [class.disabled]="currentPage === totalPagesCalculated" class="arrow">›</span>
+          <span class="label">Final</span>
         </div>
-        <span (click)="nextPage()" [class.disabled]="currentPage === totalPagesCalculated" class="arrow">›</span>
-        <span class="label">Final</span>
+        <div class="pagination-info">
+          <label for="itemsPerPage">Filas por página:</label>
+          <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage()">
+            <option *ngFor="let option of [7, 10, 20, 50, 100]" [value]="option">{{ option }}</option>
+          </select>
+          <span>
+            Mostrando {{ getDisplayedRange() }} de {{ segmentos.length }}
+          </span>
+        </div>
       </div>
+      
     </div>
   </main>
 

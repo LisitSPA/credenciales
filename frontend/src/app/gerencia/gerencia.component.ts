@@ -59,51 +59,50 @@ export class GerenciasComponent implements OnInit, OnDestroy {
     this.resetInactivityTimeout();
     this.addUserInteractionListeners();
   }
-
-  updatePaginatedGerencias() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    this.paginatedGerencias = this.filteredGerencias.slice(start, end); 
+  
+  getDisplayedRange(): string {
+    const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+    const end = Math.min(this.currentPage * this.itemsPerPage, this.filteredGerencias.length);
+    return `${start} a ${end}`;
   }
-
+  
   cargarListaGerencias() {
     this.spinnerService.showSpinner();
     this.gerenciaService.getPaginatedGerencias(this.currentPage, this.itemsPerPage).then((response: any) => {
-  
       if (response && response.content && Array.isArray(response.content.data)) {
-        this.gerencias = response.content.data.map((g: any) => ({
+        this.allGerencias = response.content.data.map((g: any) => ({
           ...g,
-          fechaCreacion: new Date()  
+          fechaCreacion: new Date(),
         }));
-        this.filteredGerencias = [...this.gerencias];
+        this.filteredGerencias = [...this.allGerencias];
+        this.updatePaginatedGerencias();
       } else {
         console.error('No se encontraron datos en la respuesta de la API');
-        this.gerencias = [];
+        this.allGerencias = [];
+        this.filteredGerencias = [];
+        this.paginatedGerencias = [];
       }
-  
-      this.updatePaginatedGerencias();
-      setTimeout(() => this.spinnerService.hideSpinner(), 1200);  
+      setTimeout(() => this.spinnerService.hideSpinner(), 1200);
     }).catch((error: any) => {
       console.error('Error al obtener las gerencias:', error);
-      if (error.name === 'HttpErrorResponse' && error.status === 0) {
-        alert('No se pudo conectar con el servidor. Por favor, verifique su conexión e inténtelo nuevamente.');
-      } else {
-        alert('Ocurrió un error al obtener las gerencias: ' + error.message);
-        setTimeout(() => this.spinnerService.hideSpinner(), 1200);
-      }
+      this.allGerencias = [];
+      this.filteredGerencias = [];
+      this.paginatedGerencias = [];
+      setTimeout(() => this.spinnerService.hideSpinner(), 1200);
     });
   }
 
   search() {
     if (this.textSearch) {
       const searchText = this.textSearch.toLowerCase();
-
-      this.filteredGerencias = this.allGerencias.filter(x =>
-        x.name?.toLowerCase().includes(searchText));
+      this.filteredGerencias = this.allGerencias.filter((x) =>
+        x.name?.toLowerCase().includes(searchText)
+      );
     } else {
       this.filteredGerencias = [...this.allGerencias];
     }
-      this.updatePaginatedGerencias();
+    this.currentPage = 1; 
+    this.updatePaginatedGerencias();
   }
 
   previousPage() {
@@ -120,13 +119,50 @@ export class GerenciasComponent implements OnInit, OnDestroy {
     }
   }
 
-  pages() {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  updatePaginatedGerencias() {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedGerencias = this.filteredGerencias.slice(start, end);
   }
-
-  goToPage(page: number) {
-    this.currentPage = page;
-    this.updatePaginatedGerencias();
+  
+  updateItemsPerPage() {
+    this.itemsPerPage = +this.itemsPerPage; 
+    this.currentPage = 1; 
+    this.updatePaginatedGerencias(); 
+  }
+  
+  pages() {
+    const totalPages = this.totalPages; 
+    const current = this.currentPage; 
+    const delta = 2; 
+    const pages: (number | string)[] = []; 
+    
+    if (current > 1 + delta) {
+      pages.push(1);
+      if (current > 2 + delta) {
+        pages.push('...');
+      }
+    }
+  
+    for (let i = Math.max(1, current - delta); i <= Math.min(totalPages, current + delta); i++) {
+      pages.push(i);
+    }
+  
+    if (current < totalPages - delta) {
+      if (current < totalPages - delta - 1) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+  
+    return pages;
+  }
+  
+  goToPage(page: number | string) {
+    if (typeof page === 'number') {
+      this.currentPage = page;
+      this.updatePaginatedGerencias();
+    }
   }
 
   abrirModalNuevaGerencia() {

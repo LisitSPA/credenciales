@@ -41,7 +41,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   colaboradores: Colaborador[] = [];
   selectedColaboradores: Colaborador[] = [];
   currentPage = 1;
-  itemsPerPage = 10;
+  itemsPerPage = 7;
   totalPages: number = 0;
   selectedColaborador: Colaborador | null = null;
   mostrarFormulario: boolean = false;
@@ -70,6 +70,12 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
     this.resetInactivityTimeout();
     this.addUserInteractionListeners();
   }  
+
+  getDisplayedRange(): string {
+    const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+    const end = Math.min(this.currentPage * this.itemsPerPage, this.filteredColaboradores.length);
+    return `${start} a ${end}`;
+  }
 
   cargarListaColaboradores() {
     this.spinnerService.showSpinner();
@@ -108,22 +114,23 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   updatePaginatedColaboradores() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    this.paginatedColaboradores = this.filteredColaboradores.slice(start, end);  
+    this.paginatedColaboradores = this.filteredColaboradores.slice(start, end);
+    console.log(`Mostrando elementos ${start + 1} a ${end} de ${this.filteredColaboradores.length}`);
   }
   
   search() {
     if (this.textSearch) {
       const searchText = this.textSearch.toLowerCase();
-
       this.filteredColaboradores = this.allColaboradores.filter(x =>
-        x.nombre?.toLowerCase().includes(searchText) ||
-        x.rut?.includes(searchText) ||
-        x.correo?.toLowerCase().includes(searchText)
+        x.nombre.toLowerCase().includes(searchText) ||
+        x.rut.includes(searchText) ||
+        x.correo.toLowerCase().includes(searchText)
       );
     } else {
       this.filteredColaboradores = [...this.allColaboradores];
     }
-      this.updatePaginatedColaboradores();
+    this.currentPage = 1; 
+    this.updatePaginatedColaboradores();
   }
 
   toggleSelection(colaborador: Colaborador, event: any) {
@@ -161,24 +168,51 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   }
 
   pages() {
-    return Array.from({ length: this.totalPagesCalculated }, (_, i) => i + 1);
+    const totalPages = this.totalPagesCalculated;
+    const current = this.currentPage;
+    const delta = 2; 
+    const pages: (number | string)[] = [];
+  
+    if (current > 1 + delta) {
+      pages.push(1);
+      if (current > 2 + delta) {
+        pages.push('...');
+      }
+    }
+  
+    for (let i = Math.max(1, current - delta); i <= Math.min(totalPages, current + delta); i++) {
+      pages.push(i);
+    }
+  
+    if (current < totalPages - delta) {
+      if (current < totalPages - delta - 1) {
+        pages.push('...');
+      }
+      pages.push(totalPages);
+    }
+  
+    return pages;
   }
 
   changeItemsPerPage() {
-    this.currentPage = 1;  
-    this.updatePaginatedColaboradores();  
+    this.itemsPerPage = +this.itemsPerPage; 
+    this.currentPage = 1; 
+    this.updatePaginatedColaboradores(); 
   }
+  
 
-  goToPage(page: number) {
-    if (page >= 1 && page <= this.totalPagesCalculated) {
+  goToPage(page: number | string) {
+    if (typeof page === 'number') {
       this.currentPage = page;
       this.updatePaginatedColaboradores();
     }
   }
+  
 
   get totalPagesCalculated() {
     return Math.ceil(this.allColaboradores.length / this.itemsPerPage); 
   }
+
   onColaboradorModificado(colaboradorModificado: Colaborador) {
     this.cargarListaColaboradores();
   }

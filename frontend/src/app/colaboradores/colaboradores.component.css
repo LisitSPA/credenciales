@@ -117,10 +117,17 @@ main {
 
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  margin-top: 20px;
+}
+
 .pagination {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 10px; 
   margin-bottom: 50px;
 }
 
@@ -141,6 +148,23 @@ main {
 .pagination button:disabled {
   background-color: #e9ecef;
   cursor: not-allowed;
+}
+
+.pagination-info {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  margin-top: -45px;
+}
+
+.pagination-info label {
+  margin-right: 5px; 
+}
+
+.pagination-info select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .label {

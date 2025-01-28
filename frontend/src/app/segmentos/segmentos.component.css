@@ -119,11 +119,30 @@ main {
 
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: space-between; /* Alinea paginación a la izquierda y selector a la derecha */
+  align-items: center; /* Centra verticalmente los elementos */
+  margin-top: 20px;
+}
+
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 50px;
+
+}.pagination-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -40px;
+}
+
+.pagination-info select {
+  padding: 5px; /* Ajusta el tamaño del selector */
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 .pagination button {

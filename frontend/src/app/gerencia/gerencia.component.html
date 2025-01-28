@@ -49,17 +49,33 @@
       </table>
   </div>
   
-  <div class="pagination">
-      <span class="label">Principio</span>
-      <span (click)="previousPage()" [class.disabled]="currentPage === 1" class="arrow">‹</span>
+  <div class="pagination-container">
+    <div class="pagination">
+      <span class="arrow" (click)="previousPage()" [class.disabled]="currentPage === 1">‹</span>
       
       <div class="page-numbers">
-          <button *ngFor="let page of pages()" (click)="goToPage(page)" [class.active]="currentPage === page">
-              {{ page }}
-          </button>
+        <button *ngFor="let page of pages()" 
+                (click)="goToPage(page)" 
+                [class.active]="currentPage === page" 
+                [disabled]="page === '...'">
+          {{ page }}
+        </button>
       </div>
-      <span (click)="nextPage()" [class.disabled]="currentPage === totalPages" class="arrow">›</span>
-      <span class="label">Final</span>
+  
+      <span class="arrow" (click)="nextPage()" [class.disabled]="currentPage === totalPages">›</span>
+    </div>
+  
+    <div class="pagination-info">
+      <label for="itemsPerPage">Filas por página:</label>
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+        <option *ngFor="let option of [7, 10, 20, 50, 100]" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+      <span>
+        Mostrando {{ getDisplayedRange() }} de {{ filteredGerencias.length }}
+      </span>
+    </div>
   </div>
 </main>
 

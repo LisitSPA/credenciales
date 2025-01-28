@@ -29,7 +29,7 @@ interface Segmento {
 export class SegmentosComponent {
   segmentos: Segmento[] = []; 
   paginatedSegmentos: Segmento[] = []; 
-  itemsPerPage = 10; 
+  itemsPerPage = 7; 
   totalPages = 1;  
   mostrarModalNuevoSegmento: boolean = false;  
   mostrarModalEliminar: boolean = false;
@@ -143,18 +143,59 @@ export class SegmentosComponent {
     }
   }
 
-  goToPage(page: number) {
-    this.currentPage = page;
-    this.updatePaginatedSegmentos();
+  goToPage(page: number | string) {
+    if (typeof page === 'number') {
+      this.currentPage = page;
+      this.updatePaginatedSegmentos(); // Actualiza los datos de la tabla
+    }
   }
+
+
+  
   get totalPagesCalculated() {
     return Math.ceil(this.segmentos.length / this.itemsPerPage);  
   }
+
   changeItemsPerPage() {
-    this.currentPage = 1;  
-    this.updatePaginatedSegmentos();  
+    this.itemsPerPage = +this.itemsPerPage; 
+    this.currentPage = 1; 
+    this.updatePaginatedSegmentos(); 
+  }
+
+  pages() {
+    const totalPages = this.totalPagesCalculated;
+    const current = this.currentPage;
+    const delta = 2;
+    const range: (number | string)[] = [];
+  
+    if (current > 1 + delta) {
+      range.push(1);
+      if (current > 2 + delta) {
+        range.push('...');
+      }
+    }
+  
+    for (let i = Math.max(1, current - delta); i <= Math.min(totalPages, current + delta); i++) {
+      range.push(i);
+    }
+  
+    if (current < totalPages - delta) {
+      if (current < totalPages - delta - 1) {
+        range.push('...');
+      }
+      range.push(totalPages);
+    }
+  
+    return range;
   }
   
+  
+
+  getDisplayedRange(): string {
+    const start = (this.currentPage - 1) * this.itemsPerPage + 1;
+    const end = Math.min(this.currentPage * this.itemsPerPage, this.segmentos.length);
+    return `${start} a ${end}`;
+  }
   generatePageNumbers() {
     return Array.from({ length: this.totalPagesCalculated }, (_, i) => i + 1);
   }
