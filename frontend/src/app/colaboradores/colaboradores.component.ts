@@ -366,7 +366,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
       this.resetInactivityTimeout();
     });
   }
-  
+
   ngOnDestroy() {
     clearTimeout(this.inactivityTimeout);
     window.removeEventListener('mousemove', () => this.resetInactivityTimeout());

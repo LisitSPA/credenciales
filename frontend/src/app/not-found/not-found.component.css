@@ -4,20 +4,29 @@
     font-family: Arial, sans-serif;
     color: #333;
     padding: 20px;
-    opacity: 0; 
-    transform: translateY(-50px); 
-    animation: slideIn 2.5s ease-out forwards; 
+    opacity: 0; /* Oculto por defecto */
+    transform: translateY(-50px); /* Posición inicial */
+    animation: slideIn 2.5s ease-out forwards; /* Animación cuando se activa */
+    display: none; /* Evita que aparezca en el flujo de la página */
 }
 
 .not-found-visible {
-    display: block; 
+    display: block; /* Lo muestra solo cuando es necesario */
+    opacity: 1; /* Totalmente visible */
+    transform: translateY(0); /* Animación completada */
 }
 
-.hidden {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-  }
-  
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 @keyframes slideIn {
     0% {
         opacity: 0;

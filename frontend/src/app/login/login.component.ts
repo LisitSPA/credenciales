@@ -36,19 +36,20 @@ export class LoginComponent implements OnInit {
 
   gotoHome() {
     if (this.loading) return;  
-
+  
     this.loading = true;
     this.spinnerService.showSpinner();  
     const loginCommand = {
       username: this.usuario.email,
       password: this.usuario.password
     };
-
+  
     this.http.post<any>(`${environment.apiUrl}/auth/login`, loginCommand)
       .subscribe(
         response => {
           this.spinnerService.hideSpinner();  
-          localStorage.setItem('token', response.token);  
+          localStorage.setItem('token', response.token);  // Guarda el token
+          localStorage.setItem('userId', response.id.toString());  // Guarda el ID del usuario
           this.router.navigate(['/home']);  
         },
         error => {
@@ -59,6 +60,8 @@ export class LoginComponent implements OnInit {
         }
       );
   }
+  
+  
 
   handleRecoverPasswordClick(): void {
     window.location.href = 'https://ambitious-plant-061bff30f.4.azurestaticapps.net/recover-password?returnUrl=credenciales';
@@ -71,15 +74,14 @@ export class LoginComponent implements OnInit {
   openModal(): void {
     const modal = document.getElementById('supportModal');
     if (modal) {
-      modal.style.display = 'block'; // Muestra el modal
+      modal.style.display = 'block'; 
     }
   }
 
-  // Cerrar el modal de soporte
   closeModal(): void {
     const modal = document.getElementById('supportModal');
     if (modal) {
-      modal.style.display = 'none'; // Oculta el modal
+      modal.style.display = 'none'; 
     }
   }
 }

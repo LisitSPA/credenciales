@@ -329,6 +329,23 @@ export class SegmentosComponent {
       this.resetInactivityTimeout();
     });
   }
+
+  handleLogout(): void {
+    console.log('Cierre de sesión.');
+    localStorage.clear(); 
+    this.logout();
+  }
+
+  mostrarModalAyuda: boolean = false;
+
+  openModal(event: Event): void {
+    event.preventDefault(); 
+    this.mostrarModalAyuda = true;
+  }
+
+  closeModal(): void {
+    this.mostrarModalAyuda = false;
+  }
   
   ngOnDestroy() {
     clearTimeout(this.inactivityTimeout);

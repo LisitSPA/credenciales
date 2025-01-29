@@ -9,17 +9,23 @@ import { SpinnerService } from '../../services/spinner.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { environment } from '../../environment/environment';
 import { AuthService } from '../../services/auth.service';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
+import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.component';
+import { TermsService } from '../../services/terms.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, MantenedoresComponent, SearchSectionComponent, HttpClientModule],
+  imports: [FormsModule, CommonModule, MantenedoresComponent, SearchSectionComponent, TermsConditionsComponent, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  mostrarModalTerminos: boolean = true; 
+  mostrarAdvertencia: boolean = false
+
   title = 'ddc-app';
   searchQuery: string = '';
   usuario = {
@@ -35,6 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private termsService: TermsService,
     private authService: AuthService,
     private renderer: Renderer2,
     private collaboratorService: CollaboratorService,
@@ -46,7 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.spinnerService.showSpinner(); 
-    
+    this.verificarTérminosAceptados();
     this.http.get<any>(`${environment.apiUrl}/data/home`).subscribe({
       next: () => {
         setTimeout(() => {
@@ -114,6 +121,62 @@ export class HomeComponent implements OnInit, OnDestroy {
     return loginPaths.includes(window.location.pathname);
   }
   
+  verificarTérminosAceptados(): void {
+    const termsAccepted = localStorage.getItem('termsAccepted'); 
+    if (!termsAccepted || termsAccepted !== 'true') {
+      this.mostrarModalTerminos = true; 
+    } else {
+      this.mostrarModalTerminos = false; 
+    }
+  }
+
+  handleAcceptTerms(): void {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.error('No se pudo obtener el ID del usuario.');
+      return;
+    }
+  
+    this.termsService.acceptTerms(parseInt(userId, 10), true).subscribe(
+      response => {
+        console.log('Términos aceptados:', response);
+        localStorage.setItem('termsAccepted', 'true'); 
+        this.mostrarModalTerminos = false; 
+      },
+      error => {
+        console.error('Error al aceptar los términos:', error);
+      }
+    );
+  }
+  
+  handleRejectTerms(): void {
+    this.mostrarModalTerminos = false;
+    this.mostrarAdvertencia = true;
+    console.log('Rechazo de términos, mostrando advertencia.');
+  }
+
+
+  handleWarningAccept(): void {
+    this.mostrarAdvertencia = false;
+    this.mostrarModalTerminos = true;
+  }
+
+  handleLogout(): void {
+    console.log('Cierre de sesión.');
+    localStorage.clear(); 
+    this.logout();
+  }
+
+  mostrarModalAyuda: boolean = false;
+
+  openModal(event: Event): void {
+    event.preventDefault(); 
+    this.mostrarModalAyuda = true;
+  }
+
+  closeModal(): void {
+    this.mostrarModalAyuda = false;
+  }
 
   private handleInactivity() {
     if (!this.isOnLoginPage()) {

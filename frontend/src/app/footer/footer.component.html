@@ -1,8 +1,31 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <footer class="footer">
+  <div class="footer-container">
     <div class="footer-links">
-      <a href="#">Términos y condiciones</a>
-      <a href="#">Política de Privacidad</a>
-      <a href="#">Ayuda</a>
+      <a href="#" (click)="openModal($event)" class="footer-link">
+        <i class="fas fa-question-circle"></i> Ayuda
+      </a>
+      <a href="#" (click)="openModal($event)" class="footer-link">
+        <i class="fas fa-comments"></i> Preguntas frecuentes
+      </a>
     </div>
-  </footer>
-  
+    <div class="footer-text">© Derechos Reservados David del Curto 2024</div>
+  </div>
+
+  <div class="modal" id="helpModal" [ngClass]="{ 'show': mostrarModalAyuda }">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ayuda y Soporte</h5>
+        </div>
+        <div class="modal-body">
+          Si tienes algún problema, comunícate a través de nuestro correo electrónico 
+          <a href="mailto:soporteTI@ddc.cl" class="text-ddc-blue">soporteTI{{'@'}}ddc.cl</a>.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-modal" (click)="closeModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

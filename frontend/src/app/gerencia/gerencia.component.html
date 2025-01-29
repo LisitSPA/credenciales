@@ -1,85 +1,84 @@
 <body>
-<main> 
-  <div class="table-container">
-    <div class="toolbar">
-        <h1 class="title">Mantenedores / </h1>
-        <h1 class="title" style="color: grey;">Gerencias</h1>
-        <button class="btn btn-primary" (click)="abrirModalNuevaGerencia()">
-          <span class="option-icon-large">&#43;</span>
-          <span>Nueva Gerencia</span>
-        </button>
-    </div>
-
-   <input type="text" [(ngModel)]="textSearch" (input)="search()" placeholder="Buscar por Gerencia" class="search-bar" />
-
-  </div>
-  
-
-  <div class="table-wrapper">
-      <table class="table">
-          <thead>
-              <tr>
-                  <th></th>
-                  <th>Gerencia</th> 
-                  <th>Editado</th>
-                  <th>Estado</th>
-                  <th>Acciones</th>
-              </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let gerencia of paginatedGerencias">
-              <td></td>
-              <td>{{ gerencia.name }}</td>  
-              <td>{{ gerencia.fechaCreacion | date:'dd/MM/yyyy' }}</td>  
-              <td>{{ gerencia.active ? 'Activo' : 'Inactivo' }}</td> 
-              <td>
-                <tr *ngIf="paginatedGerencias.length === 0">
-                  <td colspan="3">No se encontraron resultados.</td>
-                </tr>
-                
-                <button class="btn-edit" (click)="abrirModalModificar(gerencia)">
-                  <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;">
-                </button>
-                <button class="btn-delete" (click)="abrirModalEliminar(gerencia)">
-                  <img src="/trash-solid (1).svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;">
-                </button>
-              </td>
-            </tr>
-          </tbody>
-      </table>
-  </div>
-  
-  <div class="pagination-container">
-    <div class="pagination">
-      <span class="arrow" (click)="previousPage()" [class.disabled]="currentPage === 1">‹</span>
-      
-      <div class="page-numbers">
-        <button *ngFor="let page of pages()" 
-                (click)="goToPage(page)" 
-                [class.active]="currentPage === page" 
-                [disabled]="page === '...'">
-          {{ page }}
-        </button>
+  <main> 
+    <div class="table-container">
+      <div class="toolbar">
+          <h1 class="title">Mantenedores / </h1>
+          <h1 class="title" style="color: grey;">Gerencias</h1>
+          <button class="btn btn-primary" (click)="abrirModalNuevaGerencia()">
+            <span class="option-icon-large">&#43;</span>
+            <span>Nueva Gerencia</span>
+          </button>
       </div>
-  
-      <span class="arrow" (click)="nextPage()" [class.disabled]="currentPage === totalPages">›</span>
-    </div>
-  
-    <div class="pagination-info">
-      <label for="itemsPerPage">Filas por página:</label>
-      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
-        <option *ngFor="let option of [7, 10, 20, 50, 100]" [value]="option">
-          {{ option }}
-        </option>
-      </select>
-      <span>
-        Mostrando {{ getDisplayedRange() }} de {{ filteredGerencias.length }}
-      </span>
-    </div>
-  </div>
-</main>
 
-  </body>
+    <input type="text" [(ngModel)]="textSearch" (input)="search()" placeholder="Buscar por Gerencia" class="search-bar" />
+
+    </div>
+    
+
+    <div class="table-wrapper">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Gerencia</th> 
+                    <th>Editado</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let gerencia of paginatedGerencias">
+                <td></td>
+                <td>{{ gerencia.name }}</td>  
+                <td>{{ gerencia.fechaCreacion | date:'dd/MM/yyyy' }}</td>  
+                <td>{{ gerencia.active ? 'Activo' : 'Inactivo' }}</td> 
+                <td>
+                  <tr *ngIf="paginatedGerencias.length === 0">
+                    <td colspan="3">No se encontraron resultados.</td>
+                  </tr>
+                  
+                  <button class="btn-edit" (click)="abrirModalModificar(gerencia)">
+                    <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;">
+                  </button>
+                  <button class="btn-delete" (click)="abrirModalEliminar(gerencia)">
+                    <img src="/trash-solid (1).svg" alt="Eliminar" style="width: 16px; height: 16px; margin-right: 5px;">
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="pagination-container">
+      <div class="pagination">
+        <span class="arrow" (click)="previousPage()" [class.disabled]="currentPage === 1">‹</span>
+        
+        <div class="page-numbers">
+          <button *ngFor="let page of pages()" 
+                  (click)="goToPage(page)" 
+                  [class.active]="currentPage === page" 
+                  [disabled]="page === '...'">
+            {{ page }}
+          </button>
+        </div>
+    
+        <span class="arrow" (click)="nextPage()" [class.disabled]="currentPage === totalPages">›</span>
+      </div>
+    
+      <div class="pagination-info">
+        <label for="itemsPerPage">Filas por página:</label>
+        <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
+          <option *ngFor="let option of [7, 10, 20, 50, 100]" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+        <span>
+          Mostrando {{ getDisplayedRange() }} de {{ filteredGerencias.length }}
+        </span>
+      </div>
+    </div>
+  </main>
+</body>
   
   <app-eliminar-gerencia
     *ngIf="mostrarModalEliminar"

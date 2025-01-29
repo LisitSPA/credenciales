@@ -1,5 +1,37 @@
 <body>
-    <app-search-section></app-search-section>
-    <app-mantenedores></app-mantenedores>
-</body>
+  <app-search-section></app-search-section>
+  <app-mantenedores></app-mantenedores>
 
+  <app-terms-conditions
+    *ngIf="mostrarModalTerminos"
+    [isOpen]="mostrarModalTerminos"
+    (accept)="handleAcceptTerms()"
+    (reject)="handleRejectTerms()"
+  ></app-terms-conditions>
+
+  <div class="warning-modal" *ngIf="mostrarAdvertencia">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Advertencia</h2>
+        </div>
+        <div class="modal-body">
+          <p>
+            Para poder hacer uso del portal, debes aceptar los <b>Términos y Condiciones</b> de Uso.
+            Lamentablemente no podrás acceder a las funcionalidades del portal.
+          </p>
+          <p>
+            Si necesitas asistencia o tienes alguna duda, no dudes en contactarnos a través del siguiente
+            correo: <br />
+            <b>info.credenciales{{'@'}}ddc.cl</b>
+          </p>
+          <p>¿Estás seguro de que deseas rechazar los términos y condiciones?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="buttonAccept" (click)="handleWarningAccept()">Aceptar</button>
+          <button class="buttonCancel" (click)="handleLogout()">Rechazar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

@@ -7,6 +7,7 @@ body {
   overflow-y: auto;
 
 } 
+
 main {
   margin-top: 70px;
   padding: 20px; 
@@ -15,6 +16,7 @@ main {
 .table-container {
   margin: 20px;
 }
+
 .title{
   font-size: x-large;
   font-family: "Inria Sans", sans-serif;
