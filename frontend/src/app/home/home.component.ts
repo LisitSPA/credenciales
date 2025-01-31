@@ -54,22 +54,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.spinnerService.showSpinner(); 
     this.verificarTérminosAceptados();
-    this.http.get<any>(`${environment.apiUrl}/data/home`).subscribe({
-      next: () => {
-        setTimeout(() => {
-          this.spinnerService.hideSpinner(); 
-        }, 2000); 
-      },
-      error: () => {
-        console.error('Error al cargar los datos:');
-        setTimeout(() => {
-          this.spinnerService.hideSpinner(); 
-        }, 1000); 
-      }
-    });
-
     this.resetInactivityTimeout();
     this.addUserInteractionListeners();
+    this.spinnerService.hideSpinner();
   }
 
   onSearch() {}
@@ -131,7 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   handleAcceptTerms(): void {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('collaboratorId');
     if (!userId) {
       console.error('No se pudo obtener el ID del usuario.');
       return;

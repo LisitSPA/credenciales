@@ -78,9 +78,9 @@ namespace Api.Controllers
 
         [HttpPost("TerminoyCondiciones")]
         [Authorize(Roles = "Colaborador,Jefatura")] // Colaborador = 1, Jefatura = 2
-        public async Task<IActionResult> TerminoyCondiciones(int id, bool AceptaTerminos, string IP)
+        public async Task<IActionResult> TerminoyCondiciones([FromBody]TerminosyCondicionesCommand request)
         {
-            var result = await Mediator.Send(new TerminosyCondicionesCommand { id = id , AceptaTerminos = AceptaTerminos, IP = IP});
+            var result = await Mediator.Send(request);
             return HandleResult(result.Result, result.ErrorProvider);
         }
 

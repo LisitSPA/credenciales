@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-Family: 'Titillium Web, sans-serif';
+  font-Family: 'Titillium Web, sans-serif'!important;
 }
 .content{
   margin-left: 90px;
@@ -22,7 +22,7 @@ body {
 
 .login-card {
   position: relative; 
-  font-Family: 'Titillium Web, sans-serif';
+  font-Family: 'Titillium Web, sans-serif'!important;
   background-color: white;
   padding: 30px;
   border-radius: 5px;

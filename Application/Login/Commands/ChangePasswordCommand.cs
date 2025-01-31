@@ -13,7 +13,7 @@ namespace Application.Users.Commands;
 
 public record ChangePasswordCommand : IRequest<Response<bool>>
 {
-    public string Username { get; set; }
+    public int Id { get; set; }
     public string OldPassword { get; set; }
     public string NewPassword { get; set; }
 }
@@ -41,7 +41,7 @@ public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordComman
         try
         {
             var user = _repository.GetAllActive()
-                 .FirstOrDefault(x => x.Email == command.Username);
+                 .FirstOrDefault(x => x.Id == command.Id);
 
             if (user is not null && _passwordHasher.VerifyPassword(command.OldPassword, user?.Password))
             {

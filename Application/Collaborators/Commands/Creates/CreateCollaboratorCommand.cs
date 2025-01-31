@@ -31,6 +31,8 @@ public record CreateCollaboratorCommand : IRequest<Response<int>>
     public string Phone { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string Rol { get; set; }
+    public bool IsFormMassiveUpload { get; set; } = false;
     public ECollaboratorStatus ECollaboratorStatus { get; set; }
     //public IFormFile Photo { get; set; }
 }
@@ -88,13 +90,14 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
 
         if (request.Password != null)
         {
+            ERoleUser role = Enum.TryParse(request.Rol, out ERoleUser parsedRole) ? parsedRole : ERoleUser.Colaborador;
             _userRepository.Add(new User
             {
                 CollaboratorId = collaborator.Id,
                 Email = request.Email,
-                ERoleUser = ERoleUser.Jefatura,
+                ERoleUser = role,
                 Password = _passwordHasherService.HashPassword(request.Password),
-                ChangePassword = false,
+                ChangePassword = request.IsFormMassiveUpload,
                 Active = true
             });
             _userRepository.Save();

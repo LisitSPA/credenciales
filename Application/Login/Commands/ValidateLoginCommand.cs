@@ -27,11 +27,13 @@ public record ValidateLoginCommand : IRequest<Response<UserLoginDto>>
 public class ValidateLoginCommandHandler : IRequestHandler<ValidateLoginCommand, Response<UserLoginDto>>
 {
     private readonly IRepository<User> _repository;
+    private readonly IRepository<Collaborator> _repositoryCollaborator;
     private readonly IMapper _mapper;
     private readonly IPasswordHasherService _passwordHasher;
 
     public ValidateLoginCommandHandler(
         IRepository<User> repository,
+        IRepository<Collaborator> repositoryCollaborators,
         IPasswordHasherService passwordHasherService,
         IMapper mapper
         )
@@ -39,6 +41,7 @@ public class ValidateLoginCommandHandler : IRequestHandler<ValidateLoginCommand,
         _repository = repository;
         _mapper = mapper;
         _passwordHasher = passwordHasherService;
+        _repositoryCollaborator = repositoryCollaborators;
     }
 
     public async Task<Response<UserLoginDto>> Handle(ValidateLoginCommand command, CancellationToken cancellationToken)
@@ -54,7 +57,11 @@ public class ValidateLoginCommandHandler : IRequestHandler<ValidateLoginCommand,
                  .FirstOrDefault();
 
             if (user is not null && _passwordHasher.VerifyPassword(command.Password, user?.Password))
+            {
+                Collaborator collaborator = await _repositoryCollaborator.GetByIdAsync(user.CollaboratorId);
+                user.AceptaTerminosyCondiciones = collaborator.AceptaTerminosyCondiciones ?? false;
                 result.Result = user;
+            }
             else
                 result.ErrorProvider.AddError("400","Incorrect user or password");
 

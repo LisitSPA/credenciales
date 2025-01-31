@@ -17,6 +17,7 @@ namespace Application.Users.Queries.DTOs
         public Collaborator Collaborator { get; set; }
         public int CollaboratorId { get; set; }
         public bool ChangePassword { get; set; }
+        public bool AceptaTerminosyCondiciones { get; set; }
         public ERoleUser ERoleUser { get; set; }
     }
 }

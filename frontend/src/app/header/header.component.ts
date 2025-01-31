@@ -21,8 +21,12 @@ export class HeaderComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.role = localStorage.getItem('role');
-    this.userName = localStorage.getItem('userName');
+    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+      this.role = localStorage.getItem('role');
+      this.userName = localStorage.getItem('userName');
+    } else {
+      console.warn('localStorage no está disponible.');
+    }
   }
   
   toggleDropdown() {
@@ -53,5 +57,13 @@ export class HeaderComponent implements OnInit{
 
   logout() {
     this.authService.logout();  
+    localStorage.removeItem('collaboratorId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('print');
+    localStorage.removeItem('tokenChangePassword');
+    localStorage.removeItem('termsAccepted');
   }
 }

@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environment/environment';
 import { Router } from '@angular/router';
+import { CollaboratorService } from '../../services/collaborators.service';
+import { SpinnerService } from '../../services/spinner.service';
 
 @Component({
   selector: 'app-perfil',
@@ -18,7 +20,7 @@ export class PerfilComponent implements OnInit {
   pestanaActiva: string = 'misDatos';
   isDisabled: boolean = true;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private collaboratorService: CollaboratorService, private spinnerService: SpinnerService) {}
 
   ngOnInit(): void {
     this.initForms();
@@ -43,22 +45,26 @@ export class PerfilComponent implements OnInit {
   }
 
   loadUserDataFromStorage(): void {
-    const userData = JSON.parse(localStorage.getItem('print') || '{}');
-    const userRole = localStorage.getItem('role');
-  
-    if (Object.keys(userData).length > 0) {
-      const formattedData = {
-        nombre: userData.nombre,
-        rut: userData.rut,
-        telefono: userData.celular,
-        email: userData.correo,
-        tipoPerfil: userRole || 'Usuario'
-      };
-  
-      this.perfilForm.patchValue(formattedData);
-    } else {
-      console.error('No se encontraron datos en el localStorage.');
-    }
+    this.spinnerService.showSpinner();
+    const id = localStorage.getItem('collaboratorId');
+    const role = localStorage.getItem('role');
+    this.collaboratorService.getCollaboratorById(Number(id)).then(colaborador => {
+      if (colaborador && colaborador.content) {
+        this.perfilForm.patchValue({
+          nombre: colaborador.content.completeName,
+          rut: colaborador.content.rut,
+          telefono: colaborador.content.phone,
+          email: colaborador.content.email,
+          tipoPerfil: role
+        });
+      } else {
+        console.error('El objeto `response.content` no contiene datos.');
+      }
+    }).catch(error => {
+      console.error('Error al cargar los datos del colaborador:', error);
+    }).finally(() => {
+      this.spinnerService.hideSpinner();
+    });
   }
   
   cambiarPestana(pestaña: string): void {
@@ -78,11 +84,11 @@ export class PerfilComponent implements OnInit {
       const { claveActual, nuevaClave, confirmarClave } = this.cambiarClaveForm.value;
 
       if (nuevaClave === confirmarClave) {
-        const username = localStorage.getItem('username'); 
+        const id = localStorage.getItem('userId'); 
 
-        if (username) {
+        if (id) {
           const payload = {
-            username: username,
+            id: Number(id),
             oldPassword: claveActual,
             newPassword: nuevaClave
           };
@@ -92,17 +98,14 @@ export class PerfilComponent implements OnInit {
 
           this.http.put(`${environment.apiUrl}/auth/changePassword`, payload, { headers }).subscribe(
             () => {
-              console.log('Contraseña actualizada con éxito');
               alert('¡Contraseña actualizada correctamente!');
               this.cambiarClaveForm.reset(); 
             },
             (error) => {
-              console.error('Error al cambiar la contraseña:', error);
               alert('Error al actualizar la contraseña. Verifica los datos ingresados.');
             }
           );
         } else {
-          console.error('El username no está disponible en localStorage.');
           alert('Error al obtener el nombre de usuario.');
         }
       } else {

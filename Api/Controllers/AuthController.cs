@@ -42,6 +42,7 @@ namespace Api.Controllers
                     id = user.Id,
                     collaboratorId = user.CollaboratorId,
                     requiresPasswordChange = user.ChangePassword, 
+                    termsAccepted = user.AceptaTerminosyCondiciones,
                     message = user.ChangePassword ? "Debe cambiar su contraseña antes de continuar." : "Inicio de sesión exitoso."
                 });
             }

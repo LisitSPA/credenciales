@@ -89,12 +89,12 @@
     </div>
   </div>
 
-  <div *ngIf="showModal" class="modal show">
-    <div class="modal-dialog">
+  <div *ngIf="showModal" class="modal show" (click)="closeModal()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
       <div class="modalpass-content">
         <div class="modalpass-header">
-          <h5 class="modal-title">Cambio de Contraseña</h5>
-          <button type="button" class="btn-close" (click)="showModal = false"></button>
+          <h2 class="modal-title">Cambio de Contraseña</h2>
+          <button type="button" class="btn-close" (click)="showModal = false" aria-label="Close">X</button>
         </div>
         <div class="modal-body">
           <p>Tu contraseña es temporal. Por favor, cámbiala para continuar.</p>

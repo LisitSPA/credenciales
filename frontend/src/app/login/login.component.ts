@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   loading: boolean = false;
   showModal: boolean = false; 
   userId: number | null = null; 
+  tokenChangePassword: string = '';
 
   constructor(
     private router: Router,
@@ -31,9 +32,11 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.router.navigate(['/home']);  
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.router.navigate(['/home']);  
+      }
     }
   }
 
@@ -56,18 +59,20 @@ export class LoginComponent implements OnInit {
           const userRole = decodedToken.role;
           const collaboratorId = response.collaboratorId; 
           const requiresPasswordChange = response.requiresPasswordChange;
-
-          localStorage.setItem('token', token);
-          localStorage.setItem('userId', response.id.toString());
-          localStorage.setItem('role', userRole);
   
           if (requiresPasswordChange) {
             this.userId = response.id;
+            this.tokenChangePassword = token;
             this.showModal = true;
           } else {
+            localStorage.setItem('token', token);
+            localStorage.setItem('userId', response.id.toString());
+            localStorage.setItem('role', userRole);  
+            localStorage.setItem('collaboratorId', collaboratorId.toString());
+            localStorage.setItem('termsAccepted', response.termsAccepted);
             if (userRole === 'Colaborador' && collaboratorId) {
               this.loadCollaboratorDetails(collaboratorId);
-            } else {
+            } else {            
               this.router.navigate(['/home']);
             }
           }
@@ -143,25 +148,28 @@ export class LoginComponent implements OnInit {
   }
 
   handleChangePassword() {
-    const token = localStorage.getItem('token'); 
+    const token = this.tokenChangePassword; 
     const headers = { Authorization: `Bearer ${token}` }; 
   
     const payload = {
-      username: this.usuario.email,
+      id: Number(this.userId),
       oldPassword: this.usuario.password,
       newPassword: this.newPassword
     };
-  
+    this.spinnerService.showSpinner();
     this.http.put(`${environment.apiUrl}/auth/changePassword`, payload, { headers })
       .subscribe(
         () => {
           alert('Contraseña actualizada con éxito. Por favor, inicie sesión nuevamente.');
           this.showModal = false;
-          this.router.navigate(['/login']);
+          this.closeModal();
+          this.spinnerService.hideSpinner();
+          window.location.reload();
         },
         error => {
           alert('Error al cambiar la contraseña. Inténtalo nuevamente.');
           console.error('Error:', error);
+          this.spinnerService.hideSpinner();
         }
       );
   }
@@ -179,10 +187,5 @@ export class LoginComponent implements OnInit {
     if (modal) {
       modal.style.display = 'none'; 
     }
-  }
-
-  closeModalPass(): void {
-    this.showModal = false; 
-  }
-  
+  }  
 }

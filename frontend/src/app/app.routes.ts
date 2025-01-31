@@ -29,6 +29,6 @@ export const routes: Routes = [
     { path: 'credencialexitosa/:id', component: CredencialExitosaComponent, canActivate: [AuthGuard], data: { roles: ['Colaborador', 'Jefatura'] } },
     { path: 'preguntas-frecuentes', component: PreguntasFrecuentesComponent },
     { path: 'credencialweb', component: CredencialWebComponent },
-    { path: '**', component: NotFoundComponent },
+    { path: '**', redirectTo: '/' },
   ];
   
