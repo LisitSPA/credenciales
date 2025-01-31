@@ -68,7 +68,7 @@
       <div class="pagination-info">
         <label for="itemsPerPage">Filas por página:</label>
         <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="updateItemsPerPage()">
-          <option *ngFor="let option of [7, 10, 20, 50, 100]" [value]="option">
+          <option *ngFor="let option of [5, 10, 20, 50]" [value]="option">
             {{ option }}
           </option>
         </select>

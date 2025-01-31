@@ -90,7 +90,7 @@
         <div class="pagination-info">
           <label for="itemsPerPage">Filas por página:</label>
           <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage()">
-            <option *ngFor="let option of [7, 10, 20, 50, 100]" [value]="option">{{ option }}</option>
+            <option *ngFor="let option of [5, 10, 20, 50]" [value]="option">{{ option }}</option>
           </select>
           <span>
             Mostrando {{ getDisplayedRange() }} de {{ filteredColaboradores.length }}

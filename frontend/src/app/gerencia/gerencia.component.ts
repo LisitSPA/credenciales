@@ -29,7 +29,7 @@ export class GerenciasComponent implements OnInit, OnDestroy {
   gerencias: Gerencia[] = [];  
   paginatedGerencias: Gerencia[] = [];  
   currentPage = 1;  
-  itemsPerPage = 7;  
+  itemsPerPage = 10;  
   selectedFile: File | null = null;  
   filteredGerencias: Gerencia[] = [];
   gerenciaSeleccionada: Gerencia | null = null; 

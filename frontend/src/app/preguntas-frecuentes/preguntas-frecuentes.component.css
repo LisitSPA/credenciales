@@ -1,0 +1,62 @@
+.container {
+    max-width: 100%; 
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Titillium Web', sans-serif;
+    margin-top: 108px;
+    padding-bottom: 91px; 
+    box-sizing: border-box; 
+  }
+  .titulo {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .acordeon-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .acordeon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 13px;
+    padding-left: 11px;
+  }
+  
+  .acordeon-header:hover {
+    background: #f9f9f9;
+  }
+  
+  .acordeon-body {
+    padding: 15px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .icono {
+    transition: transform 0.3s ease;
+  }
+  
+  .icono.rotate {
+    transform: rotate(180deg);
+  }
+  
+  .contacto {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .contacto a {
+    color: #007bff;
+    text-decoration: underline;
+  }
+  

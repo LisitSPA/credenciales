@@ -12,18 +12,23 @@ import { CredencialExitosaComponent } from './credencial-exitosa/credencial-exit
 import { CredencialWebComponent } from './credencialWeb/credencialWeb';
 import { AuthGuard } from './auth.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { PreguntasFrecuentesComponent } from './preguntas-frecuentes/preguntas-frecuentes.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 export const routes: Routes = [
     { path: '', component: LoginComponent },
-    { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'colaboradores', component: ColaboradoresComponent, canActivate: [AuthGuard] },
-    { path: 'segmentos', component: SegmentosComponent, canActivate: [AuthGuard] },
-    { path: 'gerencias', component: GerenciasComponent, canActivate: [AuthGuard] },
-    { path: 'generar', component: GenerarCredencialComponent, canActivate: [AuthGuard] },
-    { path: 'descargar', component: DescargarCredencialComponent, canActivate: [AuthGuard] },
-    { path: 'generarfirma', component: GenerarFirmaComponent, canActivate: [AuthGuard] },
-    { path: 'firmaexitosa/:id', component: FirmaExitosaComponent, canActivate: [AuthGuard] },
-    { path: 'credencialexitosa/:id', component: CredencialExitosaComponent, canActivate: [AuthGuard] },
+    { path: 'home', component: HomeComponent, canActivate: [AuthGuard], data: { roles: ['Jefatura'] } },
+    { path: 'colaboradores', component: ColaboradoresComponent, canActivate: [AuthGuard], data: { roles: ['Jefatura'] } },
+    { path: 'perfil', component: PerfilComponent, canActivate: [AuthGuard], data: { roles: ['Colaborador', 'Jefatura'] } }, 
+    { path: 'segmentos', component: SegmentosComponent, canActivate: [AuthGuard], data: { roles: ['Jefatura'] } },
+    { path: 'gerencias', component: GerenciasComponent, canActivate: [AuthGuard], data: { roles: ['Jefatura'] } },
+    { path: 'generar', component: GenerarCredencialComponent, canActivate: [AuthGuard], data: { roles: ['Colaborador', 'Jefatura'] } },
+    { path: 'descargar', component: DescargarCredencialComponent, canActivate: [AuthGuard], data: { roles: ['Colaborador', 'Jefatura'] } },
+    { path: 'generarfirma', component: GenerarFirmaComponent, canActivate: [AuthGuard], data: { roles: ['Colaborador', 'Jefatura'] } },
+    { path: 'firmaexitosa/:id', component: FirmaExitosaComponent, canActivate: [AuthGuard], data: { roles: ['Colaborador', 'Jefatura'] } },
+    { path: 'credencialexitosa/:id', component: CredencialExitosaComponent, canActivate: [AuthGuard], data: { roles: ['Colaborador', 'Jefatura'] } },
+    { path: 'preguntas-frecuentes', component: PreguntasFrecuentesComponent },
     { path: 'credencialweb', component: CredencialWebComponent },
-    { path: '**', component: NotFoundComponent }
-];
+    { path: '**', component: NotFoundComponent },
+  ];
+  

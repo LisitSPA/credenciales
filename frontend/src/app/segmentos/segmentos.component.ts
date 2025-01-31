@@ -29,7 +29,7 @@ interface Segmento {
 export class SegmentosComponent {
   segmentos: Segmento[] = []; 
   paginatedSegmentos: Segmento[] = []; 
-  itemsPerPage = 7; 
+  itemsPerPage = 10; 
   totalPages = 1;  
   mostrarModalNuevoSegmento: boolean = false;  
   mostrarModalEliminar: boolean = false;

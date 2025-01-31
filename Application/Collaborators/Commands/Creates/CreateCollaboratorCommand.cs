@@ -32,7 +32,7 @@ public record CreateCollaboratorCommand : IRequest<Response<int>>
     public string Email { get; set; }
     public string Password { get; set; }
     public ECollaboratorStatus ECollaboratorStatus { get; set; }
-    public IFormFile Photo { get; set; }
+    //public IFormFile Photo { get; set; }
 }
 
 public class CreateCollaboratorCommandHandler
@@ -94,7 +94,7 @@ public async Task<Response<int>> Handle(CreateCollaboratorCommand request, Cance
                 Email = request.Email,
                 ERoleUser = ERoleUser.Jefatura,
                 Password = _passwordHasherService.HashPassword(request.Password),
-                ChangePassword = true,
+                ChangePassword = false,
                 Active = true
             });
             _userRepository.Save();

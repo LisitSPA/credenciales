@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Utility.APIResponseHandlers.Wrappers;
 using Utility.DTOs;
+using Utility.PasswordHasher;
 
 namespace Application.Collaborators.Commands.Creates;
 
@@ -29,6 +30,8 @@ public class CreateMasiveCollaboratorCommandHandler
         IRepository<Leadership> _repoLeadership,
         IRepository<Segment> _repoSegment,
         IRepository<Attachment> _repoAttachment,
+        IRepository<User> _userRepository, 
+        IPasswordHasherService _passwordHasherService,
         IConfiguration _configuration,
         IMediator _mediator
     )
@@ -67,6 +70,7 @@ public class CreateMasiveCollaboratorCommandHandler
                         var email = cells[6].Value.ToString();
                         var segmentName = cells[7].Value.ToString();
                         var photoName = cells[8].Value.ToString();
+                        var rolValue = cells[9]?.Value.ToString().Trim();
 
 
                         var segment = _repoSegment.GetAll().Where(x => x.Name == segmentName).FirstOrDefault();
@@ -102,7 +106,7 @@ public class CreateMasiveCollaboratorCommandHandler
                                 Position = position,
                                 RUT = rut,
                                 Sede = sede,
-                                Password = string.Empty
+                                Password = rut,
                             });
 
                             if (!res.ErrorProvider.HasError() && res.Result > 0)
@@ -111,6 +115,34 @@ public class CreateMasiveCollaboratorCommandHandler
                                 {
                                     RowNumber = i,
                                 });
+
+                                var roleUser = rolValue == "1" ? ERoleUser.Jefatura : ERoleUser.Colaborador;
+                                if (rolValue != "1" && rolValue != "2")
+                                {
+                                    errors.Add(new RowWithError
+                                    {
+                                        RowNumber = i,
+                                        Messsages = new List<string> { $"Valor de Rol no válido: {rolValue}. Debe ser '1' (Jefatura) o '2' (Colaborador)." }
+                                    });
+                                    continue; 
+                                }
+                                if (!string.IsNullOrEmpty(email))
+                                {
+                                    var existingUser = _userRepository.GetAll().FirstOrDefault(u => u.Email == email);
+                                    if (existingUser == null)
+                                    {
+                                        _userRepository.Add(new User
+                                        {
+                                            CollaboratorId = res.Result,
+                                            Email = email,
+                                            ERoleUser = roleUser,
+                                            Password = _passwordHasherService.HashPassword(rut),
+                                            ChangePassword = true, 
+                                            Active = true
+                                        });
+                                        _userRepository.Save();
+                                    }
+                                }
 
                                 if (!string.IsNullOrEmpty(photoName))
                                 {
@@ -164,7 +196,7 @@ public class CreateMasiveCollaboratorCommandHandler
             CollaboratorId = collaboratorId
         };
 
-        _repoAttachment.Add(attachment);
+    _repoAttachment.Add(attachment);
 
         return _repository.Save();
     }

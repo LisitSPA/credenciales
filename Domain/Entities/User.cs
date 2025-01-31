@@ -13,7 +13,6 @@ namespace Domain.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public bool ChangePassword { get; set; }
-
         public Collaborator Collaborator { get; set; }
     }
     

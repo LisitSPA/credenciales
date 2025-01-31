@@ -4,71 +4,124 @@
       <div class="login-card">
         <h2>Generador de firmas y credenciales</h2>
 
-        <!-- <div class="form-group">
-          <label for="colaborador-select">Seleccionar Colaborador</label>
-          <select id="colaborador-select" [(ngModel)]="selectedColaboradorId" name="colaborador" (change)="onSelectColaborador()">
-            <option value="">Selecciona un colaborador existente</option>
-            <option *ngFor="let colaborador of colaboradores" [value]="colaborador.id">
-              {{ colaborador.completeName }}
-            </option>
-          </select>
-        </div> -->
-
         <div class="form-row">
           <div class="form-group">
             <h3>Nombre completo</h3>
-            <input type="text" [(ngModel)]="nombre" name="nombre" [disabled]="disableFields" />
+            <input
+              type="text"
+              [(ngModel)]="nombre"
+              name="nombre"
+              readonly
+              disabled
+            />
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <h3>RUT</h3>
-            <input type="text" [(ngModel)]="rut" name="rut" [disabled]="disableFields" />
+            <input
+              type="text"
+              [(ngModel)]="rut"
+              name="rut"
+              readonly
+              disabled
+            />
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <h3>Gerencia</h3>
-            <input type="text" [(ngModel)]="gerencia" name="gerencia" [disabled]="disableFields" />
+            <input
+              type="text"
+              [(ngModel)]="gerencia"
+              name="gerencia"
+              readonly
+              disabled
+            />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <h3>Cargo</h3>
-            <input type="text" [(ngModel)]="cargo" name="cargo" [disabled]="disableFields" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <h3>Segmento</h3>
-            <input type="text" [(ngModel)]="segmento" name="segmento" [disabled]="disableFields" />
+            <input
+              type="text"
+              [(ngModel)]="cargo"
+              name="cargo"
+              readonly
+              disabled
+            />
           </div>
         </div>
 
-          <div class="form-row">
+        <div class="form-row">
+          <div class="form-group">
+            <h3>Segmento</h3>
+            <input
+              type="text"
+              [(ngModel)]="segmento"
+              name="segmento"
+              readonly
+              disabled
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
           <div class="form-group">
             <h3>Celular</h3>
-            <input type="text" [(ngModel)]="celular" name="celular" [disabled]="disableFields" />
+            <input
+              type="text"
+              [(ngModel)]="celular"
+              name="celular"
+              readonly
+              disabled
+            />
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <h3>Correo electrónico</h3>
-            <input type="email" [(ngModel)]="correo" name="correo" [disabled]="disableFields" />
+            <input
+              type="email"
+              [(ngModel)]="correo"
+              name="correo"
+              readonly
+              disabled
+            />
           </div>
         </div>
+
         <div class="form-row">
           <div class="form-group">
             <h3>Sede</h3>
-            <input type="text" [(ngModel)]="sede" name="sede" [disabled]="disableFields" />
+            <input
+              type="text"
+              [(ngModel)]="sede"
+              name="sede"
+              readonly
+              disabled
+            />
           </div>
         </div>
 
         <div class="button">
-          <button type="button" class="btn-secondary" (click)="redirigirCredencialExitosa()">Descargar Credencial</button>
-          <button class="btn-secondary-1" (click)="redirigirFirmaExitosa()">Copiar Pie de Firma</button>
+          <button
+            type="button"
+            class="btn-secondary"
+            (click)="redirigirCredencialExitosa()"
+          >
+            Descargar Credencial
+          </button>
+          <button
+            class="btn-secondary-1"
+            (click)="redirigirFirmaExitosa()"
+          >
+            Copiar Pie de Firma
+          </button>
         </div>
       </div>
     </div>
@@ -79,3 +132,4 @@
     </div>
   </form>
 </body>
+

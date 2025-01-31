@@ -58,7 +58,21 @@ select {
     border: 1px solid #ccc;
     box-sizing: border-box; 
     font-family: 'Roboto', sans-serif;
+}
 
+input[readonly],
+input[disabled] {
+  pointer-events: none; /* Evita que el campo reciba clics */
+  user-select: none; /* Impide la selección del texto */
+  background-color: #f9f9f9; /* Fondo gris claro para indicar que está deshabilitado */
+  border: 1px solid #ccc; /* Borde neutral */
+  color: #666; /* Color de texto tenue */
+  cursor: not-allowed; /* Cursor que indica que está deshabilitado */
+}
+
+input[readonly]:focus,
+input[disabled]:focus {
+  outline: none; /* Elimina el borde azul al intentar hacer clic */
 }
 
 select {

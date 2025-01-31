@@ -41,7 +41,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   colaboradores: Colaborador[] = [];
   selectedColaboradores: Colaborador[] = [];
   currentPage = 1;
-  itemsPerPage = 7;
+  itemsPerPage = 10;
   totalPages: number = 0;
   selectedColaborador: Colaborador | null = null;
   mostrarFormulario: boolean = false;

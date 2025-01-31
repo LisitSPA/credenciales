@@ -1,0 +1,37 @@
+<div class="container">
+    <h1 class="titulo">Preguntas Frecuentes</h1>
+  
+    <div *ngFor="let item of preguntas; let i = index" class="acordeon-item">
+      <div class="acordeon-header" (click)="toggleAcordeon(i)">
+        <h2>{{ item.pregunta }}</h2>
+        <svg
+          class="icono"
+          [class.rotate]="abiertoIndex === i"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 9l6 6 6-6"></path>
+        </svg>
+      </div>
+      <div
+        class="acordeon-body"
+        *ngIf="abiertoIndex === i"
+        [innerHTML]="item.respuesta"
+      ></div>
+    </div>
+  
+    <div class="contacto">
+      <p>
+        Si tu pregunta no está aquí, por favor contáctanos a
+        <a href="mailto:soporteTI@ddc.cl">soporteTI{{'@'}}ddc.cl</a>.
+      </p>
+    </div>
+  </div>
+  

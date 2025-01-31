@@ -2,21 +2,48 @@
   <div class="logo">
     <img src="/Logos DDC-04.svg" alt="Logo DDC" />
   </div>
-  <nav class="navigation">
+  
+  <nav class="navigation" *ngIf="role === 'Jefatura'">
     <a href="home">Inicio</a>
     <a href="gerencias">Gerencias</a>
     <a href="colaboradores">Colaboradores</a>
     <a href="segmentos">Segmentos</a>
   </nav>
-  <div class="user-info" (click)="toggleDropdown()">
-    <div class="user-text">
-      <span style="font-size: large;">Usuario</span>
-      <span style="color:gray">Administrador</span>
-    </div>
-    <img src="/blank-profile-picture-973460_1280.png" alt="Icono Usuario" />
+  
+  <div class="user-info">
+    <button class="user-btn" (click)="toggleDropdown()">
+      <i class="fas fa-user"></i>
+      <div class="user-text">
+        <span class="welcome-text"><b>Bienvenido:</b></span>
+        <span class="user-name">{{ role }}</span>
+      </div>
+      <i class="fas fa-chevron-down"></i>
+    </button>
     <div *ngIf="dropdownOpen" class="dropdown-menu">
-      <button (click)="logout()"> <i class="fas fa-sign-out-alt"></i>Cerrar sesión</button>
+      <button class="dropdown-item" (click)="goToProfile()">
+        <i class="fas fa-user"></i> Mi Perfil
+      </button>
+      <button class="dropdown-item" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i> Salir de mi cuenta
+      </button>
     </div>
   </div>
-
+  
+  <div class="modal" tabindex="-1" aria-labelledby="supportModalLabel" aria-hidden="true" id="supportModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="supportModalLabel">Ayuda y Soporte</h5>
+          <button type="button" class="btn-close" (click)="closeModal()" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Si tienes algún problema, comunícate a través de nuestro correo electrónico
+          <a href="mailto:soporteTI@ddc.cl" class="text-blue">soporteTI{{'@'}}ddc.cl</a>.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-modal btn-sm" (click)="closeModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>

@@ -23,6 +23,9 @@ using System.Text;
 using Api.Services;
 using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using DataAccess.Repositories;
+using Utility.PasswordHasher;
+using Domain.Entities;
 
 namespace Api
 {
@@ -80,6 +83,8 @@ namespace Api
 
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+            services.AddScoped<IRepository<User>, Repository<User>>(); // Registrar _userRepository
+            services.AddScoped<IPasswordHasherService, PasswordHasherService>(); // Registrar _passwordHasherService
 
             services.AddApplicationInsightsTelemetry();
             services.AddHealthChecks()

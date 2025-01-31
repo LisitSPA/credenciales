@@ -1,0 +1,86 @@
+<div class="perfil-container">
+    <div class="perfil-header">
+        <h2>Perfil</h2>
+        <p>Consulta tu información y cambia tu clave de acceso.</p>
+    </div>
+    <ul class="tabs">
+        <li (click)="cambiarPestana('misDatos')" [class.active]="pestanaActiva === 'misDatos'">Mis datos</li>
+        <li (click)="cambiarPestana('actualizarContrasena')" [class.active]="pestanaActiva === 'actualizarContrasena'">Actualizar Contraseña</li>
+    </ul>
+
+    <div *ngIf="pestanaActiva === 'misDatos'" class="recuadro">
+        <div class="section-header">
+            <h2>Datos del Usuario</h2>
+        </div>
+        <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()">
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" type="text" formControlName="nombre" />
+                </div>
+                <div class="form-group">
+                    <label for="rut">RUT</label>
+                    <input id="rut" type="text" formControlName="rut" [disabled]="isDisabled" />
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <div class="phone-container">
+                        <select formControlName="codigoPais">
+                            <option value="+56">+56</option>
+                        </select>
+                        <input id="telefono" type="text" formControlName="telefono" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input
+                      id="email"
+                      type="email"
+                      formControlName="email"
+                      [readonly]="true"
+                    />
+                  </div>
+                <div class="form-group">
+                    <label for="tipoPerfil">Tipo de Perfil</label>
+                    <input
+                      id="tipoPerfil"
+                      type="text"
+                      formControlName="tipoPerfil"
+                      [readonly]="true"
+                    />
+                  </div>
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+                <button type="submit" class="btn btn-primary"(click)="onSubmit()">Guardar</button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="pestanaActiva === 'actualizarContrasena'" class="recuadro">
+        <div class="section-header">
+            <h2>Mi contraseña</h2>
+        </div>
+        <form [formGroup]="cambiarClaveForm" (ngSubmit)="onSubmitClave()">
+            <div class="form-group-row">
+                <div class="form-group">
+                    <label for="claveActual">Contraseña Actual</label>
+                    <input id="claveActual" type="password" formControlName="claveActual" placeholder="Ingresa tu contraseña actual" />
+                </div>
+                <div class="form-group">
+                    <label for="nuevaClave">Nueva contraseña</label>
+                    <input id="nuevaClave" type="password" formControlName="nuevaClave" placeholder="Ingresa tu nueva contraseña" />
+                </div>
+                <div class="form-group">
+                    <label for="confirmarClave">Confirma nueva contraseña</label>
+                    <input id="confirmarClave" type="password" formControlName="confirmarClave" placeholder="Confirma tu nueva contraseña" />
+                </div>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+    </div>
+</div>

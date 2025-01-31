@@ -1,33 +1,35 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): boolean {
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role'); 
 
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const token = localStorage.getItem('token');
+    if (token && !this.isTokenExpired(token)) {
+      const allowedRoles = route.data['roles'] as string[]; 
 
-      if (token && !this.isTokenExpired(token)) {
-        return true;
+      if (allowedRoles && allowedRoles.includes(role!)) {
+        return true; 
       } else {
-        this.logout(); 
+        this.router.navigate(['/generar']);
         return false;
       }
     }
-    this.router.navigate(['/login']);
+
+    this.logout();
     return false;
   }
 
   isTokenExpired(token: string): boolean {
-    const payload = JSON.parse(atob(token.split('.')[1])); // Decodifica el payload
-    const expirationDate = new Date(payload.exp * 1000); // 'exp' está en segundos
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expirationDate = new Date(payload.exp * 1000);
     return expirationDate < new Date();
   }
 

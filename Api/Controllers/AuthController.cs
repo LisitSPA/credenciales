@@ -9,6 +9,7 @@ using DevExpress.CodeParser;
 using Newtonsoft.Json;
 using MediatR;
 using Domain.Domain.Helpers;
+using Domain.Entities;
 
 namespace Api.Controllers
 {
@@ -35,8 +36,14 @@ namespace Api.Controllers
 
             if (user != null)
             {
-                var token = JwtConfiguration.GenerateToken(user, _config);
-                return Ok(new { token, id = user.Id });
+                return Ok(new
+                {
+                    token = JwtConfiguration.GenerateToken(user, _config), 
+                    id = user.Id,
+                    collaboratorId = user.CollaboratorId,
+                    requiresPasswordChange = user.ChangePassword, 
+                    message = user.ChangePassword ? "Debe cambiar su contraseña antes de continuar." : "Inicio de sesión exitoso."
+                });
             }
 
             return HandleResult(result.Result, result.ErrorProvider);

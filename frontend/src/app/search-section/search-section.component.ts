@@ -39,7 +39,7 @@ export class SearchSectionComponent {
   }
 
   onLoadOption(option: string) {
-    this.selectedOption = option; 
+    this.selectedOption = option;   
   }
 
   onFileSelected(event: any) {

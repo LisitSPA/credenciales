@@ -305,6 +305,11 @@ export class CredencialExitosaComponent implements OnInit {
   }  
 
   cerrar() {
-    this.router.navigate(['/colaboradores']);
+    const role = localStorage.getItem('role'); 
+    if (role === 'Colaborador') {
+      this.router.navigate(['/generar']); 
+    } else {
+      this.router.navigate(['/home']); 
+    }
   }
 }

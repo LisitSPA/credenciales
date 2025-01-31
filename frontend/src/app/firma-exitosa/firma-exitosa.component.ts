@@ -83,6 +83,15 @@ export class FirmaExitosaComponent implements OnInit {
       console.error('Error generando QR Code:', error);
     }
   }
+  
+  cerrar() {
+    const role = localStorage.getItem('role'); 
+    if (role === 'Colaborador') {
+      this.router.navigate(['/generar']); 
+    } else {
+      this.router.navigate(['/home']); 
+    }
+  }
 
   descargarImagen() {
     const cardContainer = document.querySelector('.download') as HTMLElement;
