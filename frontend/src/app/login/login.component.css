@@ -375,3 +375,22 @@ html, body {
     color: white;
   }
   
+  .password-error {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #d9534f;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .password-error p {
+    margin: 5px 0;
+  }
+  
+  .password-error p::before {
+    content: '\f071';
+    font-family: 'Font Awesome 5 Free'; 
+    font-weight: 900; 
+    margin-right: 8px;
+  }
+  

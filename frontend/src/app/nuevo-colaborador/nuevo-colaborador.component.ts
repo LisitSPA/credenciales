@@ -130,6 +130,22 @@ file: any;
   }
   
   }
+
+  formatearRut() {
+    let rutLimpio = this.rut.replace(/[^\dKk]/g, '');
+  
+    if (rutLimpio.length < 2) {
+      this.rut = rutLimpio;
+      return;
+    }
+  
+    const cuerpo = rutLimpio.slice(0, -1);
+    const dv = rutLimpio.slice(-1).toUpperCase();
+  
+    const cuerpoConPuntos = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+    this.rut = `${cuerpoConPuntos}-${dv}`;
+  }
   
 
 

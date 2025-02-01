@@ -103,12 +103,20 @@
             class="form-control"
             placeholder="Nueva contraseña"
             [(ngModel)]="newPassword"
+            (input)="validatePassword()"
           />
+          <div *ngIf="passwordError" class="password-error">
+            <p *ngIf="!hasMinimumLength">La contraseña debe tener al menos 8 caracteres.</p>
+            <p *ngIf="!hasSpecialCharacter">La contraseña debe contener al menos un símbolo especial.</p>
+            <p *ngIf="!hasNumber">La contraseña debe contener al menos un número.</p>
+            <p *ngIf="!hasLetter">La contraseña debe contener al menos una letra.</p>
+          </div>
         </div>
         <div class="modalpass-footer">
-          <button class="btn btn-primary" (click)="handleChangePassword()">Actualizar Contraseña</button>
+          <button class="btn btn-primary" [disabled]="!isPasswordValid" (click)="handleChangePassword()">Actualizar Contraseña</button>
         </div>
       </div>
     </div>
   </div>
+  
   

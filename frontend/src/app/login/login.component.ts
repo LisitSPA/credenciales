@@ -25,10 +25,16 @@ export class LoginComponent implements OnInit {
   userId: number | null = null; 
   tokenChangePassword: string = '';
 
+  passwordError: boolean = false;
+  hasMinimumLength: boolean = false;
+  hasSpecialCharacter: boolean = false;
+  hasNumber: boolean = false;
+  hasLetter: boolean = false;
+
   constructor(
     private router: Router,
     private spinnerService: SpinnerService,
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -172,6 +178,20 @@ export class LoginComponent implements OnInit {
           this.spinnerService.hideSpinner();
         }
       );
+  }
+
+  validatePassword() {
+    const password = this.newPassword;
+    
+    this.hasMinimumLength = password.length >= 8;
+    this.hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    this.hasNumber = /\d/.test(password);
+    this.hasLetter = /[a-zA-Z]/.test(password);
+    this.passwordError = !(this.hasMinimumLength && this.hasSpecialCharacter && this.hasNumber && this.hasLetter);
+  }
+
+  get isPasswordValid(): boolean {
+    return this.hasMinimumLength && this.hasSpecialCharacter && this.hasNumber && this.hasLetter;
   }
   
 

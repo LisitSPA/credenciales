@@ -13,7 +13,16 @@
       <div class="form-row">
         <div class="form-group">
           <h3 style="font-weight: 400;">RUT</h3>
-          <input type="text" [(ngModel)]="rut" name="rut" required placeholder="Ingresa tu RUT" class="input-field" />
+          <input 
+            type="text" 
+            [(ngModel)]="rut" 
+            name="rut" 
+            required 
+            placeholder="Ingresa tu RUT" 
+            class="input-field" 
+            (input)="formatearRut()" 
+            maxlength="12" 
+          />
         </div>
       </div>
 
