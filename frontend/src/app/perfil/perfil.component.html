@@ -72,15 +72,34 @@
                 <div class="form-group">
                     <label for="nuevaClave">Nueva contraseña</label>
                     <input id="nuevaClave" type="password" formControlName="nuevaClave" placeholder="Ingresa tu nueva contraseña" />
+                    
+                    <div class="password-error" *ngIf="cambiarClaveForm.get('nuevaClave')?.touched && cambiarClaveForm.get('nuevaClave')?.hasError('missingLetter')">
+                        <p>La contraseña debe contener al menos una letra.</p>
+                    </div>
+                    <div class="password-error" *ngIf="cambiarClaveForm.get('nuevaClave')?.touched && cambiarClaveForm.get('nuevaClave')?.hasError('missingNumber')">
+                        <p>La contraseña debe contener al menos un número.</p>
+                    </div>
+                    <div class="password-error" *ngIf="cambiarClaveForm.get('nuevaClave')?.touched && cambiarClaveForm.get('nuevaClave')?.hasError('missingSymbol')">
+                        <p>La contraseña debe contener al menos un símbolo especial.</p>
+                    </div>
+                    <div class="password-error" *ngIf="cambiarClaveForm.get('nuevaClave')?.touched && cambiarClaveForm.get('nuevaClave')?.hasError('minlength')">
+                        <p>La contraseña debe tener al menos 6 caracteres.</p>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="confirmarClave">Confirma nueva contraseña</label>
                     <input id="confirmarClave" type="password" formControlName="confirmarClave" placeholder="Confirma tu nueva contraseña" />
+                    
+                    <div class="password-error" *ngIf="cambiarClaveForm.get('confirmarClave')?.touched && cambiarClaveForm.hasError('mismatch')">
+                        <p>Las contraseñas no coinciden.</p>
+                    </div>
                 </div>
             </div>
             <div class="form-buttons">
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!cambiarClaveForm.valid">Guardar</button>
             </div>
         </form>
     </div>
+    
+    
 </div>

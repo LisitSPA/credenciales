@@ -39,10 +39,12 @@ export class PerfilComponent implements OnInit {
 
     this.cambiarClaveForm = this.fb.group({
       claveActual: ['', [Validators.required]],
-      nuevaClave: ['', [Validators.required, Validators.minLength(6)]],
+      nuevaClave: ['', [Validators.required, Validators.minLength(6), this.passwordValidator]],
       confirmarClave: ['', [Validators.required]]
-    });
+    }, { validators: this.passwordMatchValidator }); 
   }
+  
+
 
   loadUserDataFromStorage(): void {
     this.spinnerService.showSpinner();
@@ -67,9 +69,29 @@ export class PerfilComponent implements OnInit {
     });
   }
   
+  passwordValidator(control: any): { [key: string]: boolean } | null {
+    const value = control.value;
+    if (!/[a-zA-Z]/.test(value)) {
+      return { missingLetter: true };
+    }
+    if (!/\d/.test(value)) {
+      return { missingNumber: true };
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+      return { missingSymbol: true };
+    }
+    return null;
+  }
   cambiarPestana(pestaña: string): void {
     this.pestanaActiva = pestaña;
   }
+
+  passwordMatchValidator(group: FormGroup): { [key: string]: boolean } | null {
+    const nuevaClave = group.get('nuevaClave')?.value;
+    const confirmarClave = group.get('confirmarClave')?.value;
+    return nuevaClave && confirmarClave && nuevaClave === confirmarClave ? null : { mismatch: true };
+  }
+
 
   onSubmit(): void {
     console.log('Datos del usuario actualizados:', this.perfilForm.value);
