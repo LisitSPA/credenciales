@@ -19,6 +19,7 @@ export class PerfilComponent implements OnInit {
   cambiarClaveForm!: FormGroup;
   pestanaActiva: string = 'misDatos';
   isDisabled: boolean = true;
+  loading: boolean = false;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private collaboratorService: CollaboratorService, private spinnerService: SpinnerService) {}
 
@@ -47,7 +48,7 @@ export class PerfilComponent implements OnInit {
 
 
   loadUserDataFromStorage(): void {
-    this.spinnerService.showSpinner();
+    this.loading = true;
     const id = localStorage.getItem('collaboratorId');
     const role = localStorage.getItem('role');
     this.collaboratorService.getCollaboratorById(Number(id)).then(colaborador => {
@@ -65,7 +66,7 @@ export class PerfilComponent implements OnInit {
     }).catch(error => {
       console.error('Error al cargar los datos del colaborador:', error);
     }).finally(() => {
-      this.spinnerService.hideSpinner();
+      this.loading = false;
     });
   }
   
@@ -94,8 +95,47 @@ export class PerfilComponent implements OnInit {
 
 
   onSubmit(): void {
-    console.log('Datos del usuario actualizados:', this.perfilForm.value);
+    const id = localStorage.getItem('collaboratorId'); 
+  
+    if (this.perfilForm.valid && id) {
+      this.loading = true; 
+  
+      this.collaboratorService.getCollaboratorById(Number(id))
+        .then((colaborador) => {
+          if (colaborador && colaborador.content) {
+            const payload = {
+              Id: Number(id),
+              CompleteName: this.perfilForm.value.nombre,
+              RUT: this.perfilForm.value.rut,
+              Phone: this.perfilForm.value.telefono,
+              LeadershipId: colaborador.content.leadershipId,
+              SegmentId: colaborador.content.segmentId,
+              Position: colaborador.content.position || 'Sin Cargo', 
+              Sede: colaborador.content.sede || 'Sin Sede', 
+              Email: colaborador.content.email,
+              ECollaboratorStatus: colaborador.content.status || 1, 
+            };
+  
+            return this.collaboratorService.updateCollaborator(Number(id), payload);
+          } else {
+            throw new Error('No se pudo cargar los datos del colaborador.');
+          }
+        })
+        .then(() => {
+          alert('Datos actualizados correctamente.');
+        })
+        .catch((error) => {
+          console.error('Error al actualizar los datos del perfil:', error);
+          alert('Hubo un error al actualizar los datos.');
+        })
+        .finally(() => {
+          this.loading = false; 
+        });
+    } else {
+      alert('Por favor, completa todos los campos obligatorios.');
+    }
   }
+  
 
   onCancel(): void {
     this.router.navigate(['/home']); 
@@ -137,4 +177,20 @@ export class PerfilComponent implements OnInit {
       alert('El formulario de cambio de contraseña no es válido.');
     }
   }
+
+  formatearRut(): void {
+    let rutLimpio = this.perfilForm.get('rut')?.value.replace(/[^\dKk]/g, '');
+  
+    if (rutLimpio.length < 2) {
+      this.perfilForm.patchValue({ rut: rutLimpio });
+      return;
+    }
+  
+    const cuerpo = rutLimpio.slice(0, -1);
+    const dv = rutLimpio.slice(-1).toUpperCase();
+    const cuerpoConPuntos = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+    this.perfilForm.patchValue({ rut: `${cuerpoConPuntos}-${dv}` });
+  }
+  
 }

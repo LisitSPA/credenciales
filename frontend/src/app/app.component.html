@@ -1,11 +1,8 @@
 <router-outlet></router-outlet>
-<ngx-spinner
-  bdColor="rgba(0, 0, 0, 0.8)"
-  size="medium"
-  color="#033baa"
-  type="ball-beat"
-  [fullScreen]="true"
-></ngx-spinner>
+
+<div *ngIf="loading" class="loading-overlay">
+  <i class="fas fa-cog fa-spin fa-3x"></i>
+</div>
 
 <div class="main-content" *ngIf="!isLoginRoute() && !isCredencialWebRoute()">
   <app-header></app-header>

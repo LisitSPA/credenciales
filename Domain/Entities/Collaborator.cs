@@ -20,10 +20,12 @@ namespace Domain.Entities
         public DateTime? FechaTerminoyCondiciones { get; set; }
         public string IPTerminoyCondiciones { get; set; }
         public ECollaboratorStatus ECollaboratorStatus { get; set; }
-
+    
         public Segment Segment { get; set; }
         public Leadership Leadership { get; set; }
         public List<Attachment> Attachments { get; set; }
+
+        public virtual User User { get; set; }
     }
     
 }

@@ -31,7 +31,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 })
 export class AppComponent {
   constructor(private router: Router,public spinnerService: SpinnerService) {}
-
+  loading: boolean = false;
+  
   isLoginRoute(): boolean {
     return this.router.url === '/';
   }
@@ -39,5 +40,11 @@ export class AppComponent {
   isCredencialWebRoute(): boolean {
     const url = this.router.url.split('?')[0];
     return url === '/credencialweb';
+  }
+  startLoading() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false; // Desactiva el spinner después de 3 segundos
+    }, 3000); // Simula un proceso de 3 segundos
   }
 }

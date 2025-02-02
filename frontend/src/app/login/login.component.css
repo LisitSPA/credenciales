@@ -31,7 +31,7 @@ html, body {
 }
 
 .loading-overlay {
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -39,9 +39,21 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 99999; 
-}
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    z-index: 9999;
+  }
+  
+  .spinner-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espacio entre el ícono y el texto */
+    color: #ffffff; /* Texto en blanco */
+  }
+  
+  .spinner-text {
+    font-size: 1.5rem; /* Tamaño del texto, ajusta según tus necesidades */
+  }
+  
 
 /* .background-container {
  

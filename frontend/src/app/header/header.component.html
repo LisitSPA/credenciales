@@ -47,3 +47,10 @@
     </div>
   </div>
 </header>
+
+<div *ngIf="loading" class="loading-overlay">
+  <div class="spinner-content">
+    <i class="fas fa-cog fa-spin fa-2x"></i>
+    <span class="spinner-text">Saliendo...</span>
+  </div>
+</div>

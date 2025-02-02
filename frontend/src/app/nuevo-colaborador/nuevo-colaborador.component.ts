@@ -24,6 +24,8 @@ export class NuevoColaboradorComponent {
   foto!: File;
   firma: File | null = null;
   credencial: File | null = null;
+  password: string = ''; 
+  rol: string = 'Colaborador';
 
   gerencias: any[] = [];  
   segmentos: any[] = [];  
@@ -78,7 +80,7 @@ file: any;
   }
 
   async guardarDatos() {
-    if (!this.nombre || !this.celular || !this.correo) {
+    if (!this.nombre || !this.celular || !this.correo|| !this.password || !this.rol) {
       alert('Por favor, rellena los campos obligatorios.');
       return;
     }
@@ -94,6 +96,8 @@ file: any;
       Position: this.cargo,
       Phone: this.celular,
       Email: this.correo,
+      Password: this.password,
+      Role: this.rol,
       ECollaboratorStatus: 1,
       LeadershipId: leadershipId,
       SegmentId: segmentoId,

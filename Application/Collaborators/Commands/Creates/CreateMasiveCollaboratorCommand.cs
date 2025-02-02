@@ -77,6 +77,8 @@ public class CreateMasiveCollaboratorCommandHandler
                         var segmentName = cells[7].Value.ToString();
                         var rolValue = cells[8]?.Value.ToString().Trim();
 
+                        rut = AplicarMascaraRut(rut);
+
                         var segment = _repoSegment.GetAll().Where(x => x.Name == segmentName).FirstOrDefault();
                         if (segment == null)
                         {
@@ -199,6 +201,38 @@ public class CreateMasiveCollaboratorCommandHandler
         }
         return result;
     }
+
+    private string AplicarMascaraRut(string rut)
+    {
+        if (string.IsNullOrEmpty(rut))
+            return rut;
+
+        rut = rut.Replace(".", "").Replace("-", "").ToUpper();
+
+        if (rut.Length < 2)
+            return rut;
+
+        string cuerpo = rut.Substring(0, rut.Length - 1);
+        string dv = rut.Substring(rut.Length - 1);
+
+        string cuerpoFormateado = string.Empty;
+        int contador = 0;
+        for (int i = cuerpo.Length - 1; i >= 0; i--)
+        {
+            cuerpoFormateado = cuerpo[i] + cuerpoFormateado;
+            contador++;
+            if (contador == 3 && i != 0)
+            {
+                cuerpoFormateado = "." + cuerpoFormateado;
+                contador = 0;
+            }
+        }
+
+        return $"{cuerpoFormateado}-{dv}";
+    }
+
+
+
 
     private bool SetPhoto(string photoName, int collaboratorId)
     {

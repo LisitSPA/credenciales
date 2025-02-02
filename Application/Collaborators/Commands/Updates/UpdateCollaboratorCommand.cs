@@ -21,10 +21,12 @@ public record UpdateCollaboratorCommand : IRequest<Response<int>>
 {
     public int Id { get; set; }
     public string CompleteName { get; set; }
+    public string RUT { get; set; }
     public int LeadershipId { get; set; }
     public int SegmentId { get; set; }
     public string Position { get; set; }
     public string Sede { get; set; }
+    public string Role { get; set; }
     public string Phone { get; set; }
     public string Email { get; set; }
     public ECollaboratorStatus ECollaboratorStatus { get; set; }
@@ -34,6 +36,7 @@ public record UpdateCollaboratorCommand : IRequest<Response<int>>
 public class CreateCollaboratorCommandHandler
     (
         IRepository<Collaborator> _repository,
+        IRepository<User> _repositoryUser,
         IRepository<Attachment> _repositoryAttach,
         IMediator _mediator,
         IEmailNotificationService _emailNotification
@@ -48,6 +51,7 @@ public class CreateCollaboratorCommandHandler
             var collaborator = _repository.GetAll().First(x => x.Id == request.Id);
 
             collaborator.CompleteName = request.CompleteName;
+            collaborator.RUT = request.RUT;
             collaborator.Area = request.Sede;
             collaborator.LeadershipId = request.LeadershipId;
             collaborator.Position = request.Position;
@@ -58,6 +62,17 @@ public class CreateCollaboratorCommandHandler
 
             _repository.Update(collaborator);
             _repository.Save();
+
+            IQueryable<User> users = _repositoryUser.GetAll();
+
+            User user = users.FirstOrDefault(user => user.CollaboratorId == collaborator.Id);
+            if (user != null)
+            {
+                user.ERoleUser = Enum.Parse<ERoleUser>(request.Role);
+                _repositoryUser.Update(user);
+                _repositoryUser.Save();
+            }
+
 
             //if (request.Photo != null)
             //{

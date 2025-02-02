@@ -20,6 +20,8 @@ export class ModificarColaboradorComponent implements OnInit {
   gerencias: any[] = [];  
   segmentos: any[] = [];  
   foto!: File;
+  rut: string = '';
+  loading: boolean = false;
 
   constructor(
     private collaboratorService: CollaboratorService,
@@ -28,6 +30,10 @@ export class ModificarColaboradorComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    if (!this.colaborador.rol) {
+      console.error('El rol del colaborador no está definido.');
+      this.colaborador.rol = ''; 
+    }
     await this.loadGerencias();
     await this.loadSegmentos();
   }
@@ -72,42 +78,63 @@ export class ModificarColaboradorComponent implements OnInit {
     const leadershipId = this.colaborador.gerencia ? Number(this.colaborador.gerencia) : null;
     const segmentId = this.colaborador.segmento ? Number(this.colaborador.segmento) : null;
   
-    if (leadershipId === null || segmentId === null) {
-      alert('Por favor, selecciona una gerencia y un segmento válidos.');
+    if (leadershipId === null || segmentId === null|| !this.colaborador.rol) {
+      alert('Por favor, selecciona una gerencia, segmento y rol válidos.');
       return;
     }
 
     const colaboradorModificado = {
       Id: this.colaborador.id,
       CompleteName: this.colaborador.nombre,
+      RUT: this.colaborador.rut,
       LeadershipId: leadershipId,
       SegmentId: segmentId,
       Position: this.colaborador.cargo,
       Sede: this.colaborador.sede || 'Sin Sede',
       Phone: this.colaborador.celular,
       Email: this.colaborador.correo,
+      Role: this.colaborador.rol,
       ECollaboratorStatus: 1,
     };
   
-  
+  this.loading = true;
  this.collaboratorService.updateCollaborator(colaboradorModificado.Id, colaboradorModificado)
     .then(response => {
       if (this.foto) {
         this.subirArchivo(colaboradorModificado.Id, this.foto, 1).then(() => {
           this.collaboratorService.getCollaboratorById(colaboradorModificado.Id).then((updatedColaborador) => {
             this.colaborador = updatedColaborador.content;
-            this.guardar.emit(this.colaborador); 
+            this.guardar.emit(this.colaborador);
+            this.loading = false; 
           });
         });
       } else {
         this.guardar.emit(colaboradorModificado);
+        this.loading = false;
       }
       this.cerrar.emit();
     })
     .catch(error => {
       console.error('Error al actualizar colaborador:', error);
       alert('Hubo un error al actualizar el colaborador.');
+      this.loading = false;
     });
+  }
+
+  formatearRut() {
+    let rutLimpio = this.rut.replace(/[^\dKk]/g, '');
+  
+    if (rutLimpio.length < 2) {
+      this.rut = rutLimpio;
+      return;
+    }
+  
+    const cuerpo = rutLimpio.slice(0, -1);
+    const dv = rutLimpio.slice(-1).toUpperCase();
+  
+    const cuerpoConPuntos = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  
+    this.rut = `${cuerpoConPuntos}-${dv}`;
   }
   
   async subirArchivo(colaboradorId: number, archivo: File, tipo: number) {
@@ -144,4 +171,5 @@ export class ModificarColaboradorComponent implements OnInit {
       reader.readAsDataURL(this.foto);
     }
   }
+  
 }

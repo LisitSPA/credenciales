@@ -13,8 +13,6 @@
     <input type="text" [(ngModel)]="textSearch" (input)="search()" placeholder="Buscar por Gerencia" class="search-bar" />
 
     </div>
-    
-
     <div class="table-wrapper">
         <table class="table">
             <thead>
@@ -100,4 +98,9 @@
   (guardar)="guardarNuevaGerencia($event)">
 </app-nueva-gerencia>
 
-  
+<div *ngIf="loading" class="loading-overlay">
+  <div class="spinner-content">
+    <i class="fas fa-cog fa-spin fa-2x"></i>
+    <span class="spinner-text">Cargando...</span>
+  </div>
+</div>

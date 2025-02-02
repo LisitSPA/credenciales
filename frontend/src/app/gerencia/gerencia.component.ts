@@ -40,6 +40,7 @@ export class GerenciasComponent implements OnInit, OnDestroy {
   allGerencias: Gerencia[] = [];
   private inactivityTimeout: any;
   private readonly INACTIVITY_TIME = 900000;
+  loading: boolean = false;
 
   constructor(
     private gerenciaService: GerenciaService, 
@@ -67,7 +68,7 @@ export class GerenciasComponent implements OnInit, OnDestroy {
   }
   
   cargarListaGerencias() {
-    this.spinnerService.showSpinner();
+    this.loading = true;
     this.gerenciaService.getPaginatedGerencias(this.currentPage, this.itemsPerPage).then((response: any) => {
       if (response && response.content && Array.isArray(response.content.data)) {
         this.allGerencias = response.content.data.map((g: any) => ({
@@ -82,13 +83,13 @@ export class GerenciasComponent implements OnInit, OnDestroy {
         this.filteredGerencias = [];
         this.paginatedGerencias = [];
       }
-      setTimeout(() => this.spinnerService.hideSpinner(), 1200);
+      setTimeout(() => this.loading = false, 1200);
     }).catch((error: any) => {
       console.error('Error al obtener las gerencias:', error);
       this.allGerencias = [];
       this.filteredGerencias = [];
       this.paginatedGerencias = [];
-      setTimeout(() => this.spinnerService.hideSpinner(), 1200);
+      setTimeout(() => this.loading = false, 1200);
     });
   }
 
@@ -180,16 +181,16 @@ export class GerenciasComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.spinnerService.showSpinner();
+    this.loading = true;
     try {
       await this.gerenciaService.crearGerencia(gerenciaCreada.name);
       this.cargarListaGerencias();  
       this.cerrarModalNuevaGerencia();
-     setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
+     setTimeout(() => this.loading = false, 1200); 
     } catch (error) {
       console.error('Error al crear la gerencia:', error);
       alert('Ocurrió un error al crear la gerencia. Verifica los datos e inténtalo nuevamente.');
-     setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
+     setTimeout(() => this.loading = false, 1200); 
     }
   }
   
@@ -208,19 +209,19 @@ export class GerenciasComponent implements OnInit, OnDestroy {
 
   async guardarModificacionGerencia(gerenciaModificada: Gerencia) {
     if (gerenciaModificada && gerenciaModificada.id !== undefined) {
-      this.spinnerService.showSpinner();
+      this.loading = true;
       try {
         await this.gerenciaService.modificarGerencia(gerenciaModificada as Required<Gerencia>); 
         this.cargarListaGerencias();
         this.cerrarModalModificar();
-        setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
+        setTimeout(() => this.loading = false, 1200); 
       } catch (error) {
         console.error('Error al modificar la gerencia:', error);
-        setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
+        setTimeout(() => this.loading = false, 1200); 
       }
     } else {
       console.error('ID de gerencia no válido para modificar');
-      setTimeout(() => this.spinnerService.hideSpinner(), 1200); 
+      setTimeout(() => this.loading = false, 1200); 
     }
   }
   

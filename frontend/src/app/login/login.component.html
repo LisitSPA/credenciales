@@ -7,6 +7,13 @@
     </div>
   </div>
 
+  <div *ngIf="loading" class="loading-overlay">
+    <div class="spinner-content">
+      <i class="fas fa-cog fa-spin fa-2x"></i>
+      <span class="spinner-text">Accediendo...</span>
+    </div>
+  </div>
+
 <div class="background-container">
   <div class="background-top"></div>
   <div class="background-bottom">

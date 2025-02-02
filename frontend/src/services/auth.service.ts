@@ -6,18 +6,19 @@ import { SpinnerService } from './spinner.service';
   providedIn: 'root'
 })
 export class AuthService {
+  loading: boolean = false;
   constructor(
     private router: Router,
     private spinnerService: SpinnerService
   ) {}
 
   logout() {
-    this.spinnerService.showSpinner();
+    this.loading = true;
     setTimeout(() => {
       localStorage.removeItem('token');  
       sessionStorage.removeItem('token'); 
       this.router.navigate(['/']); 
-      this.spinnerService.hideSpinner();
+      this.loading = false;
     }, 1500); 
   }
 

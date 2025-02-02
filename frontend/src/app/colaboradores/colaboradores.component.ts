@@ -23,6 +23,7 @@ interface Colaborador {
   celular: string;
   correo: string;
   estado: string;
+  rol: string;
   tieneFoto?: boolean;
   tieneFirma?: boolean;
   tieneCredencial?: boolean;
@@ -54,6 +55,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   canSeeHome: boolean = false;
   private inactivityTimeout: any;
   private readonly INACTIVITY_TIME = 900000;
+  loading: boolean = false;
 
 
   constructor(
@@ -78,7 +80,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   }
 
   cargarListaColaboradores() {
-    this.spinnerService.showSpinner();
+    this.loading = true;
 
     this.collaboratorService.getPaginatedCollaborators(this.currentPage, this.itemsPerPage)
       .then(response => {
@@ -95,6 +97,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
             celular: item.phone,
             correo: item.email,
             estado: item.status,
+            rol: item.role,
             tieneFoto: item.hasPhoto,
             tieneFirma: item.hasSignature,
             tieneCredencial: item.hasCredential,
@@ -104,10 +107,10 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
           this.filteredColaboradores = [...this.allColaboradores];
           this.updatePaginatedColaboradores();
         }
-        setTimeout(() => this.spinnerService.hideSpinner(), 1000);     
+        setTimeout(() => this.loading = false, 1000);     
        })
       .catch(error => {
-        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
+        setTimeout(() => this.loading = false, 1500);
       });
   }
   
@@ -124,7 +127,8 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
       this.filteredColaboradores = this.allColaboradores.filter(x =>
         x.nombre.toLowerCase().includes(searchText) ||
         x.rut.includes(searchText) ||
-        x.correo.toLowerCase().includes(searchText)
+        x.correo.toLowerCase().includes(searchText) ||
+        x.rol.toLowerCase().includes(searchText)
       );
     } else {
       this.filteredColaboradores = [...this.allColaboradores];
@@ -146,10 +150,10 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
       alert('Por favor, selecciona al menos un colaborador.');
       return;
     }
-    this.spinnerService.showSpinner();
+    this.loading = true;
     localStorage.setItem('print', JSON.stringify(this.selectedColaboradores[0]));
     this.router.navigate(['/generar']).then(() => {
-      setTimeout(() => this.spinnerService.hideSpinner(), 1500); 
+      setTimeout(() => this.loading = false, 1500); 
     });
   }
 
@@ -214,8 +218,18 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   }
 
   onColaboradorModificado(colaboradorModificado: Colaborador) {
-    this.cargarListaColaboradores();
+    const index = this.allColaboradores.findIndex(c => c.id === colaboradorModificado.id);
+  
+    if (index !== -1) {
+      this.allColaboradores[index] = { ...colaboradorModificado };
+  
+      this.updatePaginatedColaboradores();
+    } else {
+      console.error(`No se encontró el colaborador con ID: ${colaboradorModificado.id}`);
+    }
   }
+  
+  
   
 
   abrirFormulario() {
@@ -241,7 +255,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
 
   eliminarColaborador() {
     if (this.selectedColaborador) {
-      this.spinnerService.showSpinner();
+      this.loading = true;
 
       this.collaboratorService.deleteCollaborator(this.selectedColaborador.id).then(response => {
         if (response && response.statusCode === 200) {
@@ -249,10 +263,10 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
           this.cerrarModalEliminar(); 
         } else {
         }
-        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
+        setTimeout(() => this.loading = false, 1500);
       }).catch(error => {
         alert('Error al eliminar colaborador: ' + error.message);
-        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
+        setTimeout(() => this.loading = false, 1500);
       });
     }
   }
@@ -270,13 +284,13 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
 
   guardarModificaciones(colaboradorModificado: Colaborador) {
     if (colaboradorModificado && colaboradorModificado.id) {
-      this.spinnerService.showSpinner();
+      this.loading = true;
 
       this.collaboratorService.updateCollaborator(colaboradorModificado.id, colaboradorModificado)
         .then(response => {
           this.updatePaginatedColaboradores();  
           this.mostrarModificar = false;
-          setTimeout(() => this.spinnerService.hideSpinner(), 1500); 
+          setTimeout(() => this.loading = false, 1500); 
         })
         .catch(error => {
           if (error.status === 400 && error.error && error.error.message) {
@@ -284,7 +298,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
           } else {
             alert('Error al modificar colaborador: ' + error.message);  
           }
-          setTimeout(() => this.spinnerService.hideSpinner(), 1500);
+          setTimeout(() => this.loading = false, 1500);
         });
     }
   }
@@ -304,7 +318,7 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
   }
 
   descargarArchivo(colaboradorId: number, tipoArchivo: number) {
-    this.spinnerService.showSpinner();
+    this.loading = true;
 
     this.collaboratorService.getAttachment(colaboradorId, tipoArchivo)
       .then(response => {
@@ -321,12 +335,12 @@ export class ColaboradoresComponent implements OnInit, OnDestroy {
         }
 
         saveAs(blob, `${tipoArchivo}_${colaboradorId}.pdf`); 
-        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
+        setTimeout(() => this.loading = false, 1500);
       })
       .catch(error => {
         console.error(`Error al descargar el archivo ${tipoArchivo} para el colaborador con ID ${colaboradorId}:`, error);
         alert(`Hubo un error al descargar el archivo de ${tipoArchivo}.`);
-        setTimeout(() => this.spinnerService.hideSpinner(), 1500);
+        setTimeout(() => this.loading = false, 1500);
       });
   }
 

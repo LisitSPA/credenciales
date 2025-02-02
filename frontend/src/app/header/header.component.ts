@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit{
   role: string | null = null;   
   isSidebarActive: boolean = false;
   userName: string | null = null; 
+  loading: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -56,6 +57,7 @@ export class HeaderComponent implements OnInit{
   }
 
   logout() {
+    this.loading = true;
     this.authService.logout();  
     localStorage.removeItem('collaboratorId');
     localStorage.removeItem('token');

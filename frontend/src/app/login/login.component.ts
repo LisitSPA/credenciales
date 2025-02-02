@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
     if (this.loading) return;
   
     this.loading = true;
-    this.spinnerService.showSpinner();
     const loginCommand = {
       username: this.usuario.email,
       password: this.usuario.password
@@ -59,7 +58,7 @@ export class LoginComponent implements OnInit {
     this.http.post<any>(`${environment.apiUrl}/auth/login`, loginCommand)
       .subscribe(
         response => {
-          this.spinnerService.hideSpinner();
+          this.loading = false;
           const token = response.token;
           const decodedToken = this.decodeToken(token);
           const userRole = decodedToken.role;
@@ -84,7 +83,7 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
-          this.spinnerService.hideSpinner();
+          this.loading = false;
           this.loading = false;
           this.mensajeError = 'Correo electrónico o contraseña incorrectos';
           console.error(error);
@@ -162,20 +161,20 @@ export class LoginComponent implements OnInit {
       oldPassword: this.usuario.password,
       newPassword: this.newPassword
     };
-    this.spinnerService.showSpinner();
+    this.loading = true;
     this.http.put(`${environment.apiUrl}/auth/changePassword`, payload, { headers })
       .subscribe(
         () => {
           alert('Contraseña actualizada con éxito. Por favor, inicie sesión nuevamente.');
           this.showModal = false;
           this.closeModal();
-          this.spinnerService.hideSpinner();
+          this.loading = false;
           window.location.reload();
         },
         error => {
           alert('Error al cambiar la contraseña. Inténtalo nuevamente.');
           console.error('Error:', error);
-          this.spinnerService.hideSpinner();
+          this.loading = false;
         }
       );
   }

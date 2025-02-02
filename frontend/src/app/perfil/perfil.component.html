@@ -20,8 +20,14 @@
                 </div>
                 <div class="form-group">
                     <label for="rut">RUT</label>
-                    <input id="rut" type="text" formControlName="rut" [disabled]="isDisabled" />
-                </div>
+                    <input
+                      id="rut"
+                      type="text"
+                      formControlName="rut"
+                      (input)="formatearRut()"
+                      [disabled]="isDisabled"
+                    />
+                  </div>
                 <div class="form-group">
                     <label for="telefono">Teléfono</label>
                     <div class="phone-container">
@@ -103,3 +109,10 @@
     
     
 </div>
+
+<div *ngIf="loading" class="loading-overlay">
+    <div class="spinner-content">
+      <i class="fas fa-cog fa-spin fa-2x"></i>
+      <span class="spinner-text">Cargando...</span>
+    </div>
+  </div>

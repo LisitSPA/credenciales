@@ -76,12 +76,25 @@
 
       <div class="form-row">
         <div class="form-group">
-          <h3 style="font-weight: 400;">Foto</h3>
-          <div class="foto-container">
-            <div class="foto-placeholder"></div>
-            <input type="file" [(ngModel)]="file" accept="image/jpeg, image/png" (change)="onFileSelected($event)" class="input-field" />
-            <span style="color: gray; size: 12px;">Formato permitido: .jpg .jpeg .png (10mb max)</span>
-          </div>
+          <h3 style="font-weight: 400;">Contraseña</h3>
+          <input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            required
+            placeholder="Ingresa una contraseña"
+            class="input-field"
+          />
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <h3 style="font-weight: 400;">Rol</h3>
+          <select [(ngModel)]="rol" name="rol" required class="select-field">
+            <option value="Colaborador">Colaborador</option>
+            <option value="Jefatura">Jefatura</option>
+          </select>
         </div>
       </div>
 

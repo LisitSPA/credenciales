@@ -13,6 +13,20 @@
 
       <div class="form-row">
         <div class="form-group">
+          <h3>RUT</h3>
+          <input 
+            type="text" 
+            [(ngModel)]="colaborador.rut" 
+            name="rut" 
+            placeholder="Ingresa el RUT" 
+            class="input-field" 
+            (input)="formatearRut()" 
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
           <h3>Gerencia</h3>
           <select [(ngModel)]="colaborador.gerencia" name="gerencia" required class="select-field">
             <option value="">Selecciona una opción</option>
@@ -61,23 +75,27 @@
 
       <div class="form-row">
         <div class="form-group">
-          <h3>Foto</h3>
-          <div class="foto-container">
-            <div class="foto-placeholder"></div>
-            <input type="file" (change)="onFileSelected($event)" accept="image/jpeg, image/png" class="input-field"/>
-            <span style="color: gray; size: 12px;">Formato permitido: .jpg .jpeg .png (10mb max)</span>
-          </div>
-          <div class="footer-section">
-            <h3>Vista previa:</h3>
-            <img *ngIf="colaborador.fotoPreview" [src]="colaborador.fotoPreview" alt="Vista previa" />
-          </div>
+          <h3>Rol</h3>
+          <select [(ngModel)]="colaborador.rol" name="rol" required class="select-field">
+            <option value="">Seleccione un rol</option>
+            <option value="Colaborador">Colaborador</option>
+            <option value="Jefatura">Jefatura</option>
+          </select>
         </div>
       </div>
+
 
       <div class="button">
         <button class="btn-secondary-1" (click)="cerrar.emit()">Cancelar</button>
         <button type="submit" class="btn-secondary">Editar</button>
       </div>
     </form>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading-overlay">
+  <div class="spinner-content">
+    <i class="fas fa-cog fa-spin fa-2x"></i>
+    <span class="spinner-text">Cargando...</span>
   </div>
 </div>

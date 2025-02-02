@@ -30,7 +30,7 @@
               <th>Cargo</th>
               <th>Celular</th>
               <th>Correo</th>
-              <th>Adjuntos</th>
+              <th>Rol</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -44,22 +44,7 @@
               <td>{{ colaborador.cargo }}</td>
               <td>{{ colaborador.celular }}</td>
               <td>{{ colaborador.correo }}</td>
-              <td>
-                <div class="icon-container">
-                  <div *ngIf="colaborador.tieneFoto" class="icon-item" (click)="descargarArchivo(colaborador.id, 1)">
-                    <img src="/image-regular.svg" alt="Foto" />
-                    <span>Foto</span>
-                  </div>
-                  <div *ngIf="colaborador.tieneFirma" class="icon-item" (click)="descargarArchivo(colaborador.id, 2)">
-                    <img src="/signature-solid.svg" alt="Firma" />
-                    <span>Firma</span>
-                  </div>
-                  <div *ngIf="colaborador.tieneCredencial" class="icon-item" (click)="descargarArchivo(colaborador.id, 3)">
-                    <img src="/id-card-solid.svg" alt="Credencial" />
-                    <span>Credencial</span>
-                  </div>
-                </div>
-              </td>
+              <td>{{ colaborador.rol }}</td>
               <td>
                 <button class="btn-edit" (click)="editar(colaborador)">
                   <img src="/edit_modify_icon_149489.png" style="width: 16px; height: 16px; margin-right: 5px;" /> 
@@ -122,3 +107,10 @@
 </app-nuevo-colaborador>
 
 </body>
+
+<div *ngIf="loading" class="loading-overlay">
+  <div class="spinner-content">
+    <i class="fas fa-cog fa-spin fa-2x"></i>
+    <span class="spinner-text">Cargando...</span>
+  </div>
+</div>

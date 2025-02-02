@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedFile: File | null = null; 
   data: any;
   canSeeHome: boolean = false;
-
+  loading: boolean = false;
   private inactivityTimeout: any;
   private readonly INACTIVITY_TIME = 900000;
 
@@ -52,11 +52,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.spinnerService.showSpinner(); 
+    this.loading = true; 
     this.verificarTérminosAceptados();
     this.resetInactivityTimeout();
     this.addUserInteractionListeners();
-    this.spinnerService.hideSpinner();
+    this.loading = false;
   }
 
   onSearch() {}
@@ -81,11 +81,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   
   onUpload() {
     if (this.selectedFile) {
-      this.spinnerService.showSpinner();
+      this.loading = true;
       this.collaboratorService.uploadMissiveCollaborator(this.selectedFile);
       this.gerenciaService.uploadMissiveGerencia(this.selectedFile);
       this.segmentService.uploadMissiveSegment(this.selectedFile);
-      this.spinnerService.hideSpinner();
+      this.loading = false;
     } else {
       console.warn('No se ha seleccionado ningún archivo.');
     }
