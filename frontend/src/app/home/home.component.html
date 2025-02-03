@@ -29,7 +29,7 @@
         </div>
         <div class="modal-footer">
           <button class="buttonAccept" (click)="handleWarningAccept()">Aceptar</button>
-          <button class="buttonCancel" (click)="handleLogout()">Rechazar</button>
+          <button class="buttonCancel" (click)="handleWarningRejectTerms()">Rechazar</button>
         </div>
       </div>
     </div>
@@ -39,6 +39,6 @@
 <div *ngIf="loading" class="loading-overlay">
   <div class="spinner-content">
     <i class="fas fa-cog fa-spin fa-2x"></i>
-    <span class="spinner-text">Cargando...</span>
+    <span class="spinner-text">Saliendo...</span>
   </div>
 </div>

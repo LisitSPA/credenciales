@@ -149,10 +149,42 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   handleLogout(): void {
-    console.log('Cierre de sesión.');
     localStorage.clear(); 
     this.logout();
   }
+
+handleWarningRejectTerms(): void {
+  const userId = localStorage.getItem('collaboratorId');
+
+  if (!userId) {
+    console.error('No se pudo obtener el ID del usuario.');
+    return;
+  }
+
+  this.loading = true;
+
+  this.termsService.acceptTerms(parseInt(userId, 10), false).subscribe(
+    response => {
+
+      localStorage.clear(); 
+      this.logout(); 
+
+      setTimeout(() => {
+        this.mostrarModalTerminos = false; // Cierra el modal de términos
+        this.mostrarAdvertencia = true; // Muestra el modal de advertencia
+        this.loading = false; // Desactiva el spinner
+      }, 2000); // Da tiempo para completar la transición visual
+    },
+    error => {
+      console.error('Error al rechazar los términos:', error);
+
+      this.loading = false;
+    }
+  );
+}
+
+
+  
 
   mostrarModalAyuda: boolean = false;
 
