@@ -165,26 +165,17 @@ handleWarningRejectTerms(): void {
 
   this.termsService.acceptTerms(parseInt(userId, 10), false).subscribe(
     response => {
-
       localStorage.clear(); 
       this.logout(); 
 
       setTimeout(() => {
-        this.mostrarModalTerminos = false; // Cierra el modal de términos
-        this.mostrarAdvertencia = true; // Muestra el modal de advertencia
-        this.loading = false; // Desactiva el spinner
-      }, 2000); // Da tiempo para completar la transición visual
+        this.mostrarModalTerminos = false;
+        this.mostrarAdvertencia = true; 
+        this.loading = false; 
+      }, 2000); 
     },
-    error => {
-      console.error('Error al rechazar los términos:', error);
-
-      this.loading = false;
-    }
   );
 }
-
-
-  
 
   mostrarModalAyuda: boolean = false;
 

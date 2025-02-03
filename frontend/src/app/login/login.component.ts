@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
           const token = response.token;
           const decodedToken = this.decodeToken(token);
           const userRole = decodedToken.role;
+          const userName = decodedToken?.unique_name;
           const collaboratorId = response.collaboratorId; 
           const requiresPasswordChange = response.requiresPasswordChange;
   
@@ -73,6 +74,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', token);
             localStorage.setItem('userId', response.id.toString());
             localStorage.setItem('role', userRole);  
+            localStorage.setItem('userName', userName); 
             localStorage.setItem('collaboratorId', collaboratorId.toString());
             localStorage.setItem('termsAccepted', response.termsAccepted);
             if (userRole === 'Colaborador' && collaboratorId) {

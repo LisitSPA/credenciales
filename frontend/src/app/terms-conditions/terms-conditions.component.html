@@ -2,23 +2,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">Términos y Condiciones</h2>
+        <h2 class="modal-title">Términos, Condiciones de Uso y Manejo de Información Personal</h2>
       </div>
       <div class="modal-body">
         <p>
-          Bienvenido al <b>Portal de Credenciales</b>, administrado por <b>DDC</b>. Este documento regula el uso
-          del portal y describe cómo recopilamos, usamos y protegemos la información personal y comercial de
-          nuestros productores, en conformidad con la normativa chilena vigente, incluyendo la <b>Ley 19.628</b> sobre
-          Protección de la Vida Privada.
+          Bienvenido al <b>Portal de Credenciales</b>, administrado por <b>DDC</b>. Este documento regula el uso del portal y describe cómo recopilamos, usamos y protegemos la información personal y comercial de nuestros productores, en conformidad con la normativa chilena vigente, incluyendo la <b>Ley 19.628</b> sobre Protección de la Vida Privada.
         </p>
-
         <p>
-          Al registrarte y utilizar este portal, aceptas los términos y condiciones aquí descritos, así como nuestra
-          política de privacidad.
+          Al utilizar este portal, Usted acepta los términos y condiciones aquí descritos, así como nuestra política de privacidad.
         </p>
 
         <h3>1. Términos y Condiciones de Uso</h3>
-        
+
         <h4>1.1. Objetivo del Portal</h4>
         <p>Este portal ha sido diseñado para facilitar la gestión de Credenciales e información de los colaboradores de DDC. Las principales funcionalidades incluyen:</p>
         <ul>
@@ -27,7 +22,7 @@
           <li>Descarga de pie de firma para utilizar en correo electrónico.</li>
         </ul>
 
-        <h4>1.2. Obligaciones del Colaborador</h4>
+        <h4>1.2. Obligaciones del colaborador</h4>
         <p>Al utilizar el portal, el colaborador se compromete a:</p>
         <ul>
           <li>Usar el portal exclusivamente para los fines definidos en este documento.</li>
@@ -52,7 +47,7 @@
         <p><b>DDC</b> se reserva el derecho de modificar estos términos y condiciones. Cualquier cambio será notificado mediante correo electrónico y un aviso en el portal. El colaborador deberá aceptar los nuevos términos para continuar utilizando el sistema.</p>
 
         <h3>2. Política de Privacidad y Manejo de Información Personal</h3>
-        
+
         <h4>2.1. Información Recopilada</h4>
         <p>Recopilamos los siguientes datos del colaborador:</p>
         <ul>
@@ -72,7 +67,12 @@
         </ul>
 
         <h4>2.4. Retención y Protección de Datos</h4>
-        <p>Los datos serán almacenados durante el tiempo necesario para cumplir con los fines establecidos o según lo exija la normativa chilena. Implementamos medidas técnicas y administrativas para proteger la información, como encriptación, firewalls y acceso restringido.</p>
+        <p>
+          <b>Retención:</b> Los datos serán almacenados durante el tiempo necesario para cumplir con los fines establecidos o según lo exija la normativa chilena.
+        </p>
+        <p>
+          <b>Protección:</b> Implementamos medidas técnicas y administrativas para proteger la información, como encriptación, firewalls y acceso restringido.
+        </p>
 
         <h4>2.5. Derechos del Colaborador</h4>
         <p>De acuerdo con la Ley 19.628, el colaborador tiene derecho a:</p>
@@ -82,12 +82,15 @@
           <li>Oponerse al tratamiento de datos para fines no autorizados.</li>
           <li>Solicitar la eliminación de sus datos cuando ya no sean necesarios.</li>
         </ul>
+        <p>Para ejercer estos derechos, el colaborador debe enviar una solicitud a <b>[correo{{'@'}}ddc.cl]</b>.</p>
 
         <h3>3. Consentimiento y Aceptación</h3>
-        <p>El colaborador debe aceptar estos términos y condiciones antes de utilizar el portal. Este consentimiento será registrado electrónicamente con la fecha, hora y versión de los términos aceptados.</p>
-        
-        <h4>Texto de Aceptación:</h4>
-        <p>“Declaro que he leído y acepto los Términos y Condiciones de Uso, así como la Política de Privacidad y Manejo de Información Personal de este portal. Comprendo que mi información será tratada de acuerdo con la normativa chilena vigente.”</p>
+        <p>
+          El colaborador deberá aceptar estos términos y condiciones antes de utilizar el portal. Este consentimiento será registrado electrónicamente con la fecha, hora y versión de los términos aceptados.
+        </p>
+        <p>
+          <b>Texto de Aceptación:</b> “Declaro que he leído, entiendo y acepto los Términos y Condiciones de Uso, así como la Política de Privacidad y Manejo de Información Personal de este portal. Comprendo que mi información será tratada de acuerdo con la normativa chilena vigente.”
+        </p>
 
         <h3>4. Actualizaciones y Notificaciones</h3>
         <p>Cualquier actualización a estos términos será notificada mediante correo electrónico y un aviso destacado en el portal. La continuación del uso del portal implicará la aceptación de las nuevas condiciones.</p>
@@ -99,7 +102,6 @@
           <li>Teléfono: [+56 9 1234 5678]</li>
         </ul>
         <p><b>DDC</b> agradece tu confianza y compromiso.</p>
-
       </div>
       <div class="modal-footer">
         <button class="buttonAccept" (click)="handleAccept()">Aceptar</button>
@@ -108,7 +110,6 @@
     </div>
   </div>
 </div>
-
 <div *ngIf="loading" class="loading-overlay">
   <div class="spinner-content">
     <i class="fas fa-cog fa-spin fa-2x"></i>

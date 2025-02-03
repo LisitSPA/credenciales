@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import QRCode from 'qrcode';
 import { Router } from '@angular/router';
 import { CollaboratorService } from '../../services/collaborators.service';
+import { TermsService } from '../../services/terms.service';
+import { TermsConditionsComponent } from '../terms-conditions/terms-conditions.component';
 
 interface Colaborador {
   id: number;
@@ -21,7 +23,7 @@ interface Colaborador {
 @Component({
   selector: 'app-generar-credencial',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TermsConditionsComponent],
   templateUrl: './generar-credencial.component.html',
   styleUrls: ['./generar-credencial.component.css']
 })
@@ -38,7 +40,8 @@ export class GenerarCredencialComponent implements OnInit {
   sede: string = '';
   foto: File | null = null;
   qrCodeUrl: string | undefined;
-
+  mostrarModalTerminos: boolean = false;
+  loading: boolean = false;
   disableFields: boolean = true; 
 
   @Output() cerrar = new EventEmitter<void>();
@@ -46,11 +49,56 @@ export class GenerarCredencialComponent implements OnInit {
   private ipLocal: string = '192.168.3.102';
   colaborador!: Colaborador;
 
-  constructor(private router: Router, private collaboratorService: CollaboratorService) {}
+  constructor(
+    private router: Router, 
+    private collaboratorService: CollaboratorService,
+    private termsService: TermsService
+  ) {}
 
   ngOnInit() {
     this.loadColaboradores();
+    this.verificarTérminosAceptados();
   }
+
+  verificarTérminosAceptados(): void {
+    const termsAccepted = localStorage.getItem('termsAccepted');
+    if (!termsAccepted || termsAccepted !== 'true') {
+      this.mostrarModalTerminos = true;
+    } else {
+      this.mostrarModalTerminos = false;
+    }
+  }
+  
+
+  handleAcceptTerms(): void {
+    const userId = localStorage.getItem('collaboratorId');
+    if (!userId) {
+      console.error('No se pudo obtener el ID del usuario.');
+      return;
+    }
+
+    this.loading = true;
+
+    this.termsService.acceptTerms(parseInt(userId, 10), true).subscribe(
+      response => {
+        console.log('Términos aceptados:', response);
+        localStorage.setItem('termsAccepted', 'true'); // Guardar estado en localStorage
+        this.mostrarModalTerminos = false; // Cerrar modal
+        this.loading = false;
+      },
+      error => {
+        console.error('Error al aceptar los términos:', error);
+        this.loading = false;
+      }
+    );
+  }
+
+  handleRejectTerms(): void {
+    console.log('Términos rechazados');
+    localStorage.clear(); // Limpiar datos
+    this.router.navigate(['/']); // Redirigir al login u otra página
+  }
+
 
   async loadColaboradores() {
     try {

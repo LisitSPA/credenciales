@@ -28,17 +28,19 @@
   }
   
   .modal-header {
-    margin-left: 27px;
+    margin-left: 32px;
+    margin-bottom: -14px;
     padding: 1px;
     background: #ffffff;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
-    font-family: 'Titillium Web', sans-serif;
+    font-family: "Titillium Web", sans-serif;
   }
   
   .modal-body {
     font-family: 'Titillium Web', sans-serif;
     padding: 0px;
+    text-align: justify;
     padding-left: 32px;
     padding-right: 32px;
     padding-bottom: 0px;

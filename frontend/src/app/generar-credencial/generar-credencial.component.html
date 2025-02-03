@@ -1,4 +1,11 @@
 <body>
+  <app-terms-conditions
+  *ngIf="mostrarModalTerminos"
+  [isOpen]="mostrarModalTerminos"
+  (accept)="handleAcceptTerms()"
+  (reject)="handleRejectTerms()"
+></app-terms-conditions>
+
   <form>
     <div class="login-container">
       <div class="login-card">

@@ -76,6 +76,7 @@ export class SegmentosComponent {
               activo: item.active,
               seleccionado: false,
             }));
+          this.allSegmentos = [...this.segmentos];
           this.totalPages = Math.ceil(response.content.totalCount / this.itemsPerPage);
           this.updatePaginatedSegmentos();
         } else {
