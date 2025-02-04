@@ -86,7 +86,7 @@ updateCollaborator(id: number, colaborador: any): Promise<any> {
 
   return lastValueFrom(
     this._httpClient.put(this.apiUrl, payload, { headers }).pipe(
-      catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
+      // catchError(error => this.handleError(error, 'No se pudo actualizar el colaborador. Verifique la conexión.'))
       )
   );
 }

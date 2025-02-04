@@ -95,25 +95,27 @@ export class PerfilComponent implements OnInit {
 
 
   onSubmit(): void {
-    const id = localStorage.getItem('collaboratorId'); 
+    const id = localStorage.getItem('collaboratorId');
+    const role = this.perfilForm.get('tipoPerfil')?.value;
   
     if (this.perfilForm.valid && id) {
-      this.loading = true; 
+      this.loading = true;
   
       this.collaboratorService.getCollaboratorById(Number(id))
         .then((colaborador) => {
           if (colaborador && colaborador.content) {
             const payload = {
               Id: Number(id),
-              CompleteName: this.perfilForm.value.nombre,
-              RUT: this.perfilForm.value.rut,
-              Phone: this.perfilForm.value.telefono,
-              LeadershipId: colaborador.content.leadershipId,
-              SegmentId: colaborador.content.segmentId,
-              Position: colaborador.content.position || 'Sin Cargo', 
-              Sede: colaborador.content.sede || 'Sin Sede', 
-              Email: colaborador.content.email,
-              ECollaboratorStatus: colaborador.content.status || 1, 
+              CompleteName: this.perfilForm.value.nombre || 'Nombre no especificado',
+              RUT: this.perfilForm.value.rut || 'RUT no especificado',
+              LeadershipId: colaborador.content.leadershipId || 0,
+              SegmentId: colaborador.content.segmentId || 0,
+              Position: colaborador.content.position || 'Sin Cargo',
+              Sede: colaborador.content.sede || 'Sin Sede',
+              Role: role || 'Colaborador',
+              Phone: this.perfilForm.value.telefono || '',
+              Email: this.perfilForm.value.email || 'Correo no especificado',
+              ECollaboratorStatus: colaborador.content.status || 1,
             };
   
             return this.collaboratorService.updateCollaborator(Number(id), payload);
@@ -123,22 +125,103 @@ export class PerfilComponent implements OnInit {
         })
         .then(() => {
           alert('Datos actualizados correctamente.');
+        
+          this.http.get(`${environment.apiUrl}/collaborators/${id}`).subscribe(
+            (response: any) => {
+              console.log('Datos actualizados desde el backend:', response);
+        
+              const currentData = JSON.parse(localStorage.getItem('print') || '{}');
+        
+              const updatedData = {
+                ...currentData, 
+                id: response.content.id,
+                nombre: response.content.completeName,
+                rut: response.content.rut,
+                cargo: response.content.position,
+                celular: response.content.phone,
+                correo: response.content.email,
+                estado: response.content.status,
+                gerencia: response.content.leadership,
+                segmento: response.content.segment,
+                nombreGerencia: response.content.leadership, 
+                nombreSegmento: response.content.segment,   
+                sede: response.content.area || 'Sin Sede'   
+              };
+        
+              localStorage.setItem('print', JSON.stringify(updatedData));
+        
+              if (role === 'Colaborador') {
+                this.router.navigate(['/generar']);
+              } else {
+                this.router.navigate(['/home']);
+              }
+            },
+            (error) => {
+              console.error('Error al obtener los datos actualizados del backend:', error);
+              alert('Error al obtener los datos actualizados. Intenta nuevamente.');
+            }
+          );
         })
         .catch((error) => {
           console.error('Error al actualizar los datos del perfil:', error);
-          alert('Hubo un error al actualizar los datos.');
+          if (error.status === 400 || error.status === 409) {
+            alert('Error: Los datos enviados son inválidos. Verifica e intenta nuevamente.');
+          } else {
+            alert('Error inesperado. Por favor, intenta nuevamente.');
+          }
         })
         .finally(() => {
-          this.loading = false; 
+          this.loading = false;
         });
     } else {
       alert('Por favor, completa todos los campos obligatorios.');
     }
   }
   
-
+  
+  
+  
   onCancel(): void {
-    this.router.navigate(['/home']); 
+    const id = localStorage.getItem('collaboratorId');
+    const role = this.perfilForm.get('tipoPerfil')?.value; 
+  
+    if (role === 'Colaborador') {
+      this.navigateToHomeAndUpdateData(id);
+    } else {
+      this.router.navigate(['/home']);
+    }
+  }
+  navigateToHomeAndUpdateData(id: string | null): void {
+    if (!id) {
+      console.error('No se encontró un ID válido para el colaborador.');
+      return;
+    }
+  
+    this.router.navigate(['/home']).then(() => {
+      const token = localStorage.getItem('token'); 
+      const headers = { Authorization: `Bearer ${token}` };
+  
+      this.http.get(`${environment.apiUrl}/collaborators/${id}`, { headers }).subscribe(
+        (response: any) => {
+          console.log('Datos actualizados del colaborador:', response);
+  
+          if (response && response.content) {
+            this.perfilForm.patchValue({
+              nombre: response.content.completeName || '',
+              rut: response.content.rut || '',
+              telefono: response.content.phone || '',
+              email: response.content.email || '',
+              tipoPerfil: response.content.role || ''
+            });
+          } else {
+            console.error('La respuesta del backend no contiene los datos esperados.');
+          }
+        },
+        (error) => {
+          console.error('Error al obtener los datos actualizados del colaborador:', error);
+        }
+      );
+    });
   }
   
   onSubmitClave(): void {
