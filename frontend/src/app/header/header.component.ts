@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -28,6 +28,17 @@ export class HeaderComponent implements OnInit{
     } else {
       console.warn('localStorage no está disponible.');
     }
+  }
+
+  @HostListener('window:userNameUpdated', ['$event'])
+  onUserNameUpdated(): void {
+    this.userName = localStorage.getItem('userName');
+  }
+  
+
+  loadUserNameFromLocalStorage(): void {
+    this.role = localStorage.getItem('role');
+    this.userName = localStorage.getItem('userName');
   }
   
   toggleDropdown() {

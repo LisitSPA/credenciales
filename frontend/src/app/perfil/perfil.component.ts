@@ -144,12 +144,13 @@ export class PerfilComponent implements OnInit {
                 gerencia: response.content.leadership,
                 segmento: response.content.segment,
                 nombreGerencia: response.content.leadership, 
-                nombreSegmento: response.content.segment,   
-                sede: response.content.area || 'Sin Sede'   
+                nombreSegmento: response.content.segment,
+                sede: response.content.area || 'Sin Sede'
               };
         
               localStorage.setItem('print', JSON.stringify(updatedData));
-        
+              localStorage.setItem('userName', response.content.completeName);
+              window.dispatchEvent(new Event('userNameUpdated'));
               if (role === 'Colaborador') {
                 this.router.navigate(['/generar']);
               } else {
@@ -162,6 +163,7 @@ export class PerfilComponent implements OnInit {
             }
           );
         })
+        
         .catch((error) => {
           console.error('Error al actualizar los datos del perfil:', error);
           if (error.status === 400 || error.status === 409) {
